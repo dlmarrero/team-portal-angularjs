@@ -1,0 +1,24 @@
+<div ng-init="contacts = [
+                {office: 'Quarterdeck', phone: '(301) 677-0217'},
+                {office: 'N5 Dept LPO', phone: '(301) 677-0700'},
+                {office: 'N1 Admin LPO', phone: '(301) 677-0297'},
+                {office: 'N51 LPO', phone: '(301) 677-0300/0220'},
+                {office: 'N53 LPO', phone: '(301) 677-0355', poc: 'CTR1 Carlson'},
+                {office: 'N53 LCPO', phone: '(301) 677-0466'},
+                {office: 'N54 LPO (CFL)', phone: '(301) 677-0737'},
+                {office: 'N55 LPO', phone: '(301) 677-0019', poc: 'IT1 Grace'},
+                {office: 'N56 LPO (Honor Guard)', phone: '(301) 677-0409'},
+                {office: 'N6 (IMO)', phone: '(443) 854-2800'},
+                {office: 'BEQ', phone: '(301) 677-0400'},
+                {office: 'CCC', phone: '(301) 677-0239'},
+                {office: 'Command Training Office', phone: '(301) 677-0221/0477'},
+                {office: 'Duty Driver', phone: '(240) 997-6739'},
+                {office: 'FFSC', phone: '(301) 677-9014'},
+                {office: 'Legal', phone: '(301) 677-0877'},
+                {office: 'MAA Office', phone: '(301) 677-0490'},
+                {office: 'PAO', phone: '(301) 677-0860'},
+                {office: 'QDM', phone: '(301) 677-0355/0294', poc: 'CTR1 Carlson'},
+                {office: 'Safety', phone: '(301) 677-0299'},
+                {office: 'SSO', phone: '(443) 479-6100'}
+                ]">
+            </div>
