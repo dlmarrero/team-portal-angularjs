@@ -117,4 +117,14 @@ angular
     url: '/500',
     templateUrl: 'views/pages/500.html'
   })
+
+  // CUSTOM STATES
+  .state('app.roster', {
+    url: '/roster',
+    templateUrl: 'roster/roster.html',
+    controller: 'RosterController',
+    ncyBreadcrumb: {
+      label: 'Alpha Roster'
+    }
+  })
 }]);

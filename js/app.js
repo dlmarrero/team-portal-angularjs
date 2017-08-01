@@ -1,3 +1,5 @@
+'use strict';
+
 // Default colors
 var brandPrimary =  '#20a8d8';
 var brandSuccess =  '#4dbd74';
@@ -16,7 +18,10 @@ angular
   'ui.router',
   'oc.lazyLoad',
   'ncy-angular-breadcrumb',
-  'angular-loading-bar'
+  'angular-loading-bar',
+  'ngResource',
+  'devApi',
+  'roster'
 ])
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
