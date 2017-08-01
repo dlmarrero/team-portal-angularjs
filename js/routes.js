@@ -119,12 +119,27 @@ angular
   })
 
   // CUSTOM STATES
-  .state('app.roster', {
-    url: '/roster',
-    templateUrl: 'roster/roster.html',
+  .state('app.reports', {
+    url: '/reports',
+    templateUrl: 'reports/reports.html',
+    ncyBreadcrumb: {
+      label: 'Reports'
+    }
+  })
+  .state('app.reports.roster', {
+    url: '/reports/roster',
+    templateUrl: 'reports/roster/roster.html',
     controller: 'RosterController',
     ncyBreadcrumb: {
       label: 'Alpha Roster'
+    }
+  })
+  .state('app.reports.roster.sailorDetails', {
+    url: '/reports/sailor/:id',
+    templateUrl: 'reports/roster/sailorDetails.html',
+    controller: 'SailorDetailsController',
+    ncyBreadcrumb: {
+      label: 'Sailor Details'
     }
   })
 }]);

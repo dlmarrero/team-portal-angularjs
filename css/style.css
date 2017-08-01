@@ -3084,7 +3084,6 @@ tbody.collapse.show {
 
 .breadcrumb {
   padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
   list-style: none;
   background-color: #fff; }
   .breadcrumb::after {
@@ -6091,7 +6090,7 @@ body {
 
 .breadcrumb {
   position: relative;
-  margin-bottom: 1.5rem;
+  border-bottom: 0 !important;
   border-bottom: 1px solid #cfd8dc; }
 
 button {
@@ -7319,6 +7318,10 @@ base-chart.chart {
   width: 250px; }
 
 .app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   min-height: 50px;
   padding: 0 1rem;
   line-height: 50px;
@@ -8921,3 +8924,18 @@ hr.transparent {
     border-right-color: #f86c6b; }
   *[dir="rtl"] .callout-success {
     border-right-color: #4dbd74; }
+
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 20px !important;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 50px !important; }
+
+.report-card {
+  text-decoration: none !important; }
+
+.td-centered {
+  text-align: center; }

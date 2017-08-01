@@ -1,0 +1,61 @@
+<ui-view>
+<div class="card" ng-show="{ $state.includes('app.reports.roster') }">
+    <div class="card-block">
+        <table class="table table-hover">
+            <div class="row">
+                <div class="col-lg-6">
+                    <legend>N57 SAILORS</legend>
+                </div>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3">
+                    <input class="float-right form-control" ng-model="searchText" placeholder="Search...">
+                </div>
+            </div>
+            <thead>
+                <tr>
+                    <th style="width:10px;">#</th>
+                    <th class="td-centered">Rate</th>
+                    <th class="td-centered">Name</th>
+                    <th class="td-centered">Checked Onboard</th>
+                    <th class="td-centered">ADSD</th>
+                    <th class="td-centered">EAOS</th>
+                    <th class="td-centered">PRD</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sailor in sailors | filter:searchText">
+                    <td>{{sailor.id}}</td>
+                    <td class="td-centered">{{sailor.rate}}</td>
+                    <td class="td-centered">{{sailor.lastName}}, {{sailor.firstName}}</td>
+                    <td class="td-centered">{{sailor.arrivalDate | milDate}}</td>
+                    <td class="td-centered">{{sailor.adsd | milDate}}</td>
+                    <td class="td-centered">{{sailor.eaos | milDate}}</td>
+                    <td class="td-centered">{{sailor.prd | milDate}}</td>
+
+                    <td>
+                        <a ui-sref="app.reports.roster.sailorDetails({id: sailor.id})">Details</a>
+                        <!-- <a ui-sref="app.reports.roster.sailorDetails">Details</a> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- 
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">Next</a>
+            </li>
+        </ul> -->
+    </div>
+</div>
+</ui-view>
