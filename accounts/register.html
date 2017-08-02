@@ -1,0 +1,133 @@
+<div class="container-float">
+    <div class="card col-lg-5">
+        <div class="card-header">
+            <strong>Register</strong>
+        </div>
+        <div class="card-block">
+            <form class="form-horizontal" ng-submit="submit()">
+                <div class="form-group row" ng-show="firstname && lastname">
+                    <label class="col-md-3 form-control-label" for="username">Username</label>
+                    <div class="col-md-9">
+                        <p class="form-control-static">{{firstname}}.{{lastname}}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">Official Email</label>
+                    <div class="col-md-9">
+                        <input type="email" id="email" name="email" ng-model="email" class="form-control" placeholder="first.last@navy.mil">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="password">Password</label>
+                    <div class="col-md-9">
+                        <input type="password" id="password" name="password" ng-model="password" class="form-control" placeholder="Password">
+                        <span class="help-block">Please enter a complex password</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="confirm">Confirm Password</label>
+                    <div class="col-md-9">
+                        <input type="password" id="confirm" name="confirm" ng-model="confirmpassword" class="form-control" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="rate">Rate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="rate" name="rate" ng-model="rate" class="form-control" placeholder="CTN3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="rank">Rank</label>
+                    <div class="col-md-9">
+                        <select id="rank" name="rank" ng-model="rank" class="form-control">
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+                            <option value="E5">E5</option>
+                            <option value="E6">E6</option>
+                            <option value="E7">E7</option>
+                            <option value="E9">E8</option>
+                            <option value="E9">E9</option>
+                            <option value="O1">O1</option>
+                            <option value="O2">O2</option>
+                            <option value="O3">O3</option>
+                            <option value="O4">O4</option>
+                            <option value="O5">O5</option>
+                            <option value="O6">O6</option>
+                            <option value="O7">O7</option>
+                            <option value="O8">O8</option>
+                            <option value="O9">O9</option>
+                            <option value="O10">O10</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="firstname">First Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="firstname" name="firstname" ng-model="firstname" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="lastname">Last Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="lastname" name="lastname" ng-model="lastname" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="adsd">ADSD</label>
+                    <div class="col-md-9">
+                        <input type="date" id="adsd" name="adsd" ng-model="adsd" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="eaos">EAOS</label>
+                    <div class="col-md-9">
+                        <input type="date" id="eaos" name="eaos" ng-model="eaos" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="prd">PRD</label>
+                    <div class="col-md-9">
+                        <input type="date" id="prd" name="prd" ng-model="prd" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="reportdate">Report Date</label>
+                    <div class="col-md-9">
+                        <input type="date" id="reportdate" name="reportdate" ng-model="reportdate" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="rankdate">Rank Date</label>
+                    <div class="col-md-9">
+                        <input type="date" id="rankdate" name="rankdate" ng-model="rankdate" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="bluebadge">Blue Badge</label>
+                    <div class="col-md-9 checkbox">
+                        <input type="checkbox" id="bluebadge" name="bluebadge" ng-model="bluebadge" value="bluebadge">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="destuic">Destination UIC</label>
+                    <div class="col-md-9">
+                        <input type="text" id="destuic" name="destuic" ng-model="destuic" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="destcommand">Destination Command</label>
+                    <div class="col-md-9">
+                        <input type="text" id="destcommand" name="destcommand" ng-model="destcommand" class="form-control">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" id="submit" value="Submit" class="btn btn-sm btn-primary">
+                    <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

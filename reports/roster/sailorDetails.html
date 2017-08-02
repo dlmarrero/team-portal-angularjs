@@ -1,4 +1,107 @@
-TEST<br>
-ID:  {{sailor.id}}<br>
-Name:  {{sailor.lastName}}<br>
-Rate:  {{sailor.rate}}
+<div class="card">
+    <div class="card-header">
+        <h3>{{sailor.rate}} {{sailor.lastName | uppercase}}, {{sailor.firstName | uppercase}}</h3>
+    </div>
+    <div class="card-block">
+        <div class="col-lg-5">
+            <!-- ADMINISTRATIVE DATA -->
+            <div class="card">
+                <div class="card-header" style="text-align: center">
+                    <strong>Administrative Data</strong>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Rank:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.rank}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>ADSD:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.adsd | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>EAOS:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.eaos | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>PRD:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.prd | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Report Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.reportDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-7">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Rank Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.rankDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Blue Badge</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.blueBadge}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Destination Command:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.destCommand}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Destination UIC:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.destUIC}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Report Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{sailor.reportDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

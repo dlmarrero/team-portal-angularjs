@@ -105,10 +105,11 @@ angular
     url: '/login',
     templateUrl: 'views/pages/login.html'
   })
-  .state('appSimple.register', {
-    url: '/register',
-    templateUrl: 'views/pages/register.html'
-  })
+  // .state('appSimple.register', {
+  //   url: '/register',
+  //   templateUrl: 'views/pages/register.html',
+  //   controller: 'RegisterController'
+  // })
   .state('appSimple.404', {
     url: '/404',
     templateUrl: 'views/pages/404.html'
@@ -119,6 +120,11 @@ angular
   })
 
   // CUSTOM STATES
+  .state('appSimple.register', {
+    url: '/register',
+    templateUrl: 'accounts/register.html',
+    controller: 'RegisterController'
+  })
   .state('app.reports', {
     url: '/reports',
     templateUrl: 'reports/reports.html',

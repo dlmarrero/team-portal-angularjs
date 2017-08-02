@@ -16,7 +16,7 @@
                     <th style="width:10px;">#</th>
                     <th class="td-centered">Rate</th>
                     <th class="td-centered">Name</th>
-                    <th class="td-centered">Checked Onboard</th>
+                    <th class="td-centered">Report Date</th>
                     <th class="td-centered">ADSD</th>
                     <th class="td-centered">EAOS</th>
                     <th class="td-centered">PRD</th>
@@ -28,14 +28,13 @@
                     <td>{{sailor.id}}</td>
                     <td class="td-centered">{{sailor.rate}}</td>
                     <td class="td-centered">{{sailor.lastName}}, {{sailor.firstName}}</td>
-                    <td class="td-centered">{{sailor.arrivalDate | milDate}}</td>
+                    <td class="td-centered">{{sailor.reportDate | milDate}}</td>
                     <td class="td-centered">{{sailor.adsd | milDate}}</td>
                     <td class="td-centered">{{sailor.eaos | milDate}}</td>
                     <td class="td-centered">{{sailor.prd | milDate}}</td>
 
                     <td>
                         <a ui-sref="app.reports.roster.sailorDetails({id: sailor.id})">Details</a>
-                        <!-- <a ui-sref="app.reports.roster.sailorDetails">Details</a> -->
                     </td>
                 </tr>
             </tbody>

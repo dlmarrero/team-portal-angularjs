@@ -21,7 +21,8 @@ angular
   'angular-loading-bar',
   'ngResource',
   'devApi',
-  'roster'
+  'roster',
+  'accounts'
 ])
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
