@@ -1,26 +1,50 @@
 angular.module('accounts', ['ngResource', 'devApi'])
 
-    .controller('RegisterController', ['$scope', 'devApiService',
-        function ($scope, devApiService) {
+    // .factory('authService', ['$http', '$q', 'localStorageService', 'devApiService', function($http, $q, localStorageService, devApiService) {
+    //     var authServiceFactory = {};
+
+    //     var _authentication = {
+    //         isAuth: false,
+    //         userName: ""
+    //     };
+
+    //     var _saveRegistration = function(registration) {
+
+    //         _logout();
+
+    //         return devApiService.Register.save
+    //     }
+    // }])
+
+    .controller('RegisterController', ['$filter', '$log', '$scope', 'devApiService',
+        function ($filter, $log, $scope, devApiService) {
+
+            $scope.$log = $log;
+            
 
             $scope.submit = function () {
+
+                $scope.adsd = new Date($scope.adsd);
+
                 var newUser = new devApiService.Register({
-                    email: $scope.email,
-                    password: $scope.password,
-                    confirmpassword: $scope.confirmpassword,
-                    rate: $scope.rate,
-                    rank: $scope.rank,
-                    firstname: $scope.firstname,
-                    lastname: $scope.lastname,
-                    adsd: $scope.adsd,
-                    eaos: $scope.eaos,
-                    prd: $scope.prd,
-                    reportdate: $scope.reportdate,
-                    rankdate: $scope.rankdate,
-                    bluebadge: $scope.bluebadge,
-                    destuic: $scope.destuic,
-                    destcommand: $scope.destcommand
+                    Email: $scope.email,
+                    Password: $scope.password,
+                    ConfirmPassword: $scope.confirmpassword,
+                    Rate: $scope.rate,
+                    Rank: $scope.rank,
+                    FirstName: $scope.firstname,
+                    LastName: $scope.lastname,
+                    ADSD: $scope.adsd,
+                    EAOS: $scope.eaos,
+                    PRD: $scope.prd,
+                    ReportDate: $scope.reportdate,
+                    RankDate: $scope.rankdate,
+                    BlueBadge: $scope.bluebadge,
+                    DestUIC: $scope.destuic,
+                    DestCommand: $scope.destcommand
                 });
+                
+                $log.log(newUser)
 
                 newUser.$save();
             }

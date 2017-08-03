@@ -79,6 +79,7 @@
                     <div class="col-md-9">
                         <input type="date" id="adsd" name="adsd" ng-model="adsd" class="form-control">
                     </div>
+                    {{adsd}}
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="eaos">EAOS</label>
@@ -103,12 +104,14 @@
                     <div class="col-md-9">
                         <input type="date" id="rankdate" name="rankdate" ng-model="rankdate" class="form-control">
                     </div>
+                    {{rankdate}}
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="bluebadge">Blue Badge</label>
                     <div class="col-md-9 checkbox">
-                        <input type="checkbox" id="bluebadge" name="bluebadge" ng-model="bluebadge" value="bluebadge">
+                        <input type="checkbox" id="bluebadge" name="bluebadge" ng-model="bluebadge" ng-init="bluebadge=false" value="bluebadge">
                     </div>
+                    {{bluebadge}}
                 </div>
 
                 <div class="form-group row">

@@ -5,7 +5,7 @@ angular.module('devApi', ['ngResource'])
     
     service = {};
     
-    service.Register = $resource(aspApiUrl + '/account/register');
+    service.Register = $resource(aspApiUrl + '/Account/Register');
 
     service.Sailors = $resource(aspApiUrl + '/sailors');
     service.Sailor = $resource(aspApiUrl + '/sailors/:id');
