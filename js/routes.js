@@ -120,10 +120,13 @@ angular
   })
 
   // CUSTOM STATES
-  .state('appSimple.register', {
+  .state('app.register', {
     url: '/register',
     templateUrl: 'accounts/register.html',
-    controller: 'RegisterController'
+    controller: 'RegisterController',
+    ncyBreadcrumb: {
+      label: 'Register'
+    }
   })
   .state('app.reports', {
     url: '/reports',

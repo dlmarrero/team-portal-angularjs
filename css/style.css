@@ -8939,3 +8939,12 @@ hr.transparent {
 
 .td-centered {
   text-align: center; }
+
+.validated {
+  color: green; }
+
+.invalidated {
+  color: red; }
+
+.highlight {
+  background-color: yellow; }
