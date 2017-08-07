@@ -1,11 +1,139 @@
 angular.module('accounts', ['ngResource', 'devApi'])
 
+    // .factory('authService', ['$http', '$q', 'localStorageService', 'devApiService', function($http, $q, localStorageService, devApiService) {
+
+    //     var serviceBase = 'http://localhost:5000'
+    //     var authServiceFactory = {};
+
+    //     var _authentication = {
+    //         isAuth: false,
+    //         userName: ""
+    //     };
+
+    //     var _saveRegistration = function (registration) {
+
+    //         _logout();
+
+
+    //     }
+
+    //     var _login = function(loginData) {
+
+    //         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+
+    //         var deferred = $q.defer();
+
+
+    //     }
+    // }])
+
+    .factory('authData', [function () {
+        var authDataFactory = {};
+
+        var _authentication = {
+            IsAuthenticated: false,
+            userName: ""
+        };
+
+        authDataFactory.authenticationData = _authentication;
+
+        return authDataFactory;
+    }])
+
+    .service('AuthenticationService', ['$http', '$q', '$window', '$log',
+        function ($http, $q, $window, $log) {
+            var tokenInfo;
+
+            this.setTokenInfo = function (data) {
+                tokenInfo = data;
+                $window.sessionStorage["TokenInfo"] = null;
+            }
+
+            this.getTokenInfo = function () {
+                return tokenInfo;
+            }
+
+            this.removeToken = function () {
+                tokenInfo = null;
+                $window.sessionStorage["TokenInfo"] = null;
+            }
+
+            this.init = function () {
+                if ($window.sessionStorage["TokenInfo"]) {
+                    tokenInfo = JSON.parse($window.sessionStorage["TokenInfo"]);
+                }
+            }
+
+            this.setHeader = function (http) {
+                delete http.defaults.headers.common['X-Requested-With'];
+                if ((tokenInfo != undefined) && (tokenInfo.accessToken != undefined) && (tokenInfo.accessToken != null) && (tokenInfo.accessToken != "")) {
+                    http.defaults.headers.common['Authorization'] = 'Bearer' + tokenInfo.accessToken;
+                    http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+                }
+            }
+
+            this.validateRequest = function () {
+                var url = serviceBase + '/api/values';
+                $log.log(url);
+                var deferred = $q.defer();
+                $http.get(url).then(function () {
+                    this.setHeader($http);
+                    deferred.resolve(null);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+                return deferred.promise;
+            }
+            this.init();
+        }])
+
+    .service('LoginService', ['$http', '$q', 'AuthenticationService', 'authData', '$log',
+        function ($http, $q, authenticationService, authData, $log) {
+            var userInfo;
+
+            var loginServiceURL = serviceBase + '/token';
+            var deviceInfo = [];
+            var deferred;
+
+            this.login = function (userName, password) {
+                deferred = $q.defer();
+                var data = "grant_type=password&username=" + userName + "&password=" + password;
+                $log.log(data);
+                $http.post(loginServiceURL, data, {
+                    headers:
+                    { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).then(function (response) {
+                    var o = response;
+                    userInfo = {
+                        accessToken: response.access_token,
+                        userName: response.userName
+                    };
+                    $log.log(userInfo)
+                    authenticationService.setTokenInfo(userInfo);
+                    authData.authenticationData.IsAuthenticated = true;
+                    authData.authenticationData.userName = response.userName;
+                    deferred.resolve(null);
+                })
+                    .catch(function (err, status) {
+                        authData.authenticationData.IsAuthenticated = false;
+                        authData.authenticationData.userName = "";
+                        deferred.resolve(err);
+                    });
+                return deferred.promise;
+            }
+            this.logOut = function () {
+                authenticationService.removeToken();
+                authData.authenticationData.IsAuthenticated = false;
+                authData.authenticationData.userName = "";
+            }
+        }])
+
     .controller('RegisterController', ['$filter', '$log', '$scope', 'devApiService',
         function ($filter, $log, $scope, devApiService) {
 
             // Auto select rank based on rate input
-            $scope.getRank = function(rate) {
-                switch(rate.slice(-3)) {
+            $scope.getRank = function (rate) {
+                switch (rate.slice(-3)) {
                     case "ENS":
                         $scope.rank = "O1";
                         break;
@@ -22,7 +150,7 @@ angular.module('accounts', ['ngResource', 'devApi'])
                         $scope.rank = "E3";
                         break;
                 }
-                switch(rate.slice(-2)) {
+                switch (rate.slice(-2)) {
                     case "SR":
                         $scope.rank = "E1";
                         break;
@@ -40,9 +168,9 @@ angular.module('accounts', ['ngResource', 'devApi'])
                         break;
                     case "LT":
                         $scope.rank = "O3";
-                        break;    
+                        break;
                 }
-                switch(rate[rate.length - 1]) {
+                switch (rate[rate.length - 1]) {
                     case "3":
                         $scope.rank = "E4";
                         break;
@@ -56,9 +184,9 @@ angular.module('accounts', ['ngResource', 'devApi'])
                         $scope.rank = "E7";
                         break;
                 }
-                
+
             }
-            
+
             // PASSWORD VALIDATION
             $scope.passwordStrength = function (password) {
 
@@ -130,6 +258,32 @@ angular.module('accounts', ['ngResource', 'devApi'])
             }
 
         }])
+
+    .controller('loginController', ['$scope', 'LoginService', '$location', '$log',
+        function ($scope, loginService, $location, $log) {
+            $log.log(serviceBase);
+            
+            $scope.loginData = {
+                userName: "",
+                password: ""
+            };
+
+            $scope.login = function () {
+                loginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
+                    if (response != null && response.error != undefined) {
+                        $scope.message = response.error_description;
+                    }
+                    else {
+                        $location.path('/next')
+                    }
+                });
+            }
+        }])
+
+    .controller('nextController', ['$scope', 'AuthenticationService', function ($scope, authenticationService) {
+        authenticationService.validateRequest();
+    }])
+
     .controller('SailorDetailsController', [
         '$scope', '$state', '$stateParams', 'devApiService',
         function ($scope, $state, $stateParams, devApiService) {

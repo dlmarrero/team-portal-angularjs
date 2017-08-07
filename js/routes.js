@@ -101,10 +101,10 @@ angular
   })
 
   // Additional Pages
-  .state('appSimple.login', {
-    url: '/login',
-    templateUrl: 'views/pages/login.html'
-  })
+  // .state('appSimple.login', {
+  //   url: '/login',
+  //   templateUrl: 'views/pages/login.html'
+  // })
   // .state('appSimple.register', {
   //   url: '/register',
   //   templateUrl: 'views/pages/register.html',
@@ -128,6 +128,22 @@ angular
       label: 'Register'
     }
   })
+
+  .state('app.login', {
+    url: '/login',
+    templateUrl: 'accounts/login.html',
+    controller: 'loginController'
+  })
+  .state('app.next', {
+    url: '/next',
+    templateUrl: 'accounts/next.html',
+    controller: 'nextController'
+  })
+  .state('app.myInfo', {
+    url: '/myInfo',
+    templateUrl: 'accounts/info.html'
+  })
+
   .state('app.reports', {
     url: '/reports',
     templateUrl: 'reports/reports.html',

@@ -11,7 +11,16 @@ angular
 .controller('barChartCtrl', barChartCtrl)
 .controller('horizontalBarsCtrl', horizontalBarsCtrl)
 .controller('horizontalBarsType2Ctrl', horizontalBarsType2Ctrl)
-.controller('usersTableCtrl', usersTableCtrl);
+.controller('usersTableCtrl', usersTableCtrl)
+
+.controller('indexController', ['$scope', '$location', 'authData', 'LoginService', 
+function ($scope, $location, authData, loginService) {
+  $scope.logOut = function () {
+    loginService.logOut();
+    $location.path('/dashboard');
+  }
+  $scope.authentication = authData.authenticationData;
+}]);
 
 //convert Hex to RGBA
 function convertHex(hex,opacity){
