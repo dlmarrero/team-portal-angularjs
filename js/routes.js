@@ -53,6 +53,7 @@ angular
   .state('app.main', {
     url: '/dashboard',
     templateUrl: 'views/main.html',
+    //controller: 'indexController',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Home',
@@ -100,16 +101,17 @@ angular
     }
   })
 
+
   // Additional Pages
-  // .state('appSimple.login', {
-  //   url: '/login',
-  //   templateUrl: 'views/pages/login.html'
-  // })
-  // .state('appSimple.register', {
-  //   url: '/register',
-  //   templateUrl: 'views/pages/register.html',
-  //   controller: 'RegisterController'
-  // })
+  .state('appSimple.login', {
+    url: '/simplogin',
+    templateUrl: 'views/pages/login.html'
+  })
+  .state('appSimple.register', {
+    url: '/simpregister',
+    templateUrl: 'views/pages/register.html',
+    controller: 'registerController'
+  })
   .state('appSimple.404', {
     url: '/404',
     templateUrl: 'views/pages/404.html'
@@ -119,52 +121,68 @@ angular
     templateUrl: 'views/pages/500.html'
   })
 
-  // CUSTOM STATES
-  .state('app.register', {
-    url: '/register',
-    templateUrl: 'accounts/register.html',
-    controller: 'RegisterController',
-    ncyBreadcrumb: {
-      label: 'Register'
-    }
-  })
 
+  // ***** CUSTOM STATES *****
+
+
+  // Account Management
   .state('app.login', {
     url: '/login',
     templateUrl: 'accounts/login.html',
     controller: 'loginController'
   })
-  .state('app.next', {
-    url: '/next',
-    templateUrl: 'accounts/next.html',
-    controller: 'nextController'
+  .state('app.register', {
+    url: '/register',
+    templateUrl: 'accounts/register.html',
+    controller: 'registerController',
+    ncyBreadcrumb: {
+      label: 'Register'
+    }
   })
-  .state('app.myInfo', {
-    url: '/myInfo',
-    templateUrl: 'accounts/info.html'
+  // Throwaway for testing purposes
+  .state('app.order', {
+    url: '/orders',
+    templateUrl: 'views/orders.html',
+    controller: 'ordersController'
   })
 
-  .state('app.reports', {
-    url: '/reports',
-    templateUrl: 'reports/reports.html',
-    ncyBreadcrumb: {
-      label: 'Reports'
-    }
-  })
-  .state('app.reports.roster', {
-    url: '/reports/roster',
-    templateUrl: 'reports/roster/roster.html',
-    controller: 'RosterController',
-    ncyBreadcrumb: {
-      label: 'Alpha Roster'
-    }
-  })
-  .state('app.reports.roster.sailorDetails', {
-    url: '/reports/sailor/:id',
-    templateUrl: 'reports/roster/sailorDetails.html',
-    controller: 'SailorDetailsController',
-    ncyBreadcrumb: {
-      label: 'Sailor Details'
-    }
-  })
+
+
+
+
+
+
+  // .state('app.next', {
+  //   url: '/next',
+  //   templateUrl: 'accounts/next.html',
+  //   controller: 'nextController'
+  // })
+  // .state('app.myInfo', {
+  //   url: '/myInfo',
+  //   templateUrl: 'accounts/info.html'
+  // })
+
+  // .state('app.reports', {
+  //   url: '/reports',
+  //   templateUrl: 'reports/reports.html',
+  //   ncyBreadcrumb: {
+  //     label: 'Reports'
+  //   }
+  // })
+  // .state('app.reports.roster', {
+  //   url: '/reports/roster',
+  //   templateUrl: 'reports/roster/roster.html',
+  //   controller: 'RosterController',
+  //   ncyBreadcrumb: {
+  //     label: 'Alpha Roster'
+  //   }
+  // })
+  // .state('app.reports.roster.sailorDetails', {
+  //   url: '/reports/sailor/:id',
+  //   templateUrl: 'reports/roster/sailorDetails.html',
+  //   controller: 'SailorDetailsController',
+  //   ncyBreadcrumb: {
+  //     label: 'Sailor Details'
+  //   }
+  // })
 }]);

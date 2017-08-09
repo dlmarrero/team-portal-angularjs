@@ -1,11 +1,11 @@
 <div class="container-float">
     <div class="card col-lg-6" style="width: 100%;margin: 0 auto;">
         <div class="card-block">
-            <div style="text-align:center;">
-                <h4><strong>N57 Portal<br>New Sailor Registration</strong></h4>
-                <hr><br>
-            </div>
-            <form name="register" class="form" ng-submit="submit(register.$valid)" novalidate>
+            <form name="register" class="form-login" role="form" novalidate>
+                <div style="text-align:center;">
+                    <h4 class="form-login-heading"><strong>N57 Portal<br>New Sailor Registration</strong></h4>
+                    <hr><br>
+                </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <h5>Personal Data</h5>
@@ -13,14 +13,15 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rate">Rate</label>
                             <div class="col-md-12">
-                                <input type="text" id="rate" name="rate" ng-model="rate" class="form-control" placeholder="CTN3"  ng-blur="getRank(rate)" required>
+                                <input type="text" id="rate" name="rate" ng-model="registration.rate" class="form-control" placeholder="CTN3" ng-blur="getRank(registration.rate)"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rank">Rank</label>
                             <div class="col-md-12">
-                                <select id="rank" name="rank" ng-model="rank" class="form-control"  required>
-                                    <option value="{{rank}}">{{rank}}</option>
+                                <select id="rank" name="rank" ng-model="registration.rank" class="form-control" required>
+                                    <option value="{{registration.rank}}">{{registration.rank}}</option>
                                     <option value="E1">E1</option>
                                     <option value="E2">E2</option>
                                     <option value="E3">E3</option>
@@ -41,26 +42,29 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="firstname">First Name</label>
                             <div class="col-md-12">
-                                <input type="text" id="firstname" name="firstname" ng-model="firstname" class="form-control" required>
+                                <input type="text" id="firstname" name="firstname" ng-model="registration.firstName" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="lastname">Last Name</label>
                             <div class="col-md-12">
-                                <input type="text" id="lastname" name="lastname" ng-model="lastname" class="form-control" ng-blur="showUsername=true" required>
+                                <input type="text" id="lastname" name="lastname" ng-model="registration.lastName" class="form-control" ng-blur="showUsername=true"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="email">Official Email</label>
                             <div class="col-md-12">
-                                <input type="email" id="email" name="email" ng-model="email" class="form-control" placeholder="first.last@navy.mil" required>
+                                <input type="email" id="email" name="email" ng-model="registration.email" class="form-control" placeholder="first.last@navy.mil"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="password">Password</label>
                             <div class="col-md-12">
-                                <input type="password" id="password" name="password" ng-model="password" class="form-control" placeholder="Password" 
-                                ng-change="passwordStrength(password)" ng-focus="showPwRules=true" ng-blur="validatePassword(password)" required>
+                                <input type="password" id="password" name="password" ng-model="registration.password" class="form-control" placeholder="Password"
+                                    ng-change="passwordStrength(registration.password)" ng-focus="showPwRules=true" ng-blur="validatePassword(registration.password)"
+                                    required>
                                 <em ng-show="showPwRules">
                                     <label ng-class="hasUpper ? 'validated' : 'invalidated'">1+ uppercase, </label>    
                                     <label ng-class="hasLower ? 'validated' : 'invalidated'">1+ lowercase, </label>
@@ -68,13 +72,22 @@
                                     <label ng-class="hasSpecial ? 'validated' : 'invalidated'">1+ special character</label>
                                     <label ng-class="hasSix ? 'validated' : 'invalidated'">6+ characters, </label>
                                     
+                                    <!-- TROUBLESHOOTING -->
+                                    <!-- <h5>Has six: {{hasSix}}</h5>
+                                    <h5>Has lower: {{hasLower}}</h5>
+                                    <h5>Has upper: {{hasUpper}}</h5>
+                                    <h5>Has special: {{hasSpecial}}</h5>
+                                    <h5>Has digit: {{hasDigit}}</h5>
+                                    <h5>Valid: {{validPassword}}</h5> -->
+                                    
                                 </em>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="confirm">Confirm Password</label>
                             <div class="col-md-12">
-                                <input type="password" id="confirm" name="confirm" ng-model="confirmpassword" class="form-control" placeholder="Confirm Password"  required><br>
+                                <input type="password" id="confirm" name="confirm" ng-model="registration.confirmPassword" class="form-control" placeholder="Confirm Password"
+                                    required><br>
                             </div>
                         </div>
                     </div>
@@ -84,57 +97,61 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="adsd">ADSD</label>
                             <div class="col-md-12">
-                                <input type="date" id="adsd" name="adsd" ng-model="adsd" class="form-control" required>
+                                <input type="date" id="adsd" name="adsd" ng-model="registration.adsd" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="eaos">EAOS</label>
                             <div class="col-md-12">
-                                <input type="date" id="eaos" name="eaos" ng-model="eaos" class="form-control" required>
+                                <input type="date" id="eaos" name="eaos" ng-model="registration.eaos" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="prd">PRD</label>
                             <div class="col-md-12">
-                                <input type="date" id="prd" name="prd" ng-model="prd" class="form-control" required>
+                                <input type="date" id="prd" name="prd" ng-model="registration.prd" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="reportdate">Report Date</label>
                             <div class="col-md-12">
-                                <input type="date" id="reportdate" name="reportdate" ng-model="reportdate" class="form-control" required>
+                                <input type="date" id="reportdate" name="reportdate" ng-model="registration.reportDate" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rankdate">Rank Date</label>
                             <div class="col-md-12">
-                                <input type="date" id="rankdate" name="rankdate" ng-model="rankdate" class="form-control" required>
+                                <input type="date" id="rankdate" name="rankdate" ng-model="registration.rankDate" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destuic">Destination UIC</label>
                             <div class="col-md-12">
-                                <input type="text" id="destuic" name="destuic" ng-model="destuic" class="form-control" required>
+                                <input type="text" id="destuic" name="destuic" ng-model="registration.destUIC" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destcommand">Destination Command</label>
                             <div class="col-md-12">
-                                <input type="text" id="destcommand" name="destcommand" ng-model="destcommand" class="form-control" required>
+                                <input type="text" id="destcommand" name="destcommand" ng-model="registration.destCommand" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="bluebadge">
-                                Blue Badge&nbsp;&nbsp;<input type="checkbox" id="bluebadge" name="bluebadge" ng-model="bluebadge" ng-init="bluebadge=false" value="bluebadge">
+                                Blue Badge&nbsp;&nbsp;<input type="checkbox" id="bluebadge" name="bluebadge" ng-model="registration.blueBadge" ng-init="bluebadge=false" value="bluebadge">
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="button-group" style="text-align:center;">
                     <!--WOULD LIKE TO ANIMATE THIS  -->
-                    <em ng-show="showUsername"><span class="highlight">Your username is:  {{firstname | lowercase}}.{{lastname | lowercase}}</span></em><br>
-                    <input type="submit" id="submit" value="Submit" class="btn btn-lg btn-primary" style="width:100px">
-                    <input type="reset" class="btn btn-lg btn-danger" style="width:100px">
+                    <em ng-show="showUsername"><span class="highlight">Your username is:  {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span></em><br>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-click="signUp()">Submit</button>
+                    <button class="btn btn-lg btn-danger btn-block" type="reset">Reset</button>
+                    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                        {{message}}
+                    </div>
+                    <!-- <input type="submit" id="submit" value="Submit" class="btn btn-lg btn-primary" style="width:100px"> -->
                 </div>
             </form>
         </div>

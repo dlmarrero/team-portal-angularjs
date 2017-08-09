@@ -1,6 +1,7 @@
 //main.js
 angular
 .module('app')
+.controller('indexController', indexController)
 .controller('cardChartCtrl1', cardChartCtrl1)
 .controller('cardChartCtrl2', cardChartCtrl2)
 .controller('cardChartCtrl3', cardChartCtrl3)
@@ -13,14 +14,18 @@ angular
 .controller('horizontalBarsType2Ctrl', horizontalBarsType2Ctrl)
 .controller('usersTableCtrl', usersTableCtrl)
 
-.controller('indexController', ['$scope', '$location', 'authData', 'LoginService', 
-function ($scope, $location, authData, loginService) {
+
+indexController.$inject = ['$scope', '$location', 'authService']
+function indexController ($scope, $location, authService) {
+
   $scope.logOut = function () {
-    loginService.logOut();
+    authService.logOut();
     $location.path('/dashboard');
   }
-  $scope.authentication = authData.authenticationData;
-}]);
+
+  $scope.authentication = authService.authentication;
+}
+
 
 //convert Hex to RGBA
 function convertHex(hex,opacity){
