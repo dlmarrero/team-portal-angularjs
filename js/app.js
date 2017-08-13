@@ -22,12 +22,14 @@ angular
   'ncy-angular-breadcrumb',
   'angular-loading-bar',
   'ngResource',
-  // 'devApi',
-  // 'roster',
+  'api',
+  'reports',
   // 'accounts',
   'LocalStorageModule',
   'auth'
 ])
+
+
 .config(function ($httpProvider) {
   $httpProvider.interceptors.push('authInterceptorService');
 })
@@ -35,6 +37,8 @@ angular
   cfpLoadingBarProvider.includeSpinner = false;
   cfpLoadingBarProvider.latencyThreshold = 1;
 }])
+
+
 .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -45,3 +49,11 @@ angular
 .run(['authService', function (authService) {
   authService.fillAuthData();
 }])
+
+
+.filter('milDate', function ($filter) {
+        var angularDateFilter = $filter('date');
+        return function (theDate) {
+            return angularDateFilter(theDate, 'dd MMM yyyy');
+        }
+    })

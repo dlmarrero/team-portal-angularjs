@@ -24,8 +24,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="sailor in sailors | filter:searchText">
-                    <td>{{sailor.id}}</td>
+                <tr ng-repeat="sailor in sailors | filter:searchText | orderBy:'lastName' ">
+                    <td>{{$index + 1}}</td>
                     <td class="td-centered">{{sailor.rate}}</td>
                     <td class="td-centered">{{sailor.lastName}}, {{sailor.firstName}}</td>
                     <td class="td-centered">{{sailor.reportDate | milDate}}</td>

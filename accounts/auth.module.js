@@ -1,50 +1,9 @@
 'use strict';
-angular.module('auth', [])
-    // For testing
-    .factory('ordersService', ordersService)
-    .controller('ordersController', ordersController)
-
+angular.module('auth', ['ui.router'])
     .factory('authInterceptorService', authInterceptorService)
     .factory('authService', authService)
-
     .controller('registerController', registerController)
     .controller('loginController', loginController)
-
-
-ordersService.$inject = ['$http']
-function ordersService($http) {
-
-    var serviceBase = 'http://localhost:5000/';
-    var ordersServiceFactory = {};
-
-    var _getOrders = function () {
-
-        return $http.get(serviceBase + 'api/orders')
-            .then(function (results) {
-                return results;
-            });
-    };
-
-    ordersServiceFactory.getOrders = _getOrders;
-
-    return ordersServiceFactory;
-}
-
-ordersController.$inject = ['$scope', 'ordersService']
-function ordersController($scope, ordersService) {
-
-    $scope.orders = [];
-
-    ordersService.getOrders().then(function (results) {
-
-        $scope.orders = results.data;
-
-    }, function (error) {
-        alert(error.data.message);
-    });
-
-}
-
 
 
 authInterceptorService.$inject = ['$q', '$location', 'localStorageService',]
@@ -79,8 +38,8 @@ function authInterceptorService($q, $location, localStorageService) {
 }
 
 
-authService.$inject = ['$http', '$q', 'localStorageService', '$log']
-function authService($http, $q, localStorageService, $log) {
+authService.$inject = ['$http', '$q', 'localStorageService', '$log', '$window', '$location']
+function authService($http, $q, localStorageService, $log, $window, $location) {
 
     var serviceBase = 'http://localhost:5000/';
     var authServiceFactory = {};
@@ -276,7 +235,7 @@ function registerController($scope, $location, $timeout, authService, $log) {
         authService.saveRegistration($scope.registration)
             .then(function (response) {
                 $scope.savedSuccessfully = true;
-                $scope.message = "Registration succssful!  Redirecting to login page in 2 seconds.";
+                $scope.message = "Registration succssful!  Logging you in...";
                 startTimer();
             },
             function (response) {
@@ -286,21 +245,34 @@ function registerController($scope, $location, $timeout, authService, $log) {
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
-                $scope.message = "Failed to register user due to:" + errors.join(' ');
+                $scope.message = "Failed to register user. " + errors.join(' ');
             });
     };
 
     var startTimer = function () {
         var timer = $timeout(function () {
             $timeout.cancel(timer);
-            $location.path('/login');
+
+            $scope.loginData = {
+                userName: $scope.registration.firstName + '.' + $scope.registration.lastName,
+                password: $scope.registration.password
+            };
+
+            authService.login($scope.loginData)
+            .then(function (response) {
+                $location.path('/dashboard');
+            },
+            function (error_description) {
+                $scope.message = error_description.data.error_description;
+            });
+            //$location.path('/login');
         }, 2000);
     }
 }
 
 
-loginController.$inject = ['$scope', '$location', 'authService']
-function loginController($scope, $location, authService) {
+loginController.$inject = ['$scope', '$location', 'authService', '$state']
+function loginController($scope, $location, authService, $state) {
 
     $scope.loginData = {
         userName: "",
@@ -312,10 +284,10 @@ function loginController($scope, $location, authService) {
     $scope.login = function () {
         authService.login($scope.loginData)
             .then(function (response) {
-                $location.path('/orders');
+                $state.transitionTo('app.main', {}, {reload: true});
             },
-            function (err) {
-                $scope.message = err.error_description;
+            function (error_description) {
+                $scope.message = error_description.data.error_description;
             });
     };
 }

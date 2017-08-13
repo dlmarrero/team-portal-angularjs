@@ -53,7 +53,7 @@ angular
   .state('app.main', {
     url: '/dashboard',
     templateUrl: 'views/main.html',
-    //controller: 'indexController',
+    controller: 'indexController',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Home',
@@ -129,7 +129,10 @@ angular
   .state('app.login', {
     url: '/login',
     templateUrl: 'accounts/login.html',
-    controller: 'loginController'
+    controller: 'loginController',
+    ncyBreadcrumb: {
+      label: 'Login'
+    }
   })
   .state('app.register', {
     url: '/register',
@@ -139,11 +142,38 @@ angular
       label: 'Register'
     }
   })
-  // Throwaway for testing purposes
-  .state('app.order', {
-    url: '/orders',
-    templateUrl: 'views/orders.html',
-    controller: 'ordersController'
+
+  .state('app.reports', {
+    url: '/reports',
+    templateUrl: 'reports/reports.html',
+    ncyBreadcrumb: {
+      label: 'Reports'
+    }
+  })
+  .state('app.reports.roster', {
+    url: '/roster',
+    templateUrl: 'reports/roster/roster.html',
+    controller: 'rosterController',
+    ncyBreadcrumb: {
+      label: 'Alpha Roster'
+    }
+  })
+  .state('app.reports.roster.sailorDetails', {
+    url: '/details/:id',
+    templateUrl: 'reports/roster/sailorDetails.html',
+    controller: 'sailorDetailsController',
+    ncyBreadcrumb: {
+      label: 'Sailor Details'
+    }
+  })
+
+  .state('app.profile', {
+    url: '/profile',
+    templateUrl: '/user/profile.html',
+    controller: 'indexController',
+    ncyBreadcrumb: {
+      label: 'Your Profile'
+    }
   })
 
 
@@ -160,29 +190,5 @@ angular
   // .state('app.myInfo', {
   //   url: '/myInfo',
   //   templateUrl: 'accounts/info.html'
-  // })
-
-  // .state('app.reports', {
-  //   url: '/reports',
-  //   templateUrl: 'reports/reports.html',
-  //   ncyBreadcrumb: {
-  //     label: 'Reports'
-  //   }
-  // })
-  // .state('app.reports.roster', {
-  //   url: '/reports/roster',
-  //   templateUrl: 'reports/roster/roster.html',
-  //   controller: 'RosterController',
-  //   ncyBreadcrumb: {
-  //     label: 'Alpha Roster'
-  //   }
-  // })
-  // .state('app.reports.roster.sailorDetails', {
-  //   url: '/reports/sailor/:id',
-  //   templateUrl: 'reports/roster/sailorDetails.html',
-  //   controller: 'SailorDetailsController',
-  //   ncyBreadcrumb: {
-  //     label: 'Sailor Details'
-  //   }
   // })
 }]);

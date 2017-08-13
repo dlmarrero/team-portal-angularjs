@@ -1,0 +1,133 @@
+<div class="card">
+    <div class="card-header  card-inverse card-primary">
+        <h3>{{userData.rate}} {{userData.lastName | uppercase}}, {{userData.firstName | uppercase}}</h3>
+    </div>
+    <div class="card-block">
+        <div class="col-lg-5">
+            <!-- ADMINISTRATIVE DATA -->
+            <div class="card">
+                <div class="card-header" style="text-align: center">
+                    <strong>Administrative Data</strong>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Rank:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.rank}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>ADSD:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.adsd | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>EAOS:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.eaos | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>PRD:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.prd | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Report Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.reportDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-7">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Rank Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.rankDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Blue Badge</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.blueBadge}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Destination Command:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.destCommand}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Destination UIC:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.destUIC}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: right"><strong>Report Date:</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p>{{userData.reportDate | milDate}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROLE DATA -->
+            <div class="card">
+                <div class="card-header" style="text-align: center">
+                    <strong>Account Management</strong>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <table>
+                                <tr>
+                                    <td valign="top">
+                                        <p style="text-align: right;"><strong>Current Role(s):</strong></p>
+                                    </td>
+                                    <td style="padding-left: 10px;">
+                                        <p ng-repeat="role in userData.roles" ng-show="userData.roles != '[]'">
+                                            {{role}}
+                                        </p>
+                                        <p ng-show="userData.roles == ''">Non-privileged user</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
