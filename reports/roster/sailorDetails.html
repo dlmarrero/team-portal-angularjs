@@ -307,10 +307,10 @@
                                     <p style="text-align: right"><strong>Add/Remove Role:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;" valign="top">
-                                    <select ng-model="addedRole" ng-change="addRole()">
-                                            <option value="" selected>Select role</option>
-                                            <option ng-repeat="role in roles" value="{{role.id}}">{{role.name}}</option>
-                                        </select>
+                                    <select ng-model="addedRole" ng-change="addRole()" ng-disabled="enableEdit">
+                                        <option value="" selected>Select role</option>
+                                        <option ng-repeat="role in roles" value="{{role.id}}">{{role.name}}</option>
+                                    </select>
                                 </td>
                             </tr>
                         </table>
@@ -321,27 +321,39 @@
                         <strong>Edit Account</strong>
                     </div>
                     <div class="card-block" ng-hide="enableEdit">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <button class="btn btn-success" style="width: 100%" ng-click="editUser()">Edit User</button>
-                            </div>
-                            <div class="col-lg-6">
-                                <button class="btn btn-danger" style="width: 100%" ng-click="deleteUser()">Delete User</button>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="editUser()"><i class="fa fa-pencil"></i>&nbsp; Edit User</button>
+                        <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#confirmDelModal"><i class="fa fa-trash"></i>&nbsp; Delete User</button>
                     </div>
                     <div class="card-block" ng-show="enableEdit">
-                        <div>
-                            <div>
-                                <button class="btn btn-success" style="width: 100%" ng-click="updateUser()">Save Changes</button>
-                            </div>
-                            <div>
-                                <button class="btn btn-warning" style="width: 100%" ng-click="editUser()">Discard Changes</button>
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateUser()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="editUser()"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
+                    </div>
+                    <!-- Modal -->
+                    <div id="confirmDelModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">CONFIRM</h5>
+                                    <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <P>Are you sure you want to delete the user account for: </P>
+                                    <h6>{{sailor.rate}} {{sailor.lastName}}, {{sailor.firstName}}</h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" ng-click="deleteUser()" remove-modal><i class="fa fa-trash"></i>&nbsp; Delete User</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        Last Updated:  {{sailor.updated | date:'dd MMM yyyy @ HH:mm'}}
     </div>
 </div>

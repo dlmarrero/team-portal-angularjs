@@ -50,6 +50,18 @@ angular
   authService.fillAuthData();
 }])
 
+.directive('removeModal', ['$document', function ($document) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.bind('click', function () {
+                $document[0].body.classList.remove('modal-open');
+                    angular.element($document[0].getElementsByClassName('modal-backdrop')).remove();
+                    angular.element($document[0].getElementsByClassName('modal')).remove();
+                });
+            }
+        };
+    }])
 
 .filter('milDate', function ($filter) {
         var angularDateFilter = $filter('date');

@@ -15,8 +15,8 @@ angular
   .controller('usersTableCtrl', usersTableCtrl)
 
 
-indexController.$inject = ['$scope', '$location', 'authService', 'apiCall']
-function indexController($scope, $location, authService, apiCall) {
+indexController.$inject = ['$scope', '$location', 'authService', 'apiCall', '$state']
+function indexController($scope, $location, authService, apiCall, $state) {
 
   $scope.logOut = function () {
     authService.logOut();
@@ -30,7 +30,19 @@ function indexController($scope, $location, authService, apiCall) {
     apiCall.GetUserByName.get({ username: $scope.authentication.userName }, function (data) {
       $scope.userData = data;
     });
-    
+
+  }
+
+  // Enable user account editing
+  $scope.enableEdit = false;
+  $scope.editUser = function () {
+    $scope.enableEdit = !$scope.enableEdit
+  }
+  // Save changes to account data
+  $scope.updateUser = function () {
+    apiCall.Sailor.update({ id: $scope.userData.id }, $scope.userData, function (data) {
+      $state.reload();
+    });
   }
 }
 

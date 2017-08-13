@@ -1,133 +1,326 @@
 <div class="card">
-    <div class="card-header  card-inverse card-primary">
-        <h3>{{userData.rate}} {{userData.lastName | uppercase}}, {{userData.firstName | uppercase}}</h3>
+    <div class="card-header card-inverse card-primary">
+        <h3><i class="fa fa-anchor"></i>&nbsp;{{userData.rate}} {{userData.lastName}}, {{userData.firstName}}</h3>
     </div>
     <div class="card-block">
-        <div class="col-lg-5">
-            <!-- ADMINISTRATIVE DATA -->
-            <div class="card">
-                <div class="card-header" style="text-align: center">
-                    <strong>Administrative Data</strong>
-                </div>
-                <div class="card-block">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Rank:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.rank}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>ADSD:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.adsd | milDate}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>EAOS:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.eaos | milDate}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>PRD:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.prd | milDate}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Report Date:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.reportDate | milDate}}</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-lg-7">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Rank Date:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.rankDate | milDate}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Blue Badge</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.blueBadge}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Destination Command:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.destCommand}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Destination UIC:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.destUIC}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: right"><strong>Report Date:</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p>{{userData.reportDate | milDate}}</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- PERSONAL DATA  -->
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Personal Data</strong>
+                    </div>
+                    <div class="card-block">
+                        <table ng-show="!enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Rate/Rank:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p>{{userData.rate}}/{{userData.rank}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.lastName}}, {{userData.firstName}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>E-mail:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <a href="mailto:{{userData.email}}">
+                                        <p>{{userData.email}}</p>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <p style="text-align: right"><strong>Address:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p>{{userData.street}}<br> {{userData.city}}, {{userData.state}} {{userData.zip}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Phone Number:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p ng-hide="enableEdit">{{userData.phoneNumber}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- EDITABLE PERSONAL DATA  -->
+                        <table ng-show="enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rate:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.rate" value="{{userData.rate}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rank:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.rank" value="{{userData.rank}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>First Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.firstName" value="{{userData.firstName}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Last Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.lastName" value="{{userData.lastName}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Email:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.email" value="{{userData.email}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Street Address:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.street" value="{{userData.street}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>City:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.city" value="{{userData.city}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>State:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.state" value="{{userData.state}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Zip:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.zip" value="{{userData.zip}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Phone Number:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="userData.phoneNumber" value="{{userData.phoneNumber}}">
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <!-- ROLE DATA -->
-            <div class="card">
-                <div class="card-header" style="text-align: center">
-                    <strong>Account Management</strong>
+            <div class="col-lg-4">
+                <!-- ADMINISTRATIVE DATA -->
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Administrative Data</strong>
+                    </div>
+                    <div class="card-block">
+                        <table ng-show="!enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Rank Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.rankDate | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Report Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.reportDate | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>ADSD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.adsd | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>PRD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.prd | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>EAOS:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.eaos | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Blue Badge:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.blueBadge}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Destination Command:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.destCommand}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Destination UIC:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{userData.destUIC}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- EDITABLE ADMIN DATA  -->
+                        <table ng-show="enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rank Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="userData.rankDate" value="{{userData.rankDate | date:'yyyy-MM-dd'}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Report Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="userData.reportDate" value="{{userData.reportDate | date:'yyyy-MM-dd'}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>ADSD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="userData.adsd" value="{{userData.adsd | date:'yyyy-MM-dd'}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>PRD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="userData.prd" value="{{userData.prd | date:'yyyy-MM-dd'}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>EAOS:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="userData.eaos" value="{{userData.eaos | date:'yyyy-MM-dd'}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Blue Badge:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="checkbox" ng-model="userData.blueBadge" value="{{userData.blueBadge}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Destination Command:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="text" ng-model="userData.destCommand" value="{{userData.destCommand}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Destination UIC:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="text" ng-model="userData.destUIC" value="{{userData.destUIC}}">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="card-block">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <table>
-                                <tr>
-                                    <td valign="top">
-                                        <p style="text-align: right;"><strong>Current Role(s):</strong></p>
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <p ng-repeat="role in userData.roles" ng-show="userData.roles != '[]'">
-                                            {{role}}
-                                        </p>
-                                        <p ng-show="userData.roles == ''">Non-privileged user</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Role Assignment</strong>
+                    </div>
+                    <div class="card-block">
+                        <table>
+                            <tr>
+                                <td valign="top">
+                                    <p style="text-align: right;"><strong>Current Role(s):</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p ng-repeat="role in userData.roles" ng-show="userData.roles != '[]'">
+                                        {{role}}
+                                    </p>
+                                    <p ng-show="userData.roles == ''">Non-privileged user</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Edit Account</strong>
+                    </div>
+                    <div class="card-block" ng-hide="enableEdit">
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="editUser()"><i class="fa fa-pencil"></i>&nbsp; Edit User</button>
+                    </div>
+                    <div class="card-block" ng-show="enableEdit">
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateUser()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="editUser()"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        Last Updated:  {{userData.updated | date:'dd MMM yyyy @ HH:mm'}}
     </div>
 </div>

@@ -6,8 +6,8 @@ angular.module('auth', ['ui.router'])
     .controller('loginController', loginController)
 
 
-authInterceptorService.$inject = ['$q', '$location', 'localStorageService',]
-function authInterceptorService($q, $location, localStorageService) {
+authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state']
+function authInterceptorService($q, $location, localStorageService, $window, $state) {
 
     var authInterceptorServiceFactory = {};
 
@@ -26,7 +26,8 @@ function authInterceptorService($q, $location, localStorageService) {
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            $location.path('/login');
+            $window.alert('You are not authorized to visit this page.  Please log in with sufficient credentials.');
+            $state.transitionTo('app.login', {}, {reload: true});
         }
         return $q.reject(rejection);
     }
@@ -110,8 +111,8 @@ function authService($http, $q, localStorageService, $log, $window, $location) {
 }
 
 
-registerController.$inject = ['$scope', '$location', '$timeout', 'authService', '$log']
-function registerController($scope, $location, $timeout, authService, $log) {
+registerController.$inject = ['$scope', '$location', '$timeout', 'authService', '$log', '$state']
+function registerController($scope, $location, $timeout, authService, $log, $state) {
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
@@ -260,7 +261,7 @@ function registerController($scope, $location, $timeout, authService, $log) {
 
             authService.login($scope.loginData)
             .then(function (response) {
-                $location.path('/dashboard');
+                $state.transitionTo('app.main', {}, {reload: true});
             },
             function (error_description) {
                 $scope.message = error_description.data.error_description;
