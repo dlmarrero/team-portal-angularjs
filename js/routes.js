@@ -53,7 +53,7 @@ angular
   .state('app.main', {
     url: '/dashboard',
     templateUrl: 'views/main.html',
-    controller: 'indexController',
+    //controller: 'indexController',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Home',
@@ -128,7 +128,7 @@ angular
   // Account Management
   .state('app.login', {
     url: '/login',
-    templateUrl: 'accounts/login.html',
+    templateUrl: 'views/accounts/login.html',
     controller: 'loginController',
     ncyBreadcrumb: {
       label: 'Login'
@@ -136,7 +136,7 @@ angular
   })
   .state('app.register', {
     url: '/register',
-    templateUrl: 'accounts/register.html',
+    templateUrl: 'views/accounts/register.html',
     controller: 'registerController',
     ncyBreadcrumb: {
       label: 'Register'
@@ -145,14 +145,14 @@ angular
 
   .state('app.reports', {
     url: '/reports',
-    templateUrl: 'reports/reports.html',
+    templateUrl: 'views/reports/reports.html',
     ncyBreadcrumb: {
       label: 'Reports'
     }
   })
   .state('app.reports.roster', {
     url: '/roster',
-    templateUrl: 'reports/roster/roster.html',
+    templateUrl: 'views/reports/roster/roster.html',
     controller: 'rosterController',
     ncyBreadcrumb: {
       label: 'Alpha Roster'
@@ -160,7 +160,7 @@ angular
   })
   .state('app.reports.roster.sailorDetails', {
     url: '/details/:id',
-    templateUrl: 'reports/roster/sailorDetails.html',
+    templateUrl: 'views/reports/roster/sailorDetails.html',
     controller: 'sailorDetailsController',
     ncyBreadcrumb: {
       label: 'Sailor Details'
@@ -169,26 +169,10 @@ angular
 
   .state('app.profile', {
     url: '/profile',
-    templateUrl: '/user/profile.html',
+    templateUrl: 'views/accounts/profile.html',
     controller: 'indexController',
     ncyBreadcrumb: {
       label: 'Your Profile'
     }
   })
-
-
-
-
-
-
-
-  // .state('app.next', {
-  //   url: '/next',
-  //   templateUrl: 'accounts/next.html',
-  //   controller: 'nextController'
-  // })
-  // .state('app.myInfo', {
-  //   url: '/myInfo',
-  //   templateUrl: 'accounts/info.html'
-  // })
 }]);

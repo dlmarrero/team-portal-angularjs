@@ -22,22 +22,20 @@ angular
   'ncy-angular-breadcrumb',
   'angular-loading-bar',
   'ngResource',
-  'api',
-  'reports',
-  // 'accounts',
   'LocalStorageModule',
-  'auth'
 ])
 
 
+// Implements JWT interceptor
 .config(function ($httpProvider) {
   $httpProvider.interceptors.push('authInterceptorService');
 })
+
+// Stock demo loading bar
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
   cfpLoadingBarProvider.latencyThreshold = 1;
 }])
-
 
 .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
   $rootScope.$on('$stateChangeSuccess',function(){
@@ -46,10 +44,14 @@ angular
   $rootScope.$state = $state;
   return $rootScope.$stateParams = $stateParams;
 }])
+
+// Load existing JWT on app start
 .run(['authService', function (authService) {
   authService.fillAuthData();
 }])
 
+
+// Removes modal background after ng-click event
 .directive('removeModal', ['$document', function ($document) {
     return {
         restrict: 'A',
@@ -63,6 +65,8 @@ angular
         };
     }])
 
+
+// Present dates in military format
 .filter('milDate', function ($filter) {
         var angularDateFilter = $filter('date');
         return function (theDate) {
