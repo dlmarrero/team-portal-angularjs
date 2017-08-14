@@ -175,8 +175,8 @@
                     <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
                         {{message}}
                     </div>
-                    <em ng-show="showUsername"><span class="highlight">Your username is:  {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span></em><br>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-click="signUp()">Submit</button>
+                    <em ng-show="register.$valid"><span class="highlight" style="font-size: 16px">Your username is:  {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span></em><br>
+                    <button type="submit" data-ng-click="signUp()" ng-class="register.$invalid ? 'btn btn-lg btn-secondary btn-block disabled': 'btn btn-lg btn-primary btn-block'">Submit</button>
                     <button class="btn btn-lg btn-danger btn-block" type="reset">Reset</button>
                     <!-- <input type="submit" id="submit" value="Submit" class="btn btn-lg btn-primary" style="width:100px"> -->
                 </div>
