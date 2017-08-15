@@ -10,7 +10,7 @@
                     <div class="card-header" style="text-align: center">
                         <strong>Personal Data</strong>
                     </div>
-                    <div class="card-block">
+                    <div class="card-block" style="align-content: center">
                         <table ng-show="!enableEdit">
                             <tr>
                                 <td>
@@ -310,10 +310,10 @@
                         <strong>Edit Account</strong>
                     </div>
                     <div class="card-block" ng-hide="enableEdit">
-                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="editUser()"><i class="fa fa-pencil"></i>&nbsp; Edit User</button>
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="editUser()"><i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
                     </div>
                     <div class="card-block" ng-show="enableEdit">
-                        <button type="button" class="btn btn-success btn-block" ng-click="updateUser()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateProfile()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
                         <button type="button" class="btn btn-danger btn-block" ng-click="editUser()"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
                     </div>
                 </div>

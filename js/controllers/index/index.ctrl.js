@@ -24,7 +24,7 @@ function ($scope, $location, authService, apiCall, $state) {
     $scope.enableEdit = !$scope.enableEdit
   }
   // Save changes to account data
-  $scope.updateUser = function () {
+  $scope.updateProfile = function () {
     apiCall.Sailor.update({ id: $scope.userData.id }, $scope.userData, function (data) {
       $state.reload();
     });
