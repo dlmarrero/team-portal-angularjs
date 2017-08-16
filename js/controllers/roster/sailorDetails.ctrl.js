@@ -7,7 +7,6 @@ angular.module('app')
             function updateSailorData() {
                 apiCall.Sailor.get({ id: $stateParams.id }, function (data) {
                     $scope.sailor = data;
-                    $log.log($scope.sailor.rankDate)
                 })
             }
             updateSailorData();

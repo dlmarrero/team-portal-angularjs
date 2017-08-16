@@ -1,7 +1,7 @@
 angular.module('app')
 .factory('authService',
-['$http', '$q', 'localStorageService', '$log', '$window', '$location',
-function ($http, $q, localStorageService, $log, $window, $location) {
+['$http', '$q', 'localStorageService', '$log', '$window', '$location', '$state',
+function ($http, $q, localStorageService, $log, $window, $location, $state) {
 
     var serviceBase = 'http://localhost:5000/';
     var authServiceFactory = {};
@@ -51,6 +51,8 @@ function ($http, $q, localStorageService, $log, $window, $location) {
 
         _authentication.isAuth = false;
         _authentication.userName = "";
+
+        $state.reload();
     };
 
     var _fillAuthData = function () {

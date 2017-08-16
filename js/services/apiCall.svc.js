@@ -27,5 +27,20 @@ angular.module('app')
         // POST: add a role to a user
         svc.AddRole = $resource(aspApiUrl + '/api/roles/ManageUsersInRole');
 
+
+        // **** TODO ****
+        // GET a user's todos
+        svc.ToDos = $resource(aspApiUrl + '/api/todos?SailorId=:sailorId');
+
+        // Post a new todo
+        svc.AddToDo = $resource(aspApiUrl + '/api/todos');
+
+        // DELETE: remove todo
+        // GET: get single todo (ever used?)
+        // UPDATE: update todo
+        svc.ToDo = $resource(aspApiUrl + '/api/todos/:todoId', null, {
+            'update': { method:'PUT' }
+        });
+
         return svc;
     }])

@@ -1,7 +1,7 @@
 <aside class="aside-menu">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a tab class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><i class="icon-list"></i></a>
+            <a tab class="nav-link active" data-toggle="tab" href="#todo" role="tab"><i class="icon-list"></i></a>
         </li>
         <li class="nav-item">
             <a tab class="nav-link" data-toggle="tab" href="#messages" role="tab"><i class="icon-speech"></i></a>
@@ -15,122 +15,161 @@
     </ul>
 
     <!-- Tab panes -->
+
+    <!-- **** TO DO ****  -->
     <div class="tab-content">
-        <div class="tab-pane active" id="timeline" role="tabpanel">
-            <div class="callout m-0 py-2 text-muted text-center bg-faded text-uppercase">
-                <small><b>Today</b>
+        <div class="tab-pane active" id="todo" role="tabpanel" ng-controller="indexController" style="padding-bottom: 75px">
+            <!-- ADD TO DO ITEM  -->
+            <div>
+                <button type="button" class="btn btn-info btn-block" ng-click="toggleAdd()"><i class="fa fa-check-square-o"></i>&nbsp; New ToDo</button>
+            </div>
+            <div ng-show="showAdd">
+                <form name="createToDo" novalidate>
+                <div class="form-group container" style="padding-top: 10px">
+                    <a href="#" class="float-right" ng-click="toggleAdd()"><i class="fa fa-close"></i></a>
+                    <label for="toDoItem" style="padding-top: 5px">To Do:</label>
+                    <input type="text" name="toDoItem" id="toDoItem" class="form-control" ng-model="newToDo.toDoItem" placeholder="What do you need to do?" required>
+                </div>
+                <hr class="mx-3 my-0">
+                <div class="form-group container">
+                    <label for="dueDate" style="padding-top: 5px">Date:</label>
+                    <input type="date" name="dueDate" class="form-control" ng-model="newToDo.dueDate">
+                </div>
+                <hr class="mx-3 my-0">
+                <div class="form-group container">
+                    <label for="dueDate" style="padding-top: 5px">Time:</label>
+                    <input type="text" name="dueDate" class="form-control" ng-model="newToDo.time">
+                </div>
+                <hr class="mx-3 my-0">
+                <div class="form-group container">
+                    <label for="dueDate" style="padding-top: 5px">Priority:</label><br>
+                    <label><input type="radio" ng-model="newToDo.priority" value="high" ng-required="!newToDo.priority">&nbsp;High</label>
+                    <label><input type="radio" ng-model="newToDo.priority" value="medium" ng-required="!newToDo.priority">&nbsp;Medium</label>
+                    <label><input type="radio" ng-model="newToDo.priority" value="low" ng-required="!newToDo.priority">&nbsp;Low</label>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn btn-success" ng-click="addToDo()" ng-class="{'disabled': createToDo.$invalid}"><i class="fa fa-plus"></i>&nbsp; Add ToDo</button>
+                </div>
+                </form>
+                <br>
+                <hr class="mx-3 my-0">
+            </div>
+            <!-- TO DO LIST  -->
+            <div ng-show="toDos.length == 0  && !showAdd" class="container" align="center">
+                <br>
+                <p class="text-muted">You do not have anything<br>on your ToDo list.<br>Click "New ToDo" to begin.</p>
+            </div>
+            <div ng-repeat="toDo in toDos | orderBy: ['dueDate', 'time']">
+                <div class="callout callout-danger m-0 py-3" ng-show="toDo.priority == 'high'">
+                    <div>
+                        {{toDo.toDoItem}}
+                        <span class="float-right"><a href="#" ng-click="delToDo(toDo.id)"><i class="fa fa-close text-muted"></i></a></span>
+                    </div>
+                    <div ng-show="toDo.dueDate">
+                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{toDo.dueDate | date:'MM/dd/yyyy'}}</small>
+                        <small class="text-muted mr-3" ng-show="toDo.time"><i class="fa fa-clock-o"></i>&nbsp; {{toDo.time}}</small>
+                    </div>
+                </div>
+                <div class="callout callout-warning m-0 py-3" ng-show="toDo.priority == 'medium'">
+                    <div>
+                        {{toDo.toDoItem}}
+                        <span class="float-right"><a href="#" ng-click="delToDo(toDo.id)"><i class="fa fa-close text-muted"></i></a></span>
+                    </div>
+                    <div ng-show="toDo.dueDate">
+                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{toDo.dueDate | date:'MM/dd/yyyy'}}</small>
+                        <small class="text-muted mr-3" ng-show="toDo.time"><i class="fa fa-clock-o"></i>&nbsp; {{toDo.time}}</small>
+                    </div>
+                </div>
+                <div class="callout callout-success m-0 py-3" ng-show="toDo.priority == 'low'">
+                    <div>
+                        {{toDo.toDoItem}}
+                        <span class="float-right"><a href="#" ng-click="delToDo(toDo.id)"><i class="fa fa-close text-muted"></i></a></span>
+                    </div>
+                    <div ng-show="toDo.dueDate">
+                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{toDo.dueDate | date:'MM/dd/yyyy'}}</small>
+                        <small class="text-muted mr-3" ng-show="toDo.time"><i class="fa fa-clock-o"></i>&nbsp; {{toDo.time}}</small>
+                    </div>
+                </div>
+                <hr class="mx-3 my-0">
+            </div>
+        </div>
+        <!-- <div class="callout m-0 py-2 text-muted text-center bg-faded text-uppercase">
+            <small><b>Today</b>
                 </small>
+        </div>
+        <hr class="transparent mx-3 my-0">
+        <div class="callout callout-warning m-0 py-3">
+            <div class="avatar float-right">
+                <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
             </div>
-            <hr class="transparent mx-3 my-0">
-            <div class="callout callout-warning m-0 py-3">
-                <div class="avatar float-right">
-                    <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                </div>
-                <div>Meeting with
-                    <strong>Lucas</strong>
-                </div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
-                <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA</small>
+            <div>Meeting with
+                <strong>Lucas</strong>
             </div>
-            <hr class="mx-3 my-0">
-            <div class="callout callout-info m-0 py-3">
-                <div class="avatar float-right">
+            <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
+            <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA</small>
+        </div>
+        <hr class="mx-3 my-0">
+        <div class="callout callout-info m-0 py-3">
+            <div class="avatar float-right">
+                <img src="img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+            </div>
+            <div>Skype with
+                <strong>Megan</strong>
+            </div>
+            <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 5pm</small>
+            <small class="text-muted"><i class="icon-social-skype"></i>&nbsp; On-line</small>
+        </div>
+        <hr class="transparent mx-3 my-0">
+        <div class="callout m-0 py-2 text-muted text-center bg-faded text-uppercase">
+            <small><b>Tomorrow</b>
+                </small>
+        </div>
+        <hr class="transparent mx-3 my-0">
+
+        <hr class="mx-3 my-0">
+        <div class="callout callout-success m-0 py-3">
+            <div>
+                <strong>#10 Startups.Garden</strong>Meetup</div>
+            <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
+            <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA</small>
+        </div>
+        <hr class="mx-3 my-0">
+        <div class="callout callout-primary m-0 py-3">
+            <div>
+                <strong>Team meeting</strong>
+            </div>
+            <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 6pm</small>
+            <small class="text-muted"><i class="icon-home"></i>&nbsp; creativeLabs HQ</small>
+            <div class="avatars-stack mt-2">
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                </div>
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                </div>
+                <div class="avatar avatar-xs">
                     <img src="img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                 </div>
-                <div>Skype with
-                    <strong>Megan</strong>
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                 </div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 5pm</small>
-                <small class="text-muted"><i class="icon-social-skype"></i>&nbsp; On-line</small>
-            </div>
-            <hr class="transparent mx-3 my-0">
-            <div class="callout m-0 py-2 text-muted text-center bg-faded text-uppercase">
-                <small><b>Tomorrow</b>
-                </small>
-            </div>
-            <hr class="transparent mx-3 my-0">
-            <div class="callout callout-danger m-0 py-3">
-                <div>New UI Project -
-                    <strong>deadline</strong>
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                 </div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 10 - 11pm</small>
-                <small class="text-muted"><i class="icon-home"></i>&nbsp; creativeLabs HQ</small>
-                <div class="avatars-stack mt-2">
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                </div>
+                <div class="avatar avatar-xs">
+                    <img src="img/avatars/8.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                 </div>
             </div>
-            <hr class="mx-3 my-0">
-            <div class="callout callout-success m-0 py-3">
-                <div>
-                    <strong>#10 Startups.Garden</strong>Meetup</div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
-                <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA</small>
-            </div>
-            <hr class="mx-3 my-0">
-            <div class="callout callout-primary m-0 py-3">
-                <div>
-                    <strong>Team meeting</strong>
-                </div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 6pm</small>
-                <small class="text-muted"><i class="icon-home"></i>&nbsp; creativeLabs HQ</small>
-                <div class="avatars-stack mt-2">
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                    <div class="avatar avatar-xs">
-                        <img src="img/avatars/8.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    </div>
-                </div>
-            </div>
-            <hr class="mx-3 my-0">
         </div>
+        <hr class="mx-3 my-0"> -->
+        <!-- </div> -->
+
 
 
         <div class="tab-pane p-3" id="messages" role="tabpanel">
-            <<div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
             <div class="message">
                 <div class="py-3 pb-5 mr-3 float-left">
                     <div class="avatar">
@@ -189,7 +228,22 @@
                 </div>
                 <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
                 <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>>
+            </div>
+            <hr>
+            <div class="message">
+                <div class="py-3 pb-5 mr-3 float-left">
+                    <div class="avatar">
+                        <img src="img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                        <span class="avatar-status badge-success"></span>
+                    </div>
+                </div>
+                <div>
+                    <small class="text-muted">Lukasz Holeczek</small>
+                    <small class="text-muted float-right mt-1">1:52 PM</small>
+                </div>
+                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            </div>
         </div>
 
 
@@ -217,7 +271,7 @@
                 {office: 'Safety', phone: '(301) 677-0299'},
                 {office: 'SSO', phone: '(443) 479-6100'}
                 ]"></div>
-            
+
             <h6>Points of Contact</h6>
 
             <input ng-model="searchText" class="form-control" placeholder="Search" />
@@ -225,9 +279,8 @@
             <table class="table table-hover">
                 <tr ng-repeat="contact in contacts | filter:searchText">
                     <td>
-                        {{contact.office}}<br>
-                        {{contact.poc}}<br ng-if="contact.poc">
-                        {{contact.phone}}
+                        {{contact.office}}<br> {{contact.poc}}
+                        <br ng-if="contact.poc"> {{contact.phone}}
                     </td>
                 </tr>
             </table>
