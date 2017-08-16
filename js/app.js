@@ -23,7 +23,6 @@ angular
   'angular-loading-bar',
   'ngResource',
   'LocalStorageModule',
-//   'angularjs-datetime-picker',
 ])
 
 

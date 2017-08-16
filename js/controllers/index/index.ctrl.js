@@ -59,6 +59,8 @@ function ($scope, $location, authService, apiCall, $state, $log, $window) {
     });
   };
 
+
+  
   // **** THIS SHOULD BE IN A PROFILE CONTROLLER ****
   // Enable user account editing
   $scope.enableEdit = false;

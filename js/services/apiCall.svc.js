@@ -42,5 +42,18 @@ angular.module('app')
             'update': { method:'PUT' }
         });
 
+
+        // **** POCs ****
+
+        // GET all pocs
+        // SAVE new poc
+        svc.Pocs = $resource(aspApiUrl + '/api/Pocs');
+
+        // DELETE remove poc
+        // UPDATE edit poc
+        svc.Poc = $resource(aspApiUrl + '/api/Pocs/:id', null, {
+            'update': { method:'PUT' }
+        });
+
         return svc;
     }])
