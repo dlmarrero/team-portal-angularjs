@@ -53,7 +53,7 @@ angular
   .state('app.main', {
     url: '/dashboard',
     templateUrl: 'views/main.html',
-    //controller: 'indexController',
+    //controller: 'indexCtrl',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Home',
@@ -161,7 +161,7 @@ angular
   .state('app.reports.roster.sailorDetails', {
     url: '/details/:id',
     templateUrl: 'views/reports/roster/sailorDetails.html',
-    controller: 'sailorDetailsController',
+    controller: 'sailorDetsCtrl',
     ncyBreadcrumb: {
       label: 'Sailor Details'
     }
@@ -170,7 +170,7 @@ angular
   .state('app.profile', {
     url: '/profile',
     templateUrl: 'views/accounts/profile.html',
-    controller: 'indexController',
+    controller: 'profileCtrl',
     ncyBreadcrumb: {
       label: 'Your Profile'
     }

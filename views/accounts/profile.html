@@ -62,7 +62,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Rate:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.rate" value="{{userData.rate}}">
+                                    <input type="text" ng-model="newData.rate" ng-value="userData.rate">
                                 </td>
                             </tr>
                             <tr>
@@ -70,7 +70,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Rank:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.rank" value="{{userData.rank}}">
+                                    <input type="text" ng-model="newData.rank" ng-value="userData.rank">
                                 </td>
                             </tr>
                             <tr>
@@ -78,7 +78,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>First Name:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.firstName" value="{{userData.firstName}}">
+                                    <input type="text" ng-model="newData.firstName" ng-value="userData.firstName">
                                 </td>
                             </tr>
                             <tr>
@@ -86,7 +86,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Last Name:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.lastName" value="{{userData.lastName}}">
+                                    <input type="text" ng-model="newData.lastName" ng-value="userData.lastName">
                                 </td>
                             </tr>
                             <tr>
@@ -94,7 +94,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Email:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.email" value="{{userData.email}}">
+                                    <input type="text" ng-model="newData.email" ng-value="userData.email">
                                 </td>
                             </tr>
                             <tr>
@@ -102,7 +102,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Street Address:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.street" value="{{userData.street}}">
+                                    <input type="text" ng-model="newData.street" ng-value="userData.street">
                                 </td>
                             </tr>
                             <tr>
@@ -110,7 +110,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>City:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.city" value="{{userData.city}}">
+                                    <input type="text" ng-model="newData.city" ng-value="userData.city">
                                 </td>
                             </tr>
                             <tr>
@@ -118,7 +118,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>State:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.state" value="{{userData.state}}">
+                                    <input type="text" ng-model="newData.state" ng-value="userData.state">
                                 </td>
                             </tr>
                             <tr>
@@ -126,7 +126,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Zip:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.zip" value="{{userData.zip}}">
+                                    <input type="text" ng-model="newData.zip" ng-value="userData.zip">
                                 </td>
                             </tr>
                             <tr>
@@ -134,7 +134,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Phone Number:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <input type="text" ng-model="userData.phoneNumber" value="{{userData.phoneNumber}}">
+                                    <input type="text" ng-model="newData.phoneNumber" ng-value="userData.phoneNumber">
                                 </td>
                             </tr>
                         </table>
@@ -221,7 +221,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Rank Date:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="date" ng-model="userData.rankDate" value="{{userData.rankDate | date:'yyyy-MM-dd'}}">
+                                    <input type="date" ng-model="newData.rankDate" value="{{userData.rankDate | date:'yyyy-MM-dd'}}">
                                 </td>
                             </tr>
                             <tr>
@@ -229,7 +229,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Report Date:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="date" ng-model="userData.reportDate" value="{{userData.reportDate | date:'yyyy-MM-dd'}}">
+                                    <input type="date" ng-model="newData.reportDate" value="{{userData.reportDate | date:'yyyy-MM-dd'}}">
                                 </td>
                             </tr>
                             <tr>
@@ -237,7 +237,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>ADSD:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="date" ng-model="userData.adsd" value="{{userData.adsd | date:'yyyy-MM-dd'}}">
+                                    <input type="date" ng-model="newData.adsd" value="{{userData.adsd | date:'yyyy-MM-dd'}}">
                                 </td>
                             </tr>
                             <tr>
@@ -245,7 +245,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>PRD:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="date" ng-model="userData.prd" value="{{userData.prd | date:'yyyy-MM-dd'}}">
+                                    <input type="date" ng-model="newData.prd" value="{{userData.prd | date:'yyyy-MM-dd'}}">
                                 </td>
                             </tr>
                             <tr>
@@ -253,7 +253,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>EAOS:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="date" ng-model="userData.eaos" value="{{userData.eaos | date:'yyyy-MM-dd'}}">
+                                    <input type="date" ng-model="newData.eaos" value="{{userData.eaos | date:'yyyy-MM-dd'}}">
                                 </td>
                             </tr>
                             <tr>
@@ -261,7 +261,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Blue Badge:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="checkbox" ng-model="userData.blueBadge" value="{{userData.blueBadge}}">
+                                    <input type="checkbox" ng-model="newData.blueBadge" ng-value="userData.blueBadge">
                                 </td>
                             </tr>
                             <tr>
@@ -269,7 +269,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Destination Command:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="text" ng-model="userData.destCommand" value="{{userData.destCommand}}">
+                                    <input type="text" ng-model="newData.destCommand" ng-value="userData.destCommand">
                                 </td>
                             </tr>
                             <tr>
@@ -277,7 +277,7 @@
                                     <p style="text-align: right;padding-top: 15px"><strong>Destination UIC:</strong></p>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <input type="text" ng-model="userData.destUIC" value="{{userData.destUIC}}">
+                                    <input type="text" ng-model="newData.destUIC" ng-value="userData.destUIC">
                                 </td>
                             </tr>
                         </table>
@@ -310,11 +310,11 @@
                         <strong>Edit Account</strong>
                     </div>
                     <div class="card-block" ng-hide="enableEdit">
-                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="editUser()"><i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="enableEdit=true"><i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
                     </div>
                     <div class="card-block" ng-show="enableEdit">
                         <button type="button" class="btn btn-success btn-block" ng-click="updateProfile()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
-                        <button type="button" class="btn btn-danger btn-block" ng-click="editUser()"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="enableEdit=false"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
                     </div>
                 </div>
             </div>

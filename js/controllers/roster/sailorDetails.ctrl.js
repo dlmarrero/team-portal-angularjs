@@ -1,45 +1,44 @@
-angular.module('app')
-    .controller('sailorDetailsController', [
-        '$scope', '$state', '$stateParams', 'apiCall', '$log', '$window',
-        function ($scope, $state, $stateParams, apiCall, $log, $window) {
+angular
+    .module('app')
+    .controller('sailorDetsCtrl', sailorDetsCtrl);
 
-            // Get sailor data
-            function updateSailorData() {
-                apiCall.Sailor.get({ id: $stateParams.id }, function (data) {
-                    $scope.sailor = data;
-                })
-            }
-            updateSailorData();
+sailorDetsCtrl.$inject = ['$scope', '$state', '$stateParams', 'dataSvc'];
+function sailorDetsCtrl($scope, $state, $stateParams, dataSvc) {
+    
+    var userMgr = dataSvc.manageUser();
 
-            // Get all available roles
-            $scope.roles = apiCall.Roles.query(function (data) {
-                $scope.roles = data;
-            });
+    $scope.addedRole = "";
+    $scope.enableEdit = false;
+    $scope.roles = dataSvc.getRoles();
+    $scope.sailor = userMgr.get({ id: $stateParams.id }, function (data) {
+        $scope.newSailor = data;
+    });
+    
+    $scope.addRole = addRole;
+    $scope.deleteUser = deleteUser;
+    $scope.updateUser = updateUser;
 
-            // Add a role
-            $scope.addRole = function () {
-                apiCall.AddRole.save({ id: $scope.addedRole, enrolledUser: $scope.sailor.id }, function () {
-                    updateSailorData();
-                    $scope.addedRole = "";
-                });
-            };
 
-            // Enable user account editing
+    // Add a role
+    function addRole () {
+        dataSvc.addRole().save({ id: $scope.addedRole, enrolledUser: $scope.sailor.id }, function () {
+            $scope.sailor = userMgr.get({ id: $stateParams.id });
+            $scope.addedRole = "";
+        });
+    };
+
+    // Delete user account
+    function deleteUser () {
+        userMgr.delete({ id: $stateParams.id }, function (data) {
+            $state.transitionTo('app.reports.roster', {}, { reload: true });
+        });
+    };
+
+    // Save changes to account data
+    function updateUser () {
+        userMgr.update({ id: $stateParams.id }, $scope.newSailor, function (data) {
             $scope.enableEdit = false;
-            $scope.editUser = function () {
-                $scope.enableEdit = !$scope.enableEdit
-            }
-            // Save changes to account data
-            $scope.updateUser = function () {
-                apiCall.Sailor.update({ id: $stateParams.id }, $scope.sailor, function (data) {
-                    $state.reload();
-                });
-            }
-
-            // Delete user account
-            $scope.deleteUser = function () {
-                apiCall.Sailor.delete({ id: $stateParams.id }, function (data) {
-                    $state.transitionTo('app.reports.roster', {}, { reload: true });
-                })
-            }
-        }])
+            $scope.sailor = $scope.newSailor;
+        });
+    };
+};

@@ -1,48 +1,50 @@
 angular.module('app')
-.controller('pocsCtrl',
-['$scope', 'apiCall', '$log',
-function ($scope, apiCall, $log) {
+    .controller('pocsCtrl', pocsCtrl);
 
-    $scope.pocs = apiCall.Pocs.query();
-    
+pocsCtrl.$inject['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll']
+function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll) {
+
+    // Set $resource management object
+    var Pocs = dataSvc.managePocs();
+
+    // Populate POCs
+    $scope.pocs = Pocs.query();
+
+
     // Edit POC
     $scope.showEdit = false;
 
     $scope.toggleEdit = function (contact) {
         $scope.showEdit = true;
         $scope.update = contact;
-    }
-
-    $scope.saveUpdate = function (update) {
-        update.update()
-        apiCall.Poc.update({ id: update.id }, update, function (data) {
-            $scope.showEdit = false;
-            $scope.update = {}
-        });
+        $location.hash('pocs')
+        $anchorScroll();
     };
+
+    $scope.saveUpdate = function (updatedPoc) {
+        Pocs.update({ id: updatedPoc.id }, updatedPoc);
+        $scope.showEdit = false;
+        $scope.update = {};
+    };
+
 
     // Delete POC
     $scope.deletePoc = function (pocId) {
-        apiCall.Poc.delete({ id: pocId }, function (data) {
-            apiCall.Pocs.query(function (data) {
-                $scope.newPoc = {};
-                $scope.pocs = data;
-                $scope.showAdd = false;
-            });
+        Pocs.delete({ id: pocId }).$promise.then(function (data) {
+            $scope.pocs = Pocs.query();
         });
+        $scope.update = {};
+        $scope.showEdit = false;
     };
+
 
     // Add POC
     $scope.showAdd = false;
 
-    $scope.addPoc = function (update) {
-        apiCall.Pocs.save(update, function (data) {
-            apiCall.Pocs.query(function (data) {
-                $scope.pocs = data;
-                $scope.newPoc = {};
-                $scope.showAdd = false;
-            });
-        });
+    $scope.addPoc = function (newPoc) {
+        Pocs.save(newPoc);
+        $scope.pocs = Pocs.query();
+        $scope.newPoc = {};
+        $scope.showAdd = false;
     };
-
-}])
+}

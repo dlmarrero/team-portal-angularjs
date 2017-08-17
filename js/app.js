@@ -25,6 +25,7 @@ angular
   'LocalStorageModule',
 ])
 
+// .constant('aspApiUrl', 'http://localhost:5000')
 
 // Implements JWT interceptor
 .config(function ($httpProvider) {

@@ -7552,7 +7552,7 @@ base-chart.chart {
   border-bottom: 1px solid #cfd8dc; }
   .app-header.navbar .navbar-brand {
     display: inline-block;
-    width: 155px;
+    width: 180px;
     height: 55px;
     padding: 0.5rem 1rem;
     margin-right: 0;
@@ -7560,7 +7560,7 @@ base-chart.chart {
     background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 70px auto;
+    background-size: 180px auto;
     border-bottom: 1px solid #cfd8dc; }
   .app-header.navbar .navbar-nav {
     flex-direction: row;
