@@ -30,14 +30,12 @@ gulp.task('serve', ['sass'], function () {
     gulp.watch('scss/*.scss', ['sass']);
     gulp.watch('scss/**/*.scss', ['sass']);
 
-    gulp.watch('views/*.html').on('change', browserSync.reload);
-    gulp.watch('views/**/*.html').on('change', browserSync.reload);
-    gulp.watch('views/**/**/*.html').on('change', browserSync.reload);
+    gulp.watch('index.html').on('change', browserSync.reload);
+    gulp.watch('features/**/*.html').on('change', browserSync.reload);
 
-    gulp.watch('js/*.js', ['concat:dev'])//.on('change', browserSync.reload);
-    gulp.watch('js/**/*.js', ['concat:dev'])//.on('change', browserSync.reload);
-    gulp.watch('js/**/**/*.js', ['concat:dev'])//.on('change', browserSync.reload);
-
+    gulp.watch('js/*.js', ['concat:dev'])
+    gulp.watch('js/**/*.js', ['concat:dev'])
+    gulp.watch('features/**/*.js', ['concat:dev'])
 });
 
 // Static Server without watching scss files
@@ -92,14 +90,22 @@ gulp.task('copy:fonts', function () {
 });
 
 gulp.task('concat:dist', function () {
-    gulp.src(['js/app.js', 'js/*', 'js/**/*', 'js/**/**/*'])
+    gulp.src(
+        ['js/app.js', 
+        'js/*.js', 
+        'js/**/*.js', 
+        'features/**/*.js'])
         .pipe(concat('compiled.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.dist));
 })
 
 gulp.task('concat:dev', function () {
-    gulp.src(['js/app.js', 'js/*.js', 'js/**/*.js', 'js/**/**/*.js'])
+    gulp.src(
+        ['js/app.js', 
+        'js/*.js', 
+        'js/**/*.js', 
+        'features/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())

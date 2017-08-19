@@ -13,7 +13,6 @@ var grayLight =     '#818a91';
 var grayLighter =   '#d1d4d7';
 var grayLightest =  '#f8f9fa';
 
-// var serviceBase = 'http://localhost:5000'; 
 
 angular
 .module('app', [

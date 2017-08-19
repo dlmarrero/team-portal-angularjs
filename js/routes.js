@@ -18,7 +18,7 @@ angular
   $stateProvider
   .state('app', {
     abstract: true,
-    templateUrl: 'views/common/layouts/full.html',
+    templateUrl: 'features/common/layouts/full.html',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Root',
@@ -53,7 +53,6 @@ angular
   .state('app.main', {
     url: '/dashboard',
     templateUrl: 'views/main.html',
-    //controller: 'indexCtrl',
     //page title goes here
     ncyBreadcrumb: {
       label: 'Home',
@@ -84,7 +83,7 @@ angular
   })
   .state('appSimple', {
     abstract: true,
-    templateUrl: 'views/common/layouts/simple.html',
+    templateUrl: 'features/common/layouts/simple.html',
     resolve: {
       loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
         // you can lazy load files for an existing module
@@ -110,7 +109,7 @@ angular
   .state('appSimple.register', {
     url: '/simpregister',
     templateUrl: 'views/pages/register.html',
-    controller: 'registerController'
+    controller: 'registerCtrl'
   })
   .state('appSimple.404', {
     url: '/404',
@@ -128,16 +127,16 @@ angular
   // Account Management
   .state('app.login', {
     url: '/login',
-    templateUrl: 'views/accounts/login.html',
-    controller: 'loginController',
+    templateUrl: 'features/accounts/login.html',
+    controller: 'loginCtrl',
     ncyBreadcrumb: {
       label: 'Login'
     }
   })
   .state('app.register', {
     url: '/register',
-    templateUrl: 'views/accounts/register.html',
-    controller: 'registerController',
+    templateUrl: 'features/accounts/register.html',
+    controller: 'registerCtrl',
     ncyBreadcrumb: {
       label: 'Register'
     }
@@ -145,22 +144,22 @@ angular
 
   .state('app.reports', {
     url: '/reports',
-    templateUrl: 'views/reports/reports.html',
+    templateUrl: 'features/reports/reports.html',
     ncyBreadcrumb: {
       label: 'Reports'
     }
   })
   .state('app.reports.roster', {
     url: '/roster',
-    templateUrl: 'views/reports/roster/roster.html',
-    controller: 'rosterController',
+    templateUrl: 'features/roster/roster.html',
+    controller: 'rosterCtrl',
     ncyBreadcrumb: {
       label: 'Alpha Roster'
     }
   })
   .state('app.reports.roster.sailorDetails', {
     url: '/details/:id',
-    templateUrl: 'views/reports/roster/sailorDetails.html',
+    templateUrl: 'features/roster/sailorDetails.html',
     controller: 'sailorDetsCtrl',
     ncyBreadcrumb: {
       label: 'Sailor Details'
@@ -169,7 +168,7 @@ angular
 
   .state('app.profile', {
     url: '/profile',
-    templateUrl: 'views/accounts/profile.html',
+    templateUrl: 'features/accounts/profile.html',
     controller: 'profileCtrl',
     ncyBreadcrumb: {
       label: 'Your Profile'
