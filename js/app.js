@@ -23,6 +23,8 @@ angular
   'angular-loading-bar',
   'ngResource',
   'LocalStorageModule',
+  'ngAnimate',
+  'ui.bootstrap'
 ])
 
 // .constant('aspApiUrl', 'http://localhost:5000')

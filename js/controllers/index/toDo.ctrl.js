@@ -2,23 +2,33 @@ angular
     .module('app')
     .controller('toDoCtrl', toDoCtrl);
 
-toDoCtrl.$inject = ['authService', 'dataSvc', '$window', '$log'];
-function toDoCtrl(authService, dataSvc, $window, $log) {
+toDoCtrl.$inject = ['authService', 'dataSvc', '$window'];
+function toDoCtrl(authService, dataSvc, $window) {
 
     var auth = authService.authentication;
     var toDoMgr = dataSvc.manageToDos();
     var vm = this;
 
+    vm.authed = false;
     vm.newToDo = {};
+    vm.toDos = [];
+    vm.userData = {};
     vm.showAdd = false;
-    vm.userData = dataSvc.getCurUser().get({ username: auth.userName }, function (data) {
-        vm.toDos = data.toDos;
-    });
 
     vm.addToDo = addToDo;
     vm.delToDo = delToDo;
     vm.toggleAdd = toggleAdd;
 
+    init();
+
+    function init() {
+        if (auth.isAuth) {
+            vm.authed = true;
+            vm.userData = dataSvc.getCurUser().get({ username: auth.userName }, function (data) {
+                vm.toDos = data.toDos;
+            });
+        };
+    };
 
     function addToDo() {
         vm.newToDo.sailorId = vm.userData.id;

@@ -1,7 +1,7 @@
 angular.module('app')
 .controller('rosterController',
-['$scope', 'dataSvc', '$log',
-function ($scope, dataSvc, $log) {
+['$scope', 'dataSvc',
+function ($scope, dataSvc) {
     $scope.sailors = dataSvc.getUsers();
 
     // Default settings for table column display

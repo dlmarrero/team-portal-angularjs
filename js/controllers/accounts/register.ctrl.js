@@ -1,7 +1,7 @@
 angular.module('app')
 .controller('registerController',
-['$scope', '$location', '$timeout', 'authService', '$log', '$state', 
-function ($scope, $location, $timeout, authService, $log, $state) {
+['$scope', '$location', '$timeout', 'authService', '$state', 
+function ($scope, $location, $timeout, authService, $state) {
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
@@ -85,7 +85,6 @@ function ($scope, $location, $timeout, authService, $log, $state) {
 
         // Has 6+ characters
         (/^(.{6,})/.test(password)) ? $scope.hasSix = true : $scope.hasSix = false;
-        // $log.log((/^(.{6,})/.test(password)));
         // Has lowercase letter
         (/[a-z]/.test(password)) ? $scope.hasLower = true : $scope.hasLower = false;
         // Has uppercase letter

@@ -1,12 +1,11 @@
 angular.module('app')
     .factory('dataSvc', dataSvc)
 
-dataSvc.$inject = ['$resource', 'authService', '$log'];
-function dataSvc($resource, authService, $log) {
+dataSvc.$inject = ['$resource', 'authService'];
+function dataSvc($resource, authService) {
     
     var aspApiUrl = 'http://localhost:5000';
     var authentication = authService.authentication;
-    $log.log('auth', authentication)
 
     return {
         getUsers: getUsers,

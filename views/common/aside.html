@@ -21,7 +21,7 @@
         <div class="tab-pane active" id="todo" role="tabpanel" ng-controller="toDoCtrl as toDo" style="padding-bottom: 75px">
             <!-- ADD TO DO ITEM  -->
             <div>
-                <button type="button" class="btn btn-info btn-block" ng-click="toDo.toggleAdd()"><i class="fa fa-check-square-o"></i>&nbsp; New ToDo</button>
+                <button type="button" class="btn btn-info btn-block" ng-class="{'disabled': !toDo.authed}" ng-click="toDo.toggleAdd()"><i class="fa fa-check-square-o"></i>&nbsp; New ToDo</button>
             </div>
             <div ng-show="toDo.showAdd">
                 <form name="createToDo" novalidate>
@@ -55,11 +55,14 @@
                 <hr class="mx-3 my-0">
             </div>
             <!-- TO DO LIST  -->
-            <div ng-show="toDos.length == 0  && !showAdd" class="container" align="center">
-                <br>
+            <div class="container" align="center">
+                <p class="text-muted">Please log in to create<br>and view your ToDo list.</p>
+            </div>
+            <div ng-show="toDo.toDos.length == 0  && toDo.authed && !toDo.showAdd" class="container" align="center">
+                <br><br>
                 <p class="text-muted">You do not have anything<br>on your ToDo list.<br>Click "New ToDo" to begin.</p>
             </div>
-            <div ng-repeat="td in toDo.toDos | orderBy: ['dueDate', 'time']">
+            <div ng-if="toDo.authed" ng-repeat="td in toDo.toDos | orderBy: ['dueDate', 'time']">
                 <!-- THREE DIVS CAN COLLAPSE TO ONE WITH PROPER NG-CLASS STATEMENT  -->
                 <div class="callout callout-danger m-0 py-3" ng-show="td.priority == 'high'">
                     <div>

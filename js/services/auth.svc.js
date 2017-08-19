@@ -1,7 +1,7 @@
 angular.module('app')
 .factory('authService',
-['$http', '$q', 'localStorageService', '$log', '$window', '$location', '$state',
-function ($http, $q, localStorageService, $log, $window, $location, $state) {
+['$http', '$q', 'localStorageService', '$window', '$location', '$state',
+function ($http, $q, localStorageService, $window, $location, $state) {
 
     var serviceBase = 'http://localhost:5000/';
     var authServiceFactory = {};

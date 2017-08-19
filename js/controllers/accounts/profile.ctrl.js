@@ -2,8 +2,8 @@ angular
     .module('app')
     .controller('profileCtrl', profileCtrl)
 
-profileCtrl.$inject = ['$scope', 'dataSvc', 'authService', '$log'];
-function profileCtrl($scope, dataSvc, authService, $log) {
+profileCtrl.$inject = ['$scope', 'dataSvc', 'authService'];
+function profileCtrl($scope, dataSvc, authService) {
 
     var authentication = authService.authentication;
     var userMgr = dataSvc.manageUser();
@@ -16,7 +16,6 @@ function profileCtrl($scope, dataSvc, authService, $log) {
     $scope.updateProfile = updateProfile;
 
     function updateProfile() {
-        $log.log('newData:', $scope.newData)
         userMgr.update({ id: $scope.userData.id }, $scope.newData, function (data) {
             $scope.userData = dataSvc.getCurUser().get({ username: authentication.userName });
         });
