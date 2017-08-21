@@ -96,7 +96,8 @@ gulp.task('concat:dist', function () {
         'js/**/*.js', 
         'features/**/*.js'])
         .pipe(concat('compiled.js'))
-        .pipe(uglify())
+        .pipe(ngAnnotate())
+        .pipe(uglify({mangle: true}))
         .pipe(gulp.dest(paths.dist));
 })
 

@@ -174,4 +174,16 @@ angular
       label: 'Your Profile'
     }
   })
+
+
+  // **** PROJECTS ****
+  .state('app.projects', {
+    url: '/projects',
+    templateUrl: 'features/projects/projects.html',
+    controller: 'projectsCtrl',
+    controllerAs: 'projects',
+    ncyBreadcrumb: {
+      label: 'Projects'
+    }
+  })
 }]);

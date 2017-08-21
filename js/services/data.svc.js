@@ -18,7 +18,9 @@ function dataSvc($resource, authService) {
         getToDos: getToDos,
         manageToDos: manageToDos,
 
-        managePocs: managePocs
+        managePocs: managePocs,
+
+        manageProjs: manageProjs
     };
 
 
@@ -91,4 +93,20 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
+
+
+    // **** PROJECTS ****
+
+    function manageProjs() {
+        // QUERY all projects
+        // SAVE new project
+        // DELETE remove project
+        // GET single project with details
+        // PUT update basic project info
+        return $resource(aspApiUrl + '/api/Projects/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    };
+
+    
 };

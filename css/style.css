@@ -2570,6 +2570,10 @@ tbody.collapse.show {
   .nav-tabs .nav-item.show .nav-link,
   .nav-tabs .nav-item.show .navbar .dropdown-toggle, .navbar
   .nav-tabs .nav-item.show .dropdown-toggle {
+    border-top: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-bottom: 0 !important;
     color: #607d8b;
     background-color: #e4e5e6;
     border-color: #ddd #ddd #e4e5e6; }
@@ -8948,3 +8952,19 @@ hr.transparent {
 
 .highlight {
   background-color: yellow; }
+
+.projRow {
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-color: gainsboro;
+  margin-bottom: 15px;
+  line-height: 40px;
+  transition: background 0.15s linear; }
+
+.fade {
+  transition: 0.15s linear all;
+  transition-delay: 0.07s;
+  opacity: 1; }
+
+.fade.ng-hide {
+  opacity: 0; }

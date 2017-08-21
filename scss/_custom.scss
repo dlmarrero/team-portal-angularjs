@@ -22,3 +22,24 @@
 .highlight {
     background-color: yellow;
 }
+.projRow {
+//   @extend .row;
+  border-bottom: 1px; 
+  border-bottom-style:solid; 
+  border-color:gainsboro;
+  margin-bottom: 15px;
+  line-height: 40px;
+  transition: background 0.15s linear;
+}
+.projRow:hover {
+//   background-color: ;
+}
+.fade {
+  transition: 0.15s linear all;  
+  transition-delay: 0.07s;
+  opacity: 1;
+}
+
+.fade.ng-hide {
+  opacity: 0;
+}
