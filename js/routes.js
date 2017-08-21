@@ -180,10 +180,27 @@ angular
   .state('app.projects', {
     url: '/projects',
     templateUrl: 'features/projects/projects.html',
-    controller: 'projectsCtrl',
+    controller: 'projectListCtrl',
     controllerAs: 'projects',
     ncyBreadcrumb: {
       label: 'Projects'
+    }
+  })
+  .state('app.projects.new', {
+    url: '/newproject',
+    templateUrl: 'features/projects/newproject.html',
+    controller: 'newProjectCtrl',
+    controllerAs: 'project',
+    ncyBreadcrumb: {
+      label: 'New Project'
+    }
+  })
+  .state('app.projects.details', {
+    url: '/details/:id',
+    templateUrl: 'features/projects/projectDetails.html',
+    controller: 'projectDetsCtrl',
+    ncyBreadcrumb: {
+      label: 'Details'
     }
   })
 }]);

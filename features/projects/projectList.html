@@ -1,0 +1,52 @@
+<div class='card'>
+    <div class="container">
+        <div class='card-block'>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4>Projects</h4>
+                </div>
+                <div class="col-lg-6">
+                    <a ui-sref="app.projects.new" class="btn btn-success float-right">
+                        <i class="fa fa-plus"></i>&nbsp;New Project
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <uib-tabset active="0" type="tabs" vertical="false" justified="true" style="height:73vh;overflow:auto;">
+                    <uib-tab heading="Current Projects" index="0">
+                        <div ng-repeat="project in projects.data | filter:search | orderBy:'-id'">
+                            <div class="projRow" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+                                <div>
+                                    <span><strong>{{project.title}}</strong></span>
+                                </div>
+                                <div ng-hide="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                    {{project.description}}
+                                </div>
+                                <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                    <span class="fade" style="padding-right: 30px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
+                                    <span class="fade" style="padding-right: 30px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp;
+                                    <a href="#">Tasks</a>
+                                    </span>
+                                    <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
+                                    <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
+                                    <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: null}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}.&nbsp;</span>
+                                    </span>
+                                </div>
+                                <div style="text-align:right;" ng-if="project.categories">
+                                    <span class="text-muted"><small><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</small></span>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab heading="Your Projects" index="1">
+                        List of projects you are a part of.
+                    </uib-tab>
+                    <div style="width:100%">
+                        <input type="search" ng-model="search.title" class="form-control" placeholder="Filter projects...">
+                    </div>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>

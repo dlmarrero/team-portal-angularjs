@@ -75,3 +75,8 @@ angular
             return angularDateFilter(theDate, 'dd MMM yyyy');
         }
     })
+.filter('split', function () {
+    return function(input) {
+        return input.split(',');
+    }
+})

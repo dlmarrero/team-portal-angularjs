@@ -1,21 +1,23 @@
-(function(){
+(function () {
     'use strict';
 
     angular
         .module('app')
-        .controller('projectsCtrl', projectsCtrl)
+        .controller('projectListCtrl', projectListCtrl)
 
     /** @ngInject */
-    function projectsCtrl($scope, dataSvc, $log){
-        
+    function projectListCtrl($scope, dataSvc, $log, $uibModal, $document) {
+
         var projMgr = dataSvc.manageProjs();
         var vm = this;
 
+        // vm.create = create;
         vm.data = {};
-        
+        vm.newProject = {};
+
         init();
 
-        function init(){
+        function init() {
             vm.data = projMgr.query();
         };
 
