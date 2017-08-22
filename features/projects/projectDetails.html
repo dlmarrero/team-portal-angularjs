@@ -11,13 +11,27 @@
 <hr>
 <div class="row">
     <div class="col-lg-8 bordered">
-        <strong>Description:</strong><br> {{project.description}}
+        <strong>Description:</strong><br> <p style="white-space: pre-wrap;">{{project.description}}</p>
     </div>
     <div class="col-lg-4 bordered">
-        <strong>Team Members:</strong>
+        <strong>Team Members:&nbsp;</strong>
+        <span class="float-right">
+        <a href="#" ng-show="!editTeamMember" ng-click="editTeamMember = true">Edit</a>
+         <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a> 
+        </span>
+        <!-- Add Team Member  -->
+         <div class="input-group" ng-if="editTeamMember">
+            <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="addTeamMembers(selected)">Add</button>
+            </span>
+        </div>
+        <!-- Display Team Members  -->
         <div ng-repeat="tm in project.teamMembers | orderBy:rateName">
-            {{tm.rateName}}
-            <span ng-if="tm.projectLead">(Lead)</span>
+        <span ng-if="editTeamMember"><a href="#" ng-click="delTeamMember(tm.id)"><i class="fa fa-close"></i></a></span>&nbsp;{{tm.rateName}}&nbsp;
+        <span ng-if="editTeamMember && !tm.projectLead"><a href="#" ng-click="">Lead</a>
+        <span ng-if="editTeamMember && tm.projectLead"><a href="#" ng-click="">Normal</a>
+        <span ng-if="tm.projectLead">(Lead)</span>
         </div>
     </div>
 </div>

@@ -8,19 +8,21 @@ function dataSvc($resource, authService) {
     var authentication = authService.authentication;
 
     return {
+        // USERS
         getUsers: getUsers,
         getCurUser: getCurUser,
         manageUser: manageUser,
-
+        // ROLES
         addRole: addRole,
         getRoles: getRoles,
-
+        // TODOS
         getToDos: getToDos,
         manageToDos: manageToDos,
-
+        // POCS
         managePocs: managePocs,
-
-        manageProjs: manageProjs
+        // PROJECTS
+        manageProjs: manageProjs,
+        manageTeam: manageTeam
     };
 
 
@@ -107,6 +109,15 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
+
+    function manageTeam() {
+        // SAVE new team member
+        // DELETE team member
+        // PUT update team member (add team lead)
+        return $resource(aspApiUrl + '/api/TeamMembers/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
 
     
 };

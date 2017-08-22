@@ -22,6 +22,7 @@
             <option value="" selected>Select a Category</option>
             <option value="Programming">Programming</option>
             <option value="Networking">Networking</option>
+            <option value="Infrastructure">Infrastructure</option>
             <option value="other">Other</option>
         </select>
         <div ng-if="project.newCategory">
@@ -30,7 +31,7 @@
                 <input type="text" id="newcategory" ng-model="project.addedCategory" class="form-control" autocomplete="off">
                 <span class="input-group-btn">
                         <button type="button" class="btn btn-info" ng-click="project.addCategory(project.addedCategory)">Add</button>
-                    </span>
+                </span>
             </div>
         </div>
         <hr>
