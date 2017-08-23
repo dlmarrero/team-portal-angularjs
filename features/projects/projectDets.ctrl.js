@@ -1,4 +1,4 @@
-(function(){
+(function () {
     'use strict';
 
     angular
@@ -6,20 +6,25 @@
         .controller('projectDetsCtrl', projectDetsCtrl)
 
     /** @ngInject */
-    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope){
+    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document) {
         var projMgr = dataSvc.manageProjs();
         var teamMgr = dataSvc.manageTeam();
-        
-        $scope.addTeamMembers = addTeamMembers;
-        $scope.delTeamMember = delTeamMember;
+
         $scope.project = {};
         $scope.chart = [];
         $scope.labels = ["Complete", "Incomplete"];
         $scope.users = {};
-        
+
+        $scope.addTeamMembers = addTeamMembers;
+        $scope.delProject = delProject;
+        $scope.delTeamMember = delTeamMember;
+        $scope.markComplete = markComplete;
+        $scope.toggleLead = toggleLead;
+        $scope.updateProj = updateProj;
+
         init();
 
-        function init(){
+        function init() {
             // Hide add team member dialog by default
             $scope.addTeamMember = false;
             // Get project data and set up work items chart
@@ -41,8 +46,7 @@
             $scope.users = dataSvc.getUsers();
         };
 
-
-        function addTeamMembers (user) {
+        function addTeamMembers(user) {
             $log.log('add tm')
             var teamMember = {
                 projectId: $scope.project.id,
@@ -51,19 +55,44 @@
                 rateName: user.rateName
             };
             teamMgr.save(teamMember, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id }, function () {
-                    $scope.selected = "";
-                });
-            });
-        };
-
-        function delTeamMember (id) {
-            $log.log(id);
-            teamMgr.delete({ id: id}, function () {
                 $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
             });
         };
 
+        function delProject() {
+            projMgr.delete({ id: $scope.project.id }, function () {
+                $state.transitionTo('app.projects', {}, { reload: true });
+            });
+        };
+
+        function delTeamMember(id) {
+            teamMgr.delete({ id: id }, function () {
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
+            });
+        };
+
+        function markComplete(val) {
+            $scope.project.complete = val;
+            projMgr.update({ id: $scope.project.id }, $scope.project);
+        };
+
+        function toggleLead(user) {
+            if (user.projectLead) {
+                user.projectLead = false;
+            }
+            else {
+                user.projectLead = true;
+            }
+            teamMgr.update({ id: user.id }, user, function () {
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id })
+            });
+        };
+
+        function updateProj() {
+            $scope.editTitle = false;
+            $scope.editDescription = false;
+            projMgr.update({ id: $scope.project.id }, $scope.project);
+        }
     };
 
 }());

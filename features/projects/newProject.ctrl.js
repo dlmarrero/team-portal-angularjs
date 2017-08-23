@@ -61,10 +61,11 @@
                 }
                 else {
                     vm.new.categories = vm.new.categories + val
-                }
-            })
+                };
+            });
             
             projMgr.save(vm.new, function (data) {
+                $log.log('saving')
                 $state.transitionTo('app.projects.details', { id: data.id }, { reload: true });
             });
         };

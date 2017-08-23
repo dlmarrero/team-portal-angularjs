@@ -1,37 +1,54 @@
 <div class="row">
-    <div class="col-lg-6">
-        <h4>{{project.title}}</h4>
+    <div class="col-lg-11">
+        <span ng-show="!editTitle" style="font-size:24px;font-weight:500">{{project.title}}&nbsp;</span>
+        <a ng-show="!editTitle" href="#" ng-click="editTitle=true">Edit</a>
+        <input type="text" ng-model="project.title" value="project.title" ng-show="editTitle" style="font-size: 20px;">
+        <a ng-show="editTitle" href="#" ng-click="updateProj()">Save</a>
+        <span class="text-muted" ng-if="project.categories"><br><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</span>
     </div>
-    <div class="col-lg-6">
-        <div style="text-align:right;" ng-if="project.categories">
-            <span class="text-muted"><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</span>
+    <div class="col-lg-1 float-right" align="right">
+        <div align="center">
+            <span class="text-muted">Complete</span><br>
+            <label class='form-control-label' for='complete'>
+            <a href="#" ng-if="!project.complete" ng-click="markComplete(true)"><i class="fa fa-square-o fa-2x"></i></a>
+            <a href="#" ng-if="project.complete" ng-click="markComplete(false)"><i class="fa fa-check-square-o fa-2x"></i></a>
+            </label>
         </div>
     </div>
 </div>
 <hr>
 <div class="row">
     <div class="col-lg-8 bordered">
-        <strong>Description:</strong><br> <p style="white-space: pre-wrap;">{{project.description}}</p>
+        <strong>Description:</strong>
+        <span class="float-right">
+            <a href="#" ng-show="!editDescription" ng-click="editDescription = true">Edit</a>
+            <a href="#" ng-show="editDescription" ng-click="updateProj()">Save</a>
+        </span>
+        <br>
+        <p ng-show="!editDescription" style="white-space: pre-wrap;">{{project.description}}</p>
+        <textarea style="width:100%;height:180px;" ng-model="project.description" value="project.description" ng-show="editDescription"></textarea><br>
     </div>
     <div class="col-lg-4 bordered">
         <strong>Team Members:&nbsp;</strong>
         <span class="float-right">
         <a href="#" ng-show="!editTeamMember" ng-click="editTeamMember = true">Edit</a>
-         <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a> 
+        <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a>
         </span>
         <!-- Add Team Member  -->
-         <div class="input-group" ng-if="editTeamMember">
-            <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control">
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="addTeamMembers(selected)">Add</button>
+        <form>
+            <div class="input-group" ng-if="editTeamMember">
+                <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control">
+                <span class="input-group-btn">
+                <button type="submit" class="btn btn-info" ng-click="addTeamMembers(selected); selected=null">Add</button>
             </span>
-        </div>
+            </div>
+        </form>
         <!-- Display Team Members  -->
-        <div ng-repeat="tm in project.teamMembers | orderBy:rateName">
-        <span ng-if="editTeamMember"><a href="#" ng-click="delTeamMember(tm.id)"><i class="fa fa-close"></i></a></span>&nbsp;{{tm.rateName}}&nbsp;
-        <span ng-if="editTeamMember && !tm.projectLead"><a href="#" ng-click="">Lead</a>
-        <span ng-if="editTeamMember && tm.projectLead"><a href="#" ng-click="">Normal</a>
-        <span ng-if="tm.projectLead">(Lead)</span>
+        <div ng-repeat="tm in project.teamMembers | orderBy:'-projectLead'">
+            <span ng-if="editTeamMember"><a href="#" ng-click="delTeamMember(tm.id)"><i class="fa fa-close"></i></a></span>&nbsp;{{tm.rateName}}
+            <span ng-if="editTeamMember && !tm.projectLead"><a href="#" ng-click="toggleLead(tm)">Lead</a></span>
+            <span ng-if="editTeamMember && tm.projectLead"><a href="#" ng-click="toggleLead(tm)">Normal</a></span>
+            <span ng-if="tm.projectLead"><em>(Lead)</em></span>
         </div>
     </div>
 </div>
@@ -39,25 +56,33 @@
 <div class="row">
     <div class="col-lg-12 bordered">
         <div class="row">
-        <div class="col-lg-8">
-            <strong>Tasks:</strong>
-            <br><br>
-            <div ng-repeat="task in project.workItems">
-                <i class="fa fa-square-o" ng-if="!task.complete">&nbsp;</i>
-                <i class="fa fa-check-square-o" ng-if="task.complete">&nbsp;</i>
-                {{task.description}}
+            <div class="col-lg-8">
+                <strong>Tasks:</strong>
                 <br><br>
+                <div ng-repeat="task in project.workItems">
+                    <i class="fa fa-square-o" ng-if="!task.complete">&nbsp;</i>
+                    <i class="fa fa-check-square-o" ng-if="task.complete">&nbsp;</i> {{task.description}}
+                    <br><br>
+                </div>
+            </div>
+            <div class="col-lg-4" align="center">
+                <div class="chart-label" style="position:absolute;top:35%;left:34%" align="center" class="loadfade" valign="center">
+                    <strong>{{complete}}/{{complete+incomplete}}<br>
+                    TASKS<br>COMPLETED</strong>
+                </div>
+                <div class="col-lg-12">
+                    <canvas id="doughnut" class="chart chart-doughnut" chart-data="chart" chart-labels="labels" width="10%" height="10%"></canvas>
+                </div>
             </div>
         </div>
-        <div class="col-lg-4" align="center">
-            <div class="chart-label" style="position:absolute;top:35%;left:34%" align="center" class="loadfade" valign="center">
-                <strong>{{complete}}/{{complete+incomplete}}<br>
-                TASKS<br>COMPLETED</strong>
-            </div>
-            <div class="col-lg-12">
-                <canvas id="doughnut" class="chart chart-doughnut" chart-data="chart" chart-labels="labels" width="10%" height="10%"></canvas>
-            </div>
-        </div>
-        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-6">
+        <button type='button' class='btn btn-success' ng-click=''>Add Task</button>
+    </div>
+    <div class="col-lg-6" style="text-align:right;" align="right">
+        <button type='button' class='btn btn-danger' ng-click='delProject()'>Delete Project</button>
     </div>
 </div>
