@@ -27,5 +27,4 @@
             templateUrl: 'features/projects/tasklist.html'
         };
     };
-
 } ());

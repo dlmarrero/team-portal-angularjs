@@ -2,6 +2,7 @@ angular
     .module('app')
     .controller('profileCtrl', profileCtrl)
 
+
 profileCtrl.$inject = ['$scope', 'dataSvc', 'authService', '$state'];
 function profileCtrl($scope, dataSvc, authService, $state) {
 

@@ -53,6 +53,7 @@
     </div>
 </div>
 <br>
+<!-- Tasks  -->
 <div class="row">
     <div class="col-lg-12 bordered">
         <div class="row">
@@ -78,9 +79,36 @@
     </div>
 </div>
 <br>
+<!-- Footer  -->
 <div class="row">
     <div class="col-lg-6">
-        <button type='button' class='btn btn-success' ng-click=''>Add Task</button>
+        <button type='button' class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Task</button>
+        <!-- Modal -->
+        <div id="newTaskModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add a Task</h5>
+                        <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center">
+                        <!-- FORM  -->
+                        <form name="newTask">
+                            <label for="title" class="form-label" style="float:left">Title:</label>
+                            <input type="text" id="title" class="form-control" ng-model="" required>
+                            <label for="description" class="form-label" style="float:left">Description:</label>
+                            <input type="text" id="description" class="form-control" ng-model="" required>
+                            <hr>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="project.addTask()" remove-modal>&nbsp; Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-lg-6" style="text-align:right;" align="right">
         <button type='button' class='btn btn-danger' ng-click='delProject()'>Delete Project</button>
