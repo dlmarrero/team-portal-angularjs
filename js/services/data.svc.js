@@ -22,6 +22,7 @@ function dataSvc($resource, authService) {
         managePocs: managePocs,
         // PROJECTS
         manageProjs: manageProjs,
+        manageTasks: manageTasks,
         manageTeam: manageTeam
     };
 
@@ -110,6 +111,12 @@ function dataSvc($resource, authService) {
         });
     };
 
+    function manageTasks() {
+        return $resource(aspApiUrl + '/api/WorkItems/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    };
+    
     function manageTeam() {
         // SAVE new team member
         // DELETE team member

@@ -31,15 +31,26 @@
   line-height: 40px;
   transition: background 0.15s linear;
 }
+
 .fade {
   transition: 0.15s linear all;  
   transition-delay: 0.07s;
   opacity: 1;
 }
-
 .fade.ng-hide {
   opacity: 0;
 }
+
+.details-slide {
+    transition: all linear 0.4s;
+    max-height: 250px;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.details-slide.ng-hide {
+    max-height: 0;
+}
+
 .catspan {
     border-width: 1px;
     border-style: solid;
