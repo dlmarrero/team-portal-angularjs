@@ -63,9 +63,8 @@
                 <div ng-repeat="task in project.workItems">
                     <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)"><i class="fa fa-square-o"></i></a>
                     <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>                    {{task.title}}
-                    <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small>
-                    <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small>
-                    </a>
+                    <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small></a>
+                    <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small></a>
                     <!-- Task Details  -->
                     <div class="details-slide" style="overflow:auto" ng-show="showDetails" ng-class="task.priority == 'high' ? 'callout callout-danger' : 'callout callout-success'">
                         <strong>Description:</strong>
@@ -83,10 +82,15 @@
                         <br>
                         <strong>Comments ({{task.comments.length}}):</strong>
                         <small><a href="#" data-toggle="modal" data-target="#newCommentModal" ng-click="newComment.workItemId = task.id">Add Comment</a></small><br>
-                        <ul ng-repeat="comment in task.comments">
+                        <ul ng-repeat="comment in task.comments" style="padding-left:20px">
                             <li>
-                                <small>{{comment.author}} wrote @ *add a time*:</small>
-                                <p>{{comment.body}}</p>
+                                <small><strong>
+                                    {{comment.author}}:&nbsp;<a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
+                                </strong></small>
+                                <p>
+                                    {{comment.body}}<br>
+                                    <small><em>{{comment.created | date:'ddMMMyy @ HHmm'}}</em></small>
+                                </p>
                             </li>
                         </ul>
                     </div>

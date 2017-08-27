@@ -11,9 +11,9 @@
         var projMgr = dataSvc.manageProjs();
         var taskMgr = dataSvc.manageTasks();
         var teamMgr = dataSvc.manageTeam();
-        var curUser = dataSvc.getCurUser();
 
         $scope.assignedUsers = [];
+        $scope.curUser = dataSvc.getCurUser();
         $scope.newComment = {};
         $scope.newTask = {};
         $scope.project = {};
@@ -22,6 +22,7 @@
 
         $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
         $scope.assignTask = assignTask;             // Assign a user to a ask
+        $scope.delComment = delComment;             // Delete a comment
         $scope.delProject = delProject;             // Delete a project
         $scope.delTeamMember = delTeamMember;       // Remove team member from project
         $scope.projectComplete = projectComplete;   // Mark project complete
@@ -83,6 +84,12 @@
             $scope.assignedUsers.push(user);
         };
 
+        function delComment(id) {
+            commentMgr.delete({ id: id }, function () {
+                $state.reload();
+            });
+        };
+        
         function delProject() {
             projMgr.delete({ id: $scope.project.id }, function () {
                 $state.transitionTo('app.projects', {}, { reload: true });
@@ -113,7 +120,8 @@
         }
 
         function saveComment(workItemId) {
-            $scope.newComment.author = curUser.rateName
+            $scope.newComment.author = $scope.curUser.rateName
+            $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
                 $state.reload();
             })
