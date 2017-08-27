@@ -24,9 +24,9 @@ function toDoCtrl(authService, dataSvc, $window) {
     function init() {
         if (auth.isAuth) {
             vm.authed = true;
-            vm.userData = dataSvc.getCurUser().get({ username: auth.userName }, function (data) {
+            vm.userData = dataSvc.getCurUser().$promise.then( function (data) {
                 vm.toDos = data.toDos;
-            });
+            })
         };
     };
 

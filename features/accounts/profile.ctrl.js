@@ -17,9 +17,8 @@ function profileCtrl($scope, dataSvc, authService, $state) {
 
     function init() {
         if (authentication.isAuth) {
-            $scope.userData = dataSvc.getCurUser().get({ username: authentication.userName }, function (data) {
-                $scope.newData = data;
-            }); // Would really like to move this function to a service. Used often.
+            $scope.userData = dataSvc.getCurUser();
+            $scope.newData = $scope.userData;
         }
         else {
             $state.transitionTo('app.main');

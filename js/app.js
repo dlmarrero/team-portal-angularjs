@@ -69,10 +69,10 @@ angular
 
 
 // Present dates in military format
-.filter('milDate', function ($filter) {
+.filter('milDate', function ($filter, $log) {
         var angularDateFilter = $filter('date');
         return function (theDate) {
-            return angularDateFilter(theDate, 'dd MMM yyyy');
+            return angularDateFilter(new Date(theDate), 'dd MMM yyyy');
         }
     })
 .filter('split', function () {

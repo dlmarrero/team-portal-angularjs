@@ -43,9 +43,9 @@
                             </div>
                             <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center">
                                 <span class="fade" style="padding-right: 50px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
-                                <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp;
-                                <a href="#">Tasks</a>
-                                </span>
+                                <!-- <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp; -->
+                                <!-- <a href="#">Tasks</a> -->
+                                <!-- </span> -->
                                 <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
                                 <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
                                 <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: true}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}&nbsp;</span>
@@ -70,9 +70,9 @@
                             </div>
                             <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center">
                                 <span class="fade" style="padding-right: 50px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
-                                <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp;
-                                <a href="#">Tasks</a>
-                                </span>
+                                <!-- <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp; -->
+                                <!-- <a href="#">Tasks</a> -->
+                                <!-- </span> -->
                                 <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
                                 <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
                                 <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: true}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}&nbsp;</span>
@@ -97,9 +97,9 @@
                             </div>
                             <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center">
                                 <span class="fade" style="padding-right: 50px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
-                                <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp;
-                                <a href="#">Tasks</a>
-                                </span>
+                                <!-- <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp; -->
+                                <!-- <a href="#">Tasks</a> -->
+                                <!-- </span> -->
                                 <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
                                 <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
                                 <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: true}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}&nbsp;</span>

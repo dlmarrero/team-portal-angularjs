@@ -15,7 +15,7 @@ function navbarCtrl ($location, dataSvc, authService) {
 
   function init () {
     if (vm.authentication.isAuth) {
-      vm.userData = dataSvc.getCurUser().get({ username: vm.authentication.userName });
+      vm.userData = dataSvc.getCurUser()
     };
   };
   

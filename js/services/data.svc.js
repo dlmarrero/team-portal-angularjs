@@ -21,6 +21,7 @@ function dataSvc($resource, authService) {
         // POCS
         managePocs: managePocs,
         // PROJECTS
+        manageComments: manageComments,
         manageProjs: manageProjs,
         manageTasks: manageTasks,
         manageTeam: manageTeam
@@ -37,12 +38,10 @@ function dataSvc($resource, authService) {
     };
 
     function getCurUser() {
-        // Get user data by name (index controller)
         if (authentication.isAuth) {
-            return $resource(aspApiUrl + '/api/account?username=:username');
+            return $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
         };
-    };
-
+    }
 
     function manageUser() {
         // GET: single user data by Id,
@@ -99,6 +98,12 @@ function dataSvc($resource, authService) {
 
 
     // **** PROJECTS ****
+
+    function manageComments() {
+        return $resource(aspApiUrl + '/api/Comments/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
 
     function manageProjs() {
         // QUERY all projects

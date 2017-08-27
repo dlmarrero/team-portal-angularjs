@@ -7,11 +7,14 @@
 
     /** @ngInject */
     function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document) {
+        var commentMgr = dataSvc.manageComments();
         var projMgr = dataSvc.manageProjs();
         var taskMgr = dataSvc.manageTasks();
         var teamMgr = dataSvc.manageTeam();
+        var curUser = dataSvc.getCurUser();
 
         $scope.assignedUsers = [];
+        $scope.newComment = {};
         $scope.newTask = {};
         $scope.project = {};
         $scope.showDetails = false;
@@ -23,6 +26,7 @@
         $scope.delTeamMember = delTeamMember;       // Remove team member from project
         $scope.projectComplete = projectComplete;   // Mark project complete
         $scope.saveAssignments = saveAssignments;   // Save users assigned to a task 
+        $scope.saveComment = saveComment;           // Save a new comment
         $scope.saveTask = saveTask;                 // Save a new task
         $scope.taskComplete = taskComplete          // Mark task complete
         $scope.toggleDetails = toggleDetails;       // Show/hide task details
@@ -108,6 +112,13 @@
             });
         }
 
+        function saveComment(workItemId) {
+            $scope.newComment.author = curUser.rateName
+            commentMgr.save($scope.newComment, function (data) {
+                $state.reload();
+            })
+        }
+        
         function saveTask() {
             taskMgr.save($scope.newTask, function (response) {
                 saveAssignments(response.id);

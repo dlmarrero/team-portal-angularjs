@@ -62,16 +62,15 @@
                 <br><br>
                 <div ng-repeat="task in project.workItems">
                     <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)"><i class="fa fa-square-o"></i></a>
-                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>
-                    {{task.title}}
+                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>                    {{task.title}}
                     <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small>
                     <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small>
                     </a>
                     <!-- Task Details  -->
-                    <div class="details-slide" ng-show="showDetails"  ng-class="task.priority == 'high' ? 'callout callout-danger' : 'callout callout-success'">
+                    <div class="details-slide" style="overflow:auto" ng-show="showDetails" ng-class="task.priority == 'high' ? 'callout callout-danger' : 'callout callout-success'">
                         <strong>Description:</strong>
+                        <br> {{task.description}}
                         <br>
-                        {{task.description}}<br>
                         <br>
                         <strong>Assigned To:</strong>
                         <div ng-repeat="tm in task.assignedUsers | orderBy:'rateName'">
@@ -80,10 +79,18 @@
                             <span ng-if="editTeamMember && tm.projectLead"><a href="#" ng-click="toggleLead(tm)">Normal</a></span>
                             <span ng-if="tm.projectLead"><em>(Lead)</em></span>
                         </div>
-                        <span ng-if="task.assignedUsers.length == 0"><br>No one is assigned to this task</span>
+                        <span ng-if="task.assignedUsers.length == 0"><br>No one is assigned to this task<br></span>
+                        <br>
+                        <strong>Comments ({{task.comments.length}}):</strong>
+                        <small><a href="#" data-toggle="modal" data-target="#newCommentModal" ng-click="newComment.workItemId = task.id">Add Comment</a></small><br>
+                        <ul ng-repeat="comment in task.comments">
+                            <li>
+                                <small>{{comment.author}} wrote @ *add a time*:</small>
+                                <p>{{comment.body}}</p>
+                            </li>
+                        </ul>
                     </div>
-                        <hr>
-                    
+                    <hr>
                 </div>
             </div>
             <div class="col-lg-4" align="center">
@@ -103,59 +110,85 @@
 <div class="row">
     <div class="col-lg-6">
         <button type='button' class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Task</button>
-        <!-- Modal -->
-        <div id="newTaskModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add a Task</h5>
-                        <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
-                    </div>
-                    <div class="modal-body" style="text-align: center">
-                        <!-- FORM  -->
-                        <ng-form name="newTaskForm">
-                            <label for="title" class="form-label" style="float:left">Title:</label>
-                            <input type="text" id="title" class="form-control" ng-model="newTask.title" required>
-                            <hr>
-                            <label for="description" class="form-label" style="float:left">Description:</label>
-                            <input type="text" id="description" class="form-control" ng-model="newTask.description" required>
-                            <hr>
-                            <!-- Assign Users  -->
-                            <form name="assignForm">
-                                <label for="assign" class="form-label" style="float:left">Assign To:</label>
-                                <div class="input-group">
-                                    <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-info" ng-click="assignTask(taskSelected); taskSelected=null">Add</button>
-                                    </span>
-                                </div>
-                            </ng-form>
-                            <!-- Display Selected Users  -->
-                            <div ng-repeat="user in assignedUsers" style="text-align:left">
-                                <a href="#" ng-click="unassignTask(user, $index)"><i class="fa fa-close"></i></a>
-                                &nbsp;{{user.rateName}}
-                            </div>
-                            <hr>
-                            <div style="text-align:left">
-                                <label for="priority" class="form-label">Priority: </label>
-                                <input type="radio" name="high" value="high" ng-model="newTask.priority">
-                                <label for="high" class="form-label">High</label>
-                                <input type="radio" name="normal" value="normal" ng-model="newTask.priority">
-                                <label for="normal" class="form-label" ng-selected>Normal</label>
-                            </div>
-                        </ng-form>
-                        {{newTask}}
-                    </div>
-                    <div class="modal-footer">
-                         <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button> 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="col-lg-6" style="text-align:right;" align="right">
         <button type='button' class='btn btn-danger' ng-click='delProject()'>Delete Project</button>
     </div>
 </div>
+
+<!-- Modals  -->
+
+<!-- New Task Modal -->
+<div id="newTaskModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Task</h5>
+                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <!-- FORM  -->
+                <ng-form name="newTaskForm">
+                    <label for="title" class="form-label" style="float:left">Title:</label>
+                    <input type="text" id="title" class="form-control" ng-model="newTask.title" required>
+                    <hr>
+                    <label for="description" class="form-label" style="float:left">Description:</label>
+                    <input type="text" id="description" class="form-control" ng-model="newTask.description" required>
+                    <hr>
+                    <!-- Assign Users  -->
+                    <form name="assignForm">
+                        <label for="assign" class="form-label" style="float:left">Assign To:</label>
+                        <div class="input-group">
+                            <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
+                                class="form-control">
+                            <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-info" ng-click="assignTask(taskSelected); taskSelected=null">Add</button>
+                                    </span>
+                        </div>
+                </ng-form>
+                <!-- Display Selected Users  -->
+                <div ng-repeat="user in assignedUsers" style="text-align:left">
+                    <a href="#" ng-click="unassignTask(user, $index)"><i class="fa fa-close"></i></a> &nbsp;{{user.rateName}}
+                </div>
+                <hr>
+                <div style="text-align:left">
+                    <label for="priority" class="form-label">Priority: </label>
+                    <input type="radio" name="high" value="high" ng-model="newTask.priority">
+                    <label for="high" class="form-label">High</label>
+                    <input type="radio" name="normal" value="normal" ng-model="newTask.priority">
+                    <label for="normal" class="form-label" ng-selected>Normal</label>
+                </div>
+                </ng-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Comment Modal  -->
+<div id="newCommentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Post a Comment</h5>
+                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <!-- FORM  -->
+                <ng-form name="newCommentForm">
+                    <label for="comment" class="form-label" style="float:left">Comment:</label>
+                    <textarea id="comment" class="form-control" ng-model="newComment.body" required></textarea>
+                    <hr>
+                </ng-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="saveComment(task.id)" remove-modal>Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
