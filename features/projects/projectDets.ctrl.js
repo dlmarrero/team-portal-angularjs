@@ -8,13 +8,16 @@
     /** @ngInject */
     function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document) {
         var commentMgr = dataSvc.manageComments();
+        var linkMgr = dataSvc.manageLinks();
         var projMgr = dataSvc.manageProjs();
         var taskMgr = dataSvc.manageTasks();
         var teamMgr = dataSvc.manageTeam();
+        var attachMgr = dataSvc.manageAttachments();
 
         $scope.assignedUsers = [];
         $scope.curUser = dataSvc.getCurUser();
         $scope.newComment = {};
+        $scope.newLink = {};
         $scope.newTask = {};
         $scope.project = {};
         $scope.showDetails = false;
@@ -23,11 +26,13 @@
         $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
         $scope.assignTask = assignTask;             // Assign a user to a ask
         $scope.delComment = delComment;             // Delete a comment
+        $scope.delLink = delLink;                   // Delete a link
         $scope.delProject = delProject;             // Delete a project
         $scope.delTeamMember = delTeamMember;       // Remove team member from project
         $scope.projectComplete = projectComplete;   // Mark project complete
         $scope.saveAssignments = saveAssignments;   // Save users assigned to a task 
         $scope.saveComment = saveComment;           // Save a new comment
+        $scope.saveResource = saveResource;         // Save a new resource
         $scope.saveTask = saveTask;                 // Save a new task
         $scope.taskComplete = taskComplete          // Mark task complete
         $scope.toggleDetails = toggleDetails;       // Show/hide task details
@@ -89,6 +94,13 @@
                 $state.reload();
             });
         };
+
+        function delLink(id) {
+            linkMgr.delete({ id: id }, function (data) {
+                var i = $scope.project.links.indexOf(data);
+                $scope.project.links.splice(i, 1);
+            });
+        };
         
         function delProject() {
             projMgr.delete({ id: $scope.project.id }, function () {
@@ -117,32 +129,51 @@
                 };
                 teamMgr.save(submission);
             });
-        }
+        };
 
-        function saveComment(workItemId) {
+        function saveComment(workItem) {
             $scope.newComment.author = $scope.curUser.rateName
             $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
                 $state.reload();
-            })
-        }
+            });
+        };
+
+        function saveResource() {
+            if ($scope.newLink.url != null) {
+                $scope.newLink.projectId = $scope.project.id;
+                linkMgr.save($scope.newLink, function (data) {
+                    $scope.project.links.push(data)
+                });
+            };
+            if ($scope.attachment != null) {
+                var test = {
+                    projectId: $scope.project.id,
+                    title: 'test',
+                    file: $scope.attachment
+                };
+                $log.log(test);
+                attachMgr.save(test);
+            };
+        };
         
         function saveTask() {
             taskMgr.save($scope.newTask, function (response) {
                 saveAssignments(response.id);
+                init();
             });
-            init();
         };
 
         function taskComplete(task, val) {
             task.complete = val;
-            taskMgr.update({ id: task.id }, task);
-            init();
+            taskMgr.update({ id: task.id }, task, function () {
+                init();
+            });
         };
 
         function toggleDetails() {
             $scope.showDetails = !$scope.showDetails;
-        }
+        };
 
         function toggleLead(user) {
             if (user.projectLead) {

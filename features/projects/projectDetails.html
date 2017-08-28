@@ -53,6 +53,25 @@
     </div>
 </div>
 <br>
+<!-- Resources  -->
+<div class="row">
+    <div class="col-lg-12 bordered" style="min-height:100px">
+        <strong>Resources:</strong>
+        <span class="float-right">
+            <a href="#" ng-show="!editResources" ng-click="editResources = true">Edit</a>
+            <a href="#" ng-show="editResources" ng-click="editResources = false">Done</a>
+        </span>
+        <small><a href="#" data-toggle="modal" data-target="#newLinkModal">Add</a></small>
+        <!-- <button type='button' class='btn btn-primary' data-toggle="modal" data-target="#newLinkModal">Add Link</button> -->
+        <ul ng-repeat="link in project.links">
+            <li>
+                <a ng-href="{{link.url}}" target="blank">{{link.title}}</a>
+                <a href="#" ng-if="editResources" ng-click="delLink(link.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
 <!-- Tasks  -->
 <div class="row">
     <div class="col-lg-12 bordered">
@@ -62,13 +81,13 @@
                 <br><br>
                 <div ng-repeat="task in project.workItems">
                     <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)"><i class="fa fa-square-o"></i></a>
-                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>                    {{task.title}}
+                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>{{task.title}}
                     <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small></a>
                     <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small></a>
                     <!-- Task Details  -->
                     <div class="details-slide" style="overflow:auto" ng-show="showDetails" ng-class="task.priority == 'high' ? 'callout callout-danger' : 'callout callout-success'">
                         <strong>Description:</strong>
-                        <br> {{task.description}}
+                        <br>{{task.description}}
                         <br>
                         <br>
                         <strong>Assigned To:</strong>
@@ -85,7 +104,9 @@
                         <ul ng-repeat="comment in task.comments" style="padding-left:20px">
                             <li>
                                 <small><strong>
-                                    {{comment.author}}:&nbsp;<a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
+                                    {{comment.author}}:&nbsp;
+                                    <span ng-if="comment.stuck" style="color:red">STUCK!</span>
+                                    <a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
                                 </strong></small>
                                 <p>
                                     {{comment.body}}<br>
@@ -98,7 +119,7 @@
                 </div>
             </div>
             <div class="col-lg-4" align="center">
-                <div class="chart-label" style="position:absolute;top:60px;left:85px" align="center" class="loadfade" valign="center">
+                <div class="chart-label" style="position:absolute;top:100px;right:125px" align="center" class="loadfade" valign="center">
                     <strong>{{complete}}/{{complete+incomplete}}<br>
                     TASKS<br>COMPLETED</strong>
                 </div>
@@ -138,7 +159,7 @@
                     <input type="text" id="title" class="form-control" ng-model="newTask.title" required>
                     <hr>
                     <label for="description" class="form-label" style="float:left">Description:</label>
-                    <input type="text" id="description" class="form-control" ng-model="newTask.description" required>
+                    <textarea id="description" class="form-control" ng-model="newTask.description" required></textarea>
                     <hr>
                     <!-- Assign Users  -->
                     <form name="assignForm">
@@ -185,14 +206,50 @@
             <div class="modal-body" style="text-align: center">
                 <!-- FORM  -->
                 <ng-form name="newCommentForm">
+                    <label class='form-control-label float-right' for='stuck'>Stuck?&nbsp;&nbsp;
+                    <input type='checkbox' id='stuck' ng-model='newComment.stuck'>
+                    </label>
+
                     <label for="comment" class="form-label" style="float:left">Comment:</label>
                     <textarea id="comment" class="form-control" ng-model="newComment.body" required></textarea>
                     <hr>
                 </ng-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="saveComment(task.id)" remove-modal>Submit</button>
+                <button type="button" class="btn btn-primary" ng-click="saveComment(task)" remove-modal>Submit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
+</div>
+
+<!-- New Link Modal  -->
+<div id="newLinkModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Resource</h5>
+                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <!-- FORM  -->
+                <ng-form name="newLinkForm">
+                    <label for="title" class="form-label" style="float:left">Title:</label>
+                    <input type="text" id="comment" class="form-control" ng-model="newLink.title">
+                    <hr>
+                    <label for="url" class="form-label" style="float:left">URL:</label>
+                    <input type="text" id="url" class="form-control" ng-model="newLink.url">
+                    <hr>
+                    <!-- https://github.com/danialfarid/ng-file-upload  -->
+                    <label for="fileupload" class="form-label" style="float:left">Upload a File:</label>
+                    <input id="fileupload" name="file" type="file" ng-model="attachment"/>
+                </ng-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="saveResource()" remove-modal>Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

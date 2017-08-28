@@ -21,7 +21,9 @@ function dataSvc($resource, authService) {
         // POCS
         managePocs: managePocs,
         // PROJECTS
+        manageAttachments: manageAttachments,
         manageComments: manageComments,
+        manageLinks: manageLinks,
         manageProjs: manageProjs,
         manageTasks: manageTasks,
         manageTeam: manageTeam
@@ -99,12 +101,24 @@ function dataSvc($resource, authService) {
 
     // **** PROJECTS ****
 
+    function manageAttachments() {
+        return $resource(aspApiUrl + '/api/Comments/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    };
+    
     function manageComments() {
         return $resource(aspApiUrl + '/api/Comments/:id', null, {
             'update': { method: 'PUT' }
         });
-    }
+    };
 
+    function manageLinks() {
+        return $resource(aspApiUrl + '/api/Links/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    };
+    
     function manageProjs() {
         // QUERY all projects
         // SAVE new project
