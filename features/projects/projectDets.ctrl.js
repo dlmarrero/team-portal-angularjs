@@ -7,12 +7,12 @@
 
     /** @ngInject */
     function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document) {
+        var attachMgr = dataSvc.manageAttachments();
         var commentMgr = dataSvc.manageComments();
         var linkMgr = dataSvc.manageLinks();
         var projMgr = dataSvc.manageProjs();
         var taskMgr = dataSvc.manageTasks();
         var teamMgr = dataSvc.manageTeam();
-        var attachMgr = dataSvc.manageAttachments();
 
         $scope.assignedUsers = [];
         $scope.curUser = dataSvc.getCurUser();
@@ -37,8 +37,8 @@
         $scope.taskComplete = taskComplete          // Mark task complete
         $scope.toggleDetails = toggleDetails;       // Show/hide task details
         $scope.toggleLead = toggleLead;             // Toggle user as a project lead
-        $scope.updateProj = updateProj;             // Save changes to project details
         $scope.unassignTask = unassignTask;         // Remove a user from a task
+        $scope.updateProj = updateProj;             // Save changes to project details
 
         init();
 
