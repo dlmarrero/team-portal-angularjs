@@ -23,7 +23,8 @@ angular
   'ngResource',
   'LocalStorageModule',
   'ngAnimate',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngFileUpload'
 ])
 
 // .constant('aspApiUrl', 'http://localhost:5000')

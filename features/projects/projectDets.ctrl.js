@@ -6,7 +6,7 @@
         .controller('projectDetsCtrl', projectDetsCtrl)
 
     /** @ngInject */
-    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document) {
+    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, Upload, $timeout) {
         var attachMgr = dataSvc.manageAttachments();
         var commentMgr = dataSvc.manageComments();
         var linkMgr = dataSvc.manageLinks();
@@ -39,6 +39,7 @@
         $scope.toggleLead = toggleLead;             // Toggle user as a project lead
         $scope.unassignTask = unassignTask;         // Remove a user from a task
         $scope.updateProj = updateProj;             // Save changes to project details
+        $scope.uploadFiles = uploadFiles;           // Upload file attachments
 
         init();
 
@@ -101,7 +102,7 @@
                 $scope.project.links.splice(i, 1);
             });
         };
-        
+
         function delProject() {
             projMgr.delete({ id: $scope.project.id }, function () {
                 $state.transitionTo('app.projects', {}, { reload: true });
@@ -146,17 +147,17 @@
                     $scope.project.links.push(data)
                 });
             };
-            if ($scope.attachment != null) {
-                var test = {
-                    projectId: $scope.project.id,
-                    title: 'test',
-                    file: $scope.attachment
-                };
-                $log.log(test);
-                attachMgr.save(test);
-            };
+            // if ($scope.attachment != null) {
+            //     var test = {
+            //         projectId: $scope.project.id,
+            //         title: 'test',
+            //         file: $scope.attachment
+            //     };
+            //     $log.log(test);
+            //     attachMgr.save(test);
+            // };
         };
-        
+
         function saveTask() {
             taskMgr.save($scope.newTask, function (response) {
                 saveAssignments(response.id);
@@ -195,6 +196,32 @@
             $scope.editTitle = false;
             $scope.editDescription = false;
             projMgr.update({ id: $scope.project.id }, $scope.project);
+        };
+
+        function uploadFiles(files, errFiles) {
+            $scope.files = files;
+            $scope.errFiles = errFiles;
+            angular.forEach(files, function (file) {
+                // attachMgr.save(file)
+                $log.log(file)
+                
+                // file.upload = Upload.upload({
+                //     url: 'http://localhost:5000/api/Attachments',
+                //     data: { file: file }
+                // });
+
+                // file.upload.then(function (response) {
+                //     $timeout(function () {
+                //         file.result = response.data;
+                //     });
+                // }, function (response) {
+                //     if (response.status > 0)
+                //         $scope.errorMsg = response.status + ': ' + response.data;
+                // }, function (evt) {
+                //     file.progress = Math.min(100, parseInt(100.0 *
+                //         evt.loaded / evt.total));
+                // });
+            });
         };
     };
 

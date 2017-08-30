@@ -18,12 +18,6 @@
         vm.new = {};
         vm.submit = submitProject;
         
-        // init();
-
-        // function init(){
-        // }
-
-        
         function addCategory(category) {
             if (vm.categories.indexOf(category) == -1) {
                 vm.categories.push(category)

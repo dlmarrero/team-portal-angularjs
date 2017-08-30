@@ -81,7 +81,7 @@
                 <br><br>
                 <div ng-repeat="task in project.workItems">
                     <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)"><i class="fa fa-square-o"></i></a>
-                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>{{task.title}}
+                    <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>&nbsp;{{task.title}}
                     <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small></a>
                     <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small></a>
                     <!-- Task Details  -->
@@ -223,7 +223,7 @@
     </div>
 </div>
 
-<!-- New Link Modal  -->
+<!-- New Resource Modal  -->
 <div id="newLinkModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -241,9 +241,23 @@
                     <label for="url" class="form-label" style="float:left">URL:</label>
                     <input type="text" id="url" class="form-control" ng-model="newLink.url">
                     <hr>
-                    <!-- https://github.com/danialfarid/ng-file-upload  -->
-                    <label for="fileupload" class="form-label" style="float:left">Upload a File:</label>
-                    <input id="fileupload" name="file" type="file" ng-model="attachment"/>
+                    <label for="fileupload" class="form-label" style="float:left">Upload a File:&nbsp;
+                        <button ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                            ngf-max-size="10MB">
+                            Select Files
+                        </button>
+                    </label>
+                    <ul ng-if="files.length">
+                        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+                            <span class="progress" ng-show="f.progress >= 0">
+                                <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                            </span>
+                        </li>
+                        <li ng-repeat="f in errFiles" style="font:smaller">
+                            {{f.name}} {{f.$error}} {{f.$errorParam}}
+                        </li>
+                    </ul>
+                    {{errorMsg}}
                 </ng-form>
             </div>
             <div class="modal-footer">
