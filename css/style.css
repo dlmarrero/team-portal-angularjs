@@ -9007,6 +9007,19 @@ hr.transparent {
   /* Opera < 12.1 */
   animation: fadein 3s; }
 
+#taskChart {
+  position: absolute;
+  font-size: 1vw;
+  top: 28%;
+  left: 33%; }
+
+@media (max-width: 991px) {
+  #taskChart {
+    position: absolute;
+    font-size: 6vh;
+    top: 30%;
+    left: 31%; } }
+
 @keyframes fadein {
   from {
     opacity: 0; }

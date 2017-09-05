@@ -2,29 +2,35 @@
     'use strict';
 
     angular
-        .module ('app')
-        .directive ('projectList', projectList)
-        .directive('taskList', taskList);
+        .module('app')
+        .directive('projectDetails', projectDetails)
+        .directive('projectList', projectList)
+        .directive('yourProjects', yourProjects);
 
+    function projectDetails() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/projects/projectDetails.html',
+            controller: 'projectDetsCtrl',
+            scope: {
+                project: '=project'
+            }
+        };
+    }
 
-    // function newProject () {
-    //     return {
-    //         restrict: 'E',
-    //         templateUrl: 'features/projects/newproject.html'
-    //     };
-    // };
-
-    function projectList () {
+    function projectList() {
         return {
             restrict: 'E',
             templateUrl: 'features/projects/projectlist.html'
         };
-    };
+    }
 
-    function taskList () {
+    function yourProjects() {
         return {
             restrict: 'E',
-            templateUrl: 'features/projects/tasklist.html'
+            templateUrl: 'features/projects/yourProjects.html',
+            controller: 'projectListCtrl',
+            controllerAs: 'vm'
         };
-    };
-} ());
+    }
+}());

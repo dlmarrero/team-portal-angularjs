@@ -28,7 +28,9 @@
                     angular.forEach(project.teamMembers, function(tm) {
                         var tMember = ($filter('lowercase')(tm.userName))
                         if (username == tMember) {
-                            vm.yourProjs.push(project);
+                            // $scope.$apply(function () {
+                                vm.yourProjs.push(project);
+                            // });
                         }
                     });
 

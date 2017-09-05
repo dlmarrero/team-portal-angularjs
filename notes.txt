@@ -1,0 +1,15 @@
+/* Project Notes */
+
+************
+* PROJECTS *
+************
+- Filter current and past projects in controller
+- Sort team members by lead property
+- File upload
+- Complete checkbox positioning
+- Chart text positioning (don't allow page to scale, overflow:fixed maybe)
+- Breadcrumb should be project name
+- Remove taskSelected after adding
+- Only one modal will load per refresh if submit is clicked
+- Configure cascade delete
+- When team lead or Complete is set, update projectList

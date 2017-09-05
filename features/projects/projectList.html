@@ -1,4 +1,4 @@
-<div class='card' style="height:73vh;overflow-y:scroll;">
+<div class='card' style="height:87vh;overflow-y:scroll;">
     <div class="container">
         <div class='card-block'>
             <div class="row">
@@ -14,12 +14,12 @@
             <hr>
             <!-- TABS  -->
             <div>
-                <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <li class="nav-item">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                    <!-- <li class="nav-item">
                         <a tab class="nav-link active" data-toggle="tab" href="#yourProjs" role="tab">Your Projects</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a tab class="nav-link" data-toggle="tab" href="#current" role="tab">Current Projects</a>
+                        <a tab class="nav-link active" data-toggle="tab" href="#current" role="tab">Current Projects</a>
                     </li>
                     <li class="nav-item">
                         <a tab class="nav-link" data-toggle="tab" href="#pastProjs" role="tab">Past Projects</a>
@@ -30,34 +30,6 @@
                 <input type="search" ng-model="search.title" class="form-control" placeholder="Filter projects...">
             </div>
             <div class="tab-content">
-                <!-- YOUR PROJECTS  -->
-                <div class="tab-pane" id="yourProjs" role="tabpanel">
-                    <span ng-if="projects.yourProjs.length == 0">You are not currently assigned to any projects.</span>
-                    <div ng-repeat="project in projects.yourProjs | filter:search | orderBy:'-id'">
-                        <div class="projRow" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
-                            <div>
-                                <span><strong>{{project.title}}</strong></span>
-                            </div>
-                            <div ng-hide="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                                {{project.description}}
-                            </div>
-                            <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center">
-                                <span class="fade" style="padding-right: 50px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
-                                <!-- <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp; -->
-                                <!-- <a href="#">Tasks</a> -->
-                                <!-- </span> -->
-                                <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
-                                <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
-                                <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: true}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}&nbsp;</span>
-                                </span>
-                            </div>
-                            <div style="text-align:right;" ng-if="project.categories">
-                                <span class="text-muted"><small><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;:&nbsp;{{category}}</small></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- CURRENT PROJECTS TAB  -->
                 <div class="tab-pane active" id="current" name="current" role="tabpanel">
                     <div ng-repeat="project in projects.data | filter:{complete: false} | filter:search | orderBy:'-id'">
