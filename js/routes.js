@@ -203,4 +203,15 @@ angular
       label: 'Details'
     }
   })
+
+  // **** QUIZ ****
+  .state('app.quiz', {
+    url: '/quiz',
+    templateUrl: 'features/quiz/quizGen.html',
+    controller: 'quizGenCtrl',
+    controllerAs: 'vm',
+    ncyBreadcrumb: {
+      label: 'Quiz Generator'
+    }
+  })
 }]);

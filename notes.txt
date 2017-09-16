@@ -13,3 +13,12 @@
 - Only one modal will load per refresh if submit is clicked
 - Configure cascade delete
 - When team lead or Complete is set, update projectList
+
+
+************
+*   QUIZ   *
+************
+- Add count of questions per section functionality to backend
+- Select quiz length functionality
+- Saving a generated quiz in the database with questions and correct answers should result in fewer
+    database trips/faster response time. Then delete quiz from database when done.

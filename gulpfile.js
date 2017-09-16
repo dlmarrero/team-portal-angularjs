@@ -110,7 +110,7 @@ gulp.task('concat:dev', function () {
         .pipe(sourcemaps.init())
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(gulp.dest('.'))
         .pipe(browserSync.stream());
 })

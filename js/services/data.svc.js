@@ -26,7 +26,13 @@ function dataSvc($resource, authService) {
         manageLinks: manageLinks,
         manageProjs: manageProjs,
         manageTasks: manageTasks,
-        manageTeam: manageTeam
+        manageTeam: manageTeam,
+        // QUIZ
+        manageQuestions: manageSections,
+        manageReferences: manageReferences,
+        manageSections: manageSections,
+        manageTopics: manageTopics,
+        quizGen: quizGen
     };
 
 
@@ -145,5 +151,32 @@ function dataSvc($resource, authService) {
         });
     }
 
-    
+    // **** QUIZ ****
+    function manageTopics() {
+        return $resource(aspApiUrl + '/api/Topics/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
+
+    function manageReferences() {
+        return $resource(aspApiUrl + '/api/References/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
+
+    function manageSections() {
+        return $resource(aspApiUrl + '/api/Sections/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
+
+    function manageQuestions() {
+        return $resource(aspApiUrl + '/api/Questions/:id', null, {
+            'update': { method: 'PUT' }
+        });
+    }
+
+    function quizGen() {
+        return $resource(aspApiUrl + '/api/Quiz')
+    }
 };
