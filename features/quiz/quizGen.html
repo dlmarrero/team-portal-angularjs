@@ -1,20 +1,49 @@
-<select class="form-control" style="font-size:16px;height:50px;" name="selectTopic" id="selectTopic" ng-options="topic.title for topic in vm.topics track by topic.id" ng-model="vm.selectedTopic" ng-change="vm.loadTopic()">
-    <option value="" selected>----Select a Topic----</option>
-</select>
-<div ng-repeat="ref in vm.references">
-    <h4>Reference:  {{ref.title}}</h4>
-    <p><em>{{ref.description}}</em></p>
-    <table>
-        <th>Select</th>
-        <th>Section</th>
-        <tr ng-repeat="sect in ref.sections">
-            <td><input type="checkbox" class="form-control" ng-model="selected" ng-change="vm.selectSection(sect)"></td>
-            <td>{{sect.title}}</td>
-        </tr>
-    </table>
-</div>
-<button class="btn btn-primary" ng-click="vm.generateQuiz()">Generate Quiz</button>
-{{vm.quizSelectors}}
-<div ng-repeat="q in vm.quiz">
-    {{q}}
+<div class="card">
+    <div class="card-block">
+        <h4>Quiz Generator</h4>
+        <hr>
+        <ui-view>
+        <div>
+            <div class="row">
+                <div class="col-lg-10" style="padding-right:0">
+                    <select class="form-control" name="selectTopic" id="selectTopic" ng-options="topic.title for topic in vm.topics track by topic.id"
+                        ng-model="vm.selectedTopic" ng-change="vm.loadTopic()">
+                        <option value="" selected>----Select a Topic----</option>
+                    </select>
+                </div>
+                <div class="col-lg-2" style="padding-left:0">
+                    <a ui-sref=".create" class="btn btn-primary" style="width:100%">
+                        <i class="fa fa-plus"></i> New Topic
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div style="text-align:center">
+                <h4>{{vm.selectedTopic.title}}</h4>
+            </div>
+            <div ng-repeat="ref in vm.references">
+                <div style="text-align:center">
+                    <span style="font-size:18px"><strong>Reference: </strong>{{ref.title}}</span>
+                    <p ng-show="ref.description.length"><em>{{ref.description}}</em></p>
+                </div>
+                <div style="padding-left:20px">
+                    <table class="table">
+                        <th width="50px"></th>
+                        <th style="width:33%">Section</th>
+                        <th>Description</th>
+                        <tr ng-repeat="sect in ref.sections">
+                            <td><input type="checkbox" class="form-control" ng-model="selected" ng-change="vm.selectSection(sect)"></td>
+                            <td style="padding-right: 15px">{{sect.title}}</td>
+                            <td>{{sect.description}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <button class="btn btn-primary" ng-click="vm.generateQuiz()">Generate Quiz</button> {{vm.quizSelectors}}
+            </div>
+            <div ng-repeat="q in vm.quiz">
+                {{q}}
+            </div>
+        </div>
+        </ui-view>
+    </div>
 </div>

@@ -214,4 +214,22 @@ angular
       label: 'Quiz Generator'
     }
   })
+  .state('app.quiz.create', {
+    url: '/create',
+    templateUrl: 'features/quiz/quizCreate.html',
+    controller: 'quizCreateCtrl',
+    controllerAs: 'vm',
+    ncyBreadcrumb: {
+      label: 'Create Quiz'
+    }
+  })
+  .state('app.quiz.create.refs', {
+    url: '/:topicId',
+    templateUrl: 'features/quiz/quizCreate-refs.html',
+    controller: 'quizCreateCtrl',
+    controllerAs: 'vm',
+    ncyBreadcrumb: {
+      label: 'Add References'
+    }
+  })
 }]);

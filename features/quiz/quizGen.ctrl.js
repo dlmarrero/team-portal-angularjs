@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('quizGenCtrl', quizGenCtrl)
+        .controller('quizGenCtrl', quizGenCtrl);
 
     /** @ngInject */
     function quizGenCtrl($scope, dataSvc){
