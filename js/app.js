@@ -74,10 +74,10 @@ angular
         var angularDateFilter = $filter('date');
         return function (theDate) {
             return angularDateFilter(new Date(theDate), 'dd MMM yyyy');
-        }
+        };
     })
 .filter('split', function () {
     return function(input) {
         return input.split(',');
-    }
-})
+    };
+});

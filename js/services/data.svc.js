@@ -1,5 +1,5 @@
 angular.module('app')
-    .factory('dataSvc', dataSvc)
+    .factory('dataSvc', dataSvc);
 
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {

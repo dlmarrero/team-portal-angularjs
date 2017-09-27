@@ -75,13 +75,13 @@ angular
         var angularDateFilter = $filter('date');
         return function (theDate) {
             return angularDateFilter(new Date(theDate), 'dd MMM yyyy');
-        }
+        };
     }])
 .filter('split', function () {
     return function(input) {
         return input.split(',');
-    }
-})
+    };
+});
 angular
 .module('app')
 .directive('a', preventClickDirective)
@@ -93,14 +93,14 @@ angular
 .directive('div', bootstrapCarouselDirective)
 .directive('toggle', bootstrapTooltipsPopoversDirective)
 .directive('tab', bootstrapTabsDirective)
-.directive('button', cardCollapseDirective)
+.directive('button', cardCollapseDirective);
 
 //Prevent click if href="#"
 function preventClickDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -117,7 +117,7 @@ function bootstrapCollapseDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -135,7 +135,7 @@ function navigationDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -1907,7 +1907,7 @@ angular.module('app')
         }])
 
 angular.module('app')
-    .factory('dataSvc', dataSvc)
+    .factory('dataSvc', dataSvc);
 
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {

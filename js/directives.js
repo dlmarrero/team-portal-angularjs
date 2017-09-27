@@ -9,14 +9,14 @@ angular
 .directive('div', bootstrapCarouselDirective)
 .directive('toggle', bootstrapTooltipsPopoversDirective)
 .directive('tab', bootstrapTabsDirective)
-.directive('button', cardCollapseDirective)
+.directive('button', cardCollapseDirective);
 
 //Prevent click if href="#"
 function preventClickDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -33,7 +33,7 @@ function bootstrapCollapseDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -51,7 +51,7 @@ function navigationDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {

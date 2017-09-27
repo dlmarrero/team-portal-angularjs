@@ -13,12 +13,23 @@ var rename = require('gulp-rename');
 var del = require('del');
 var runSequence = require('run-sequence');
 var replace = require('gulp-replace');
+var eslint = require("gulp-eslint");
 
 gulp.paths = {
     dist: 'dist',
 };
 
 var paths = gulp.paths;
+
+gulp.task('eslint', function () {
+    return gulp.src(
+        ['js/app.js', 
+        'js/*.js', 
+        'js/**/*.js', 
+        'features/**/*.js'])
+        .pipe(eslint())
+        .pipe(eslint.format('stylish'));
+});
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function () {
