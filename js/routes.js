@@ -223,13 +223,13 @@ angular
       label: 'Create Quiz'
     }
   })
-  .state('app.quiz.create.refs', {
-    url: '/:topicId',
-    templateUrl: 'features/quiz/quizCreate-refs.html',
+  .state('app.quiz.edit', {
+    url: '/edit/:topicId',
+    templateUrl: 'features/quiz/quizCreate.html',
     controller: 'quizCreateCtrl',
     controllerAs: 'vm',
     ncyBreadcrumb: {
-      label: 'Add References'
+      label: 'Edit Quiz'
     }
   })
 }]);

@@ -29,6 +29,7 @@
   &.disabled,
   &:disabled {
     opacity: .65;
+    // cursor: not-allowed;
     @include box-shadow(none);
   }
 

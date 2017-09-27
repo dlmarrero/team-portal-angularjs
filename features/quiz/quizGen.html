@@ -6,7 +6,7 @@
         <div>
             <div class="row">
                 <div class="col-lg-10" style="padding-right:0">
-                    <select class="form-control" name="selectTopic" id="selectTopic" ng-options="topic.title for topic in vm.topics track by topic.id"
+                    <select class="form-control" name="selectTopic" id="selectTopic" ng-options="topic.title for topic in vm.topics | orderBy:'title' track by topic.id"
                         ng-model="vm.selectedTopic" ng-change="vm.loadTopic()">
                         <option value="" selected>----Select a Topic----</option>
                     </select>
@@ -18,8 +18,14 @@
                 </div>
             </div>
             <br>
-            <div style="text-align:center">
-                <h4>{{vm.selectedTopic.title}}</h4>
+            <div style="text-align:center" ng-show="vm.selectedTopic.title.length">
+                <h4>
+                    {{vm.selectedTopic.title}}&nbsp;<a ui-sref='.edit({ topicId: vm.selectedTopic.id })'><i class="fa fa-pencil"></i></a>
+                </h4>
+                <hr>
+                <div ng-show="!vm.references.length">
+                    <h4>No references have been added to this topic.<br>Click the above pencil icon to begin.</h4>
+                </div>
             </div>
             <div ng-repeat="ref in vm.references">
                 <div style="text-align:center">
@@ -38,8 +44,8 @@
                         </tr>
                     </table>
                 </div>
-                <button class="btn btn-primary" ng-click="vm.generateQuiz()">Generate Quiz</button> {{vm.quizSelectors}}
             </div>
+            <button class="btn btn-primary" ng-if="vm.selectedTopic" ng-click="vm.generateQuiz()">Generate Quiz</button> {{vm.quizSelectors}}
             <div ng-repeat="q in vm.quiz">
                 {{q}}
             </div>

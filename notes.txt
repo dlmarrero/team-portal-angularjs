@@ -18,7 +18,12 @@
 ************
 *   QUIZ   *
 ************
-- Add count of questions per section functionality to backend
+- Topic list does not update when clicking on breadcrumb to go back
+- Back button in editor
+- Delete Topic
+- Create topic "enter" to submit
+- Add count of questions per ref/sect etc
 - Select quiz length functionality
 - Saving a generated quiz in the database with questions and correct answers should result in fewer
     database trips/faster response time. Then delete quiz from database when done.
+- WBN: export to pdf functionality

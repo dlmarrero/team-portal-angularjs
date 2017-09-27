@@ -28,7 +28,8 @@ function dataSvc($resource, authService) {
         manageTasks: manageTasks,
         manageTeam: manageTeam,
         // QUIZ
-        manageQuestions: manageSections,
+        manageBulkAdd: manageBulkAdd,
+        manageQuestions: manageQuestions,
         manageReferences: manageReferences,
         manageSections: manageSections,
         manageTopics: manageTopics,
@@ -152,6 +153,12 @@ function dataSvc($resource, authService) {
     }
 
     // **** QUIZ ****
+    function manageBulkAdd() {
+        return $resource(aspApiUrl + '/api/Questions/bulkAdd', null, {
+            'send': { method: 'POST', isArray: true }
+        });
+    }
+
     function manageTopics() {
         return $resource(aspApiUrl + '/api/Topics/:id', null, {
             'update': { method: 'PUT' }
