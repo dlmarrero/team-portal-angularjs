@@ -1,7 +1,7 @@
 angular.module('app')
-    .controller('registerCtrl', registerCtrl)
+    .controller('registerCtrl', registerCtrl);
 
-registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state']
+registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state'];
 function registerCtrl($scope, $location, $timeout, authService, $state) {
 
     $scope.getRank = getRank;

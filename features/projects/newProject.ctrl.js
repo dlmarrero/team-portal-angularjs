@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('newProjectCtrl', newProjectCtrl)
+        .controller('newProjectCtrl', newProjectCtrl);
 
     /** @ngInject */
     function newProjectCtrl($scope, dataSvc, $log, $state, $window){
@@ -20,8 +20,8 @@
         
         function addCategory(category) {
             if (vm.categories.indexOf(category) == -1) {
-                vm.categories.push(category)
-                vm.addedCategory = ""
+                vm.categories.push(category);
+                vm.addedCategory = "";
                 $window.document.getElementById('newcategory').focus();
             };
         };
@@ -40,7 +40,7 @@
                 vm.submittedCategory = "";
             }
             else {
-                vm.categories.pop(category)
+                vm.categories.pop(category);
                 vm.submittedCategory = "";
             };
 
@@ -51,15 +51,15 @@
             vm.new.categories = "";
             angular.forEach(vm.categories, function (val, i) {
                 if (i !== vm.categories.length - 1) {
-                    vm.new.categories = vm.new.categories + val + ","
+                    vm.new.categories = vm.new.categories + val + ",";
                 }
                 else {
-                    vm.new.categories = vm.new.categories + val
+                    vm.new.categories = vm.new.categories + val;
                 };
             });
             
             projMgr.save(vm.new, function (data) {
-                $log.log('saving')
+                $log.log('saving');
                 $state.transitionTo('app.projects.details', { id: data.id }, { reload: true });
             });
         };

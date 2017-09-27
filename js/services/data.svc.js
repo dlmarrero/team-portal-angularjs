@@ -184,6 +184,6 @@ function dataSvc($resource, authService) {
     }
 
     function quizGen() {
-        return $resource(aspApiUrl + '/api/Quiz')
+        return $resource(aspApiUrl + '/api/Quiz');
     }
 };

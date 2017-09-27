@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('projectDetsCtrl', projectDetsCtrl)
+        .controller('projectDetsCtrl', projectDetsCtrl);
 
     /** @ngInject */
     function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, Upload, $timeout) {
@@ -36,7 +36,7 @@
         $scope.saveComment = saveComment;           // Save a new comment
         $scope.saveResource = saveResource;         // Save a new resource
         $scope.saveTask = saveTask;                 // Save a new task
-        $scope.taskComplete = taskComplete          // Mark task complete
+        $scope.taskComplete = taskComplete;          // Mark task complete
         $scope.toggleDetails = toggleDetails;       // Show/hide task details
         $scope.toggleLead = toggleLead;             // Toggle user as a project lead
         $scope.unassignTask = unassignTask;         // Remove a user from a task
@@ -54,7 +54,7 @@
                         description: "",
                         priority: "Normal",
                         projectId: project.id
-                    }
+                    };
                 });
             } else {
                 $scope.newTask = {
@@ -62,7 +62,7 @@
                     description: "",
                     priority: "Normal",
                     projectId: $scope.project.id
-                }
+                };
                 populateChart($scope.project);
             }
         }
@@ -130,11 +130,11 @@
                         $scope.project.workItems[t].assignedUsers = [];
                     } else {
                         $scope.project.workItems[t].assignedUsers.splice(u,1);
-                        $log.log('spliced',$scope.project.workItems[t].assignedUsers)
+                        $log.log('spliced',$scope.project.workItems[t].assignedUsers);
                     }
                     $scope.taskSelected = null;
                 // })
-            })
+            });
         }
         
         function delComment(id) {
@@ -187,7 +187,7 @@
         }
 
         function saveComment(workItem) {
-            $scope.newComment.author = $scope.curUser.rateName
+            $scope.newComment.author = $scope.curUser.rateName;
             $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
                 $state.reload();
@@ -198,7 +198,7 @@
             if ($scope.newLink.url != null) {
                 $scope.newLink.projectId = $scope.project.id;
                 linkMgr.save($scope.newLink, function (data) {
-                    $scope.project.links.push(data)
+                    $scope.project.links.push(data);
                 });
             }
         }
@@ -233,7 +233,7 @@
                 user.projectLead = true;
             };
             teamMgr.update({ id: user.id }, user, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id })
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
             });
         }
 
@@ -252,7 +252,7 @@
             $scope.errFiles = errFiles;
             angular.forEach(files, function (file) {
                 // attachMgr.save(file)
-                $log.log(file)
+                $log.log(file);
 
                 // file.upload = Upload.upload({
                 //     url: 'http://localhost:5000/api/Attachments',

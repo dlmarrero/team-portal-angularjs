@@ -1,7 +1,7 @@
 angular.module('app')
     .controller('pocsCtrl', pocsCtrl);
 
-pocsCtrl.$inject['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll']
+pocsCtrl.$inject = ['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll'];
 function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll) {
 
     var Pocs = dataSvc.managePocs();
@@ -42,7 +42,7 @@ function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll)
     function toggleEdit(contact) {
         $scope.showEdit = true;
         $scope.update = contact;
-        $location.hash('pocs')
+        $location.hash('pocs');
         $anchorScroll();
     };
 };

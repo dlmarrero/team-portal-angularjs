@@ -231,5 +231,5 @@ angular
     ncyBreadcrumb: {
       label: 'Edit Quiz'
     }
-  })
+  });
 }]);

@@ -30,7 +30,7 @@
             var quizSelectors = {sections: vm.selectedSections};
             quizGenMgr.save(quizSelectors, function(quiz) {
                 vm.quiz = quiz;
-            })
+            });
         }
 
         function loadTopic() {

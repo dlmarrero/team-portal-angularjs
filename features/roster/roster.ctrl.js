@@ -1,7 +1,7 @@
 angular.module('app')
-.controller('rosterCtrl', rosterCtrl)
+.controller('rosterCtrl', rosterCtrl);
 
-rosterCtrl.$inject = ['$scope', 'dataSvc']
+rosterCtrl.$inject = ['$scope', 'dataSvc'];
 function rosterCtrl ($scope, dataSvc) {
     
     $scope.sailors = dataSvc.getUsers();

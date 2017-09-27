@@ -7,7 +7,7 @@ angular
   .controller('barChartCtrl', barChartCtrl)
   .controller('horizontalBarsCtrl', horizontalBarsCtrl)
   .controller('horizontalBarsType2Ctrl', horizontalBarsType2Ctrl)
-  .controller('usersTableCtrl', usersTableCtrl)
+  .controller('usersTableCtrl', usersTableCtrl);
 
 
 trafficDemoCtrl.$inject = ['$scope'];
@@ -78,7 +78,7 @@ function trafficDemoCtrl($scope) {
         hoverBorderWidth: 3,
       }
     },
-  }
+  };
 }
 
 dateRangeCtrl.$inject = ['$scope'];
@@ -208,7 +208,7 @@ function sparklineChartCtrl($scope) {
         hoverBorderWidth: 3,
       }
     },
-  }
+  };
 }
 
 horizontalBarsCtrl.$inject = ['$scope'];
@@ -371,7 +371,7 @@ function usersTableCtrl($scope, $timeout) {
       activity: 'Yesterday',
       satisfaction: '11'
     }
-  ]
+  ];
 }
 
 clientsTableCtrl.$inject = ['$scope', '$timeout'];
@@ -432,7 +432,7 @@ function clientsTableCtrl($scope, $timeout) {
       transactions: 189,
       comments: 72
     }
-  ]
+  ];
 }
 
 function random(min, max) {

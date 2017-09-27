@@ -43,7 +43,7 @@
         _init();
 
         function _init() {
-            if ($stateParams.topicId !== undefined) {
+            if ($stateParams.topicId !== angular.isUndefined) {
                 topicMgr.get({ id: $stateParams.topicId }, function (data) {
                     vm.topic = data;
                     vm.isNewTopic = false;
@@ -55,7 +55,7 @@
                     references: []
                 };
             } // end ifElse
-            vm.isNewTopic = vm.topic.id === undefined ? true : false;
+            vm.isNewTopic = vm.topic.id === angular.isUndefined ? true : false;
             setActiveTab('topic');
         }
 
@@ -118,7 +118,7 @@
 
         function delQuestion(q) {
             var i = vm.selectedSection.questions.indexOf(q);
-            if (q.id !== undefined) {
+            if (q.id !== angular.isUndefined) {
                 questionMgr.delete({ id: q.id });
             }
             vm.selectedSection.questions.splice(i, 1);
@@ -126,7 +126,7 @@
 
         function delReference(ref) {
             var i = vm.topic.references.indexOf(ref);
-            if (ref.id !== undefined) {
+            if (ref.id !== angular.isUndefined) {
                 referenceMgr.delete({ id: ref.id });
             }
             vm.topic.references.splice(i, 1);
@@ -134,7 +134,7 @@
 
         function delSection(sect) {
             var i = vm.selectedReference.sections.indexOf(sect);
-            if (sect.id !== undefined) {
+            if (sect.id !== angular.isUndefined) {
                 sectionMgr.delete({ id: sect.id });
             }
             vm.selectedReference.sections.splice(i, 1);
@@ -143,7 +143,7 @@
         function delTopic(topic) {
             topicMgr.delete({ id: topic.id }, function () {
                 _init();
-            })
+            });
         }
 
         function setActiveTab(activeTab) {
@@ -161,7 +161,7 @@
         }
 
         function updateQuestion(q) {
-            if (q.id !== undefined) {
+            if (q.id !== angular.isUndefined) {
                 questionMgr.update({ id: q.id }, q);
             } else if (q.question !== '' && q.answer !== '') {
                 questionMgr.save(q, function (data) {
@@ -172,7 +172,7 @@
         }
 
         function updateReference(ref) {
-            if (ref.id !== undefined) {
+            if (ref.id !== angular.isUndefined) {
                 referenceMgr.update({ id: ref.id }, ref);
             } else if (ref.title !== '') {
                 referenceMgr.save(ref, function (data) {
@@ -183,7 +183,7 @@
         }
 
         function updateSection(sect) {
-            if (sect.id !== undefined) {
+            if (sect.id !== angular.isUndefined) {
                 sectionMgr.update({ id: sect.id }, sect);
             } else if (sect.title !== '') {
                 sectionMgr.save(sect, function (data) {

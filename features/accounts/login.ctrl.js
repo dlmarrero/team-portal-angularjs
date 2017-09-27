@@ -1,7 +1,7 @@
 angular.module('app')
-    .controller('loginCtrl', loginCtrl)
+    .controller('loginCtrl', loginCtrl);
 
-loginCtrl.$inject = ['$scope', '$location', 'authService', '$state']
+loginCtrl.$inject = ['$scope', '$location', 'authService', '$state'];
 function loginCtrl($scope, $location, authService, $state) {
 
     $scope.login = login;

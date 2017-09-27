@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('projectListCtrl', projectListCtrl)
+        .controller('projectListCtrl', projectListCtrl);
 
     /** @ngInject */
     function projectListCtrl($scope, dataSvc, $log, $uibModal, $document, authService, $filter) {
@@ -26,7 +26,7 @@
                 angular.forEach(data, function(project) {
                     // Set a variable to hold a bool, iterate through each team member
                     angular.forEach(project.teamMembers, function(tm) {
-                        var tMember = ($filter('lowercase')(tm.userName))
+                        var tMember = ($filter('lowercase')(tm.userName));
                         if (username == tMember) {
                             // $scope.$apply(function () {
                                 vm.yourProjs.push(project);

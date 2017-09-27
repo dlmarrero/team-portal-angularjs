@@ -6,7 +6,7 @@ angular
 .controller('DoughnutCtrl', DoughnutCtrl)
 .controller('RadarCtrl', RadarCtrl)
 .controller('PieCtrl', PieCtrl)
-.controller('PolarAreaCtrl', PolarAreaCtrl)
+.controller('PolarAreaCtrl', PolarAreaCtrl);
 
 LineCtrl.$inject = ['$scope'];
 function LineCtrl($scope) {

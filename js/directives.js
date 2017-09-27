@@ -75,7 +75,7 @@ function sidebarNavDynamicResizeDirective($window, $timeout) {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -90,7 +90,7 @@ function sidebarNavDynamicResizeDirective($window, $timeout) {
         } else {
           element.css('height', bodyHeight - headerHeight);
         }
-      })
+      });
 
       angular.element($window).bind('resize', function(){
         var bodyHeight = angular.element(window).height();
@@ -114,7 +114,7 @@ function layoutToggleDirective($interval) {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -136,15 +136,15 @@ function collapseMenuTogglerDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
     element.on('click', function(){
       if (element.hasClass('navbar-toggler') && !element.hasClass('layout-toggler')) {
-        angular.element('body').toggleClass('sidebar-mobile-show')
+        angular.element('body').toggleClass('sidebar-mobile-show');
       }
-    })
+    });
   }
 }
 
@@ -153,13 +153,13 @@ function bootstrapCarouselDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
     if (attrs.ride=='carousel'){
       element.find('a').each(function(){
-        $(this).attr('data-target',$(this).attr('href').replace('index.html','')).attr('href','javascript;;')
+        $(this).attr('data-target',$(this).attr('href').replace('index.html','')).attr('href','javascript;;');
       });
     }
   }
@@ -170,7 +170,7 @@ function bootstrapTooltipsPopoversDirective() {
   var directive = {
     restrict: 'A',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -188,7 +188,7 @@ function bootstrapTabsDirective() {
   var directive = {
     restrict: 'A',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -204,7 +204,7 @@ function cardCollapseDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -215,12 +215,12 @@ function cardCollapseDirective() {
       }
 
       var id = 'collapse-' + Math.floor((Math.random() * 1000000000) + 1);
-      element.attr('data-target','#'+id)
+      element.attr('data-target','#'+id);
       element.parent().parent().parent().find('.card-block').attr('id',id);
 
       element.on('click', function(){
         element.find('i').toggleClass('r180');
-      })
+      });
     }
   }
 }

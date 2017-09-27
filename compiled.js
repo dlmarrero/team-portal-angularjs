@@ -1,7 +1,6 @@
 'use strict';
 
 // Default colors
-pocsCtrl.$inject = ["$scope", "dataSvc", "$window", "$location", "$resource", "$anchorScroll"];
 var brandPrimary =  '#20a8d8';
 var brandSuccess =  '#4dbd74';
 var brandInfo =     '#63c2de';
@@ -159,7 +158,7 @@ function sidebarNavDynamicResizeDirective($window, $timeout) {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -174,7 +173,7 @@ function sidebarNavDynamicResizeDirective($window, $timeout) {
         } else {
           element.css('height', bodyHeight - headerHeight);
         }
-      })
+      });
 
       angular.element($window).bind('resize', function(){
         var bodyHeight = angular.element(window).height();
@@ -198,7 +197,7 @@ function layoutToggleDirective($interval) {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -220,15 +219,15 @@ function collapseMenuTogglerDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
     element.on('click', function(){
       if (element.hasClass('navbar-toggler') && !element.hasClass('layout-toggler')) {
-        angular.element('body').toggleClass('sidebar-mobile-show')
+        angular.element('body').toggleClass('sidebar-mobile-show');
       }
-    })
+    });
   }
 }
 
@@ -237,13 +236,13 @@ function bootstrapCarouselDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
     if (attrs.ride=='carousel'){
       element.find('a').each(function(){
-        $(this).attr('data-target',$(this).attr('href').replace('index.html','')).attr('href','javascript;;')
+        $(this).attr('data-target',$(this).attr('href').replace('index.html','')).attr('href','javascript;;');
       });
     }
   }
@@ -254,7 +253,7 @@ function bootstrapTooltipsPopoversDirective() {
   var directive = {
     restrict: 'A',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -272,7 +271,7 @@ function bootstrapTabsDirective() {
   var directive = {
     restrict: 'A',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -288,7 +287,7 @@ function cardCollapseDirective() {
   var directive = {
     restrict: 'E',
     link: link
-  }
+  };
   return directive;
 
   function link(scope, element, attrs) {
@@ -299,12 +298,12 @@ function cardCollapseDirective() {
       }
 
       var id = 'collapse-' + Math.floor((Math.random() * 1000000000) + 1);
-      element.attr('data-target','#'+id)
+      element.attr('data-target','#'+id);
       element.parent().parent().parent().find('.card-block').attr('id',id);
 
       element.on('click', function(){
         element.find('i').toggleClass('r180');
-      })
+      });
     }
   }
 }
@@ -542,7 +541,7 @@ angular
     ncyBreadcrumb: {
       label: 'Edit Quiz'
     }
-  })
+  });
 }]);
 
 //chart.js
@@ -553,7 +552,7 @@ angular
 .controller('DoughnutCtrl', DoughnutCtrl)
 .controller('RadarCtrl', RadarCtrl)
 .controller('PieCtrl', PieCtrl)
-.controller('PolarAreaCtrl', PolarAreaCtrl)
+.controller('PolarAreaCtrl', PolarAreaCtrl);
 
 LineCtrl.$inject = ['$scope'];
 function LineCtrl($scope) {
@@ -613,7 +612,7 @@ angular
   .controller('barChartCtrl', barChartCtrl)
   .controller('horizontalBarsCtrl', horizontalBarsCtrl)
   .controller('horizontalBarsType2Ctrl', horizontalBarsType2Ctrl)
-  .controller('usersTableCtrl', usersTableCtrl)
+  .controller('usersTableCtrl', usersTableCtrl);
 
 
 trafficDemoCtrl.$inject = ['$scope'];
@@ -684,7 +683,7 @@ function trafficDemoCtrl($scope) {
         hoverBorderWidth: 3,
       }
     },
-  }
+  };
 }
 
 dateRangeCtrl.$inject = ['$scope'];
@@ -814,7 +813,7 @@ function sparklineChartCtrl($scope) {
         hoverBorderWidth: 3,
       }
     },
-  }
+  };
 }
 
 horizontalBarsCtrl.$inject = ['$scope'];
@@ -977,7 +976,7 @@ function usersTableCtrl($scope, $timeout) {
       activity: 'Yesterday',
       satisfaction: '11'
     }
-  ]
+  ];
 }
 
 clientsTableCtrl.$inject = ['$scope', '$timeout'];
@@ -1038,7 +1037,7 @@ function clientsTableCtrl($scope, $timeout) {
       transactions: 189,
       comments: 72
     }
-  ]
+  ];
 }
 
 function random(min, max) {
@@ -1796,9 +1795,10 @@ angular
 }]);
 
 angular.module('app')
-.factory('authService',
-['$http', '$q', 'localStorageService', '$window', '$location', '$state',
-function ($http, $q, localStorageService, $window, $location, $state) {
+.factory('authService', authService);
+
+authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state'];
+function authService ($http, $q, localStorageService, $window, $location, $state) {
 
     var serviceBase = 'http://localhost:5000/';
     var authServiceFactory = {};
@@ -1859,7 +1859,7 @@ function ($http, $q, localStorageService, $window, $location, $state) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
         }
-    }
+    };
 
     authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.login = _login;
@@ -1869,43 +1869,43 @@ function ($http, $q, localStorageService, $window, $location, $state) {
 
     return authServiceFactory;
 
-}])
+}
 
 angular.module('app')
-    .factory('authInterceptorService',
-    ['$q', '$location', 'localStorageService', '$window', '$state',
-        function ($q, $location, localStorageService, $window, $state) {
+    .factory('authInterceptorService', authInterceptorService);
 
-            var authInterceptorServiceFactory = {};
+authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state']
+function authInterceptorService($q, $location, localStorageService, $window, $state) {
 
-            var _request = function (config) {
+    var authInterceptorServiceFactory = {};
 
-                config.headers = config.headers || {};
+    var _request = function (config) {
 
-                var authData = localStorageService.get('authorizationData');
-                if (authData) {
-                    config.headers.Authorization = 'Bearer ' + authData.token;
+        config.headers = config.headers || {};
 
-                }
+        var authData = localStorageService.get('authorizationData');
+        if (authData) {
+            config.headers.Authorization = 'Bearer ' + authData.token;
 
-                return config;
-            }
+        }
 
-            var _responseError = function (rejection) {
-                if (rejection.status === 401) {
-                    $window.alert('You are not authorized to visit this page.  Please log in with sufficient credentials.');
-                    $state.transitionTo('app.login', {}, { reload: true });
-                }
-                return $q.reject(rejection);
-            }
+        return config;
+    };
 
-            authInterceptorServiceFactory.request = _request;
-            authInterceptorServiceFactory.responseError = _responseError;
+    var _responseError = function (rejection) {
+        if (rejection.status === 401) {
+            $window.alert('You are not authorized to visit this page.  Please log in with sufficient credentials.');
+            $state.transitionTo('app.login', {}, { reload: true });
+        }
+        return $q.reject(rejection);
+    };
 
-            return authInterceptorServiceFactory;
+    authInterceptorServiceFactory.request = _request;
+    authInterceptorServiceFactory.responseError = _responseError;
 
-        }])
+    return authInterceptorServiceFactory;
 
+} 
 angular.module('app')
     .factory('dataSvc', dataSvc);
 
@@ -2092,13 +2092,13 @@ function dataSvc($resource, authService) {
     }
 
     function quizGen() {
-        return $resource(aspApiUrl + '/api/Quiz')
+        return $resource(aspApiUrl + '/api/Quiz');
     }
 };
 angular.module('app')
-    .controller('loginCtrl', loginCtrl)
+    .controller('loginCtrl', loginCtrl);
 
-loginCtrl.$inject = ['$scope', '$location', 'authService', '$state']
+loginCtrl.$inject = ['$scope', '$location', 'authService', '$state'];
 function loginCtrl($scope, $location, authService, $state) {
 
     $scope.login = login;
@@ -2120,7 +2120,7 @@ function loginCtrl($scope, $location, authService, $state) {
 
 angular
     .module('app')
-    .controller('profileCtrl', profileCtrl)
+    .controller('profileCtrl', profileCtrl);
 
 
 profileCtrl.$inject = ['$scope', 'dataSvc', 'authService', '$state'];
@@ -2153,9 +2153,9 @@ function profileCtrl($scope, dataSvc, authService, $state) {
     };
 };
 angular.module('app')
-    .controller('registerCtrl', registerCtrl)
+    .controller('registerCtrl', registerCtrl);
 
-registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state']
+registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state'];
 function registerCtrl($scope, $location, $timeout, authService, $state) {
 
     $scope.getRank = getRank;
@@ -2301,7 +2301,7 @@ function registerCtrl($scope, $location, $timeout, authService, $state) {
 
 angular
 .module('app')
-.controller('navbarCtrl', navbarCtrl)
+.controller('navbarCtrl', navbarCtrl);
 
 navbarCtrl.$inject = ['$location', 'dataSvc', 'authService'];
 function navbarCtrl ($location, dataSvc, authService) {
@@ -2316,7 +2316,7 @@ function navbarCtrl ($location, dataSvc, authService) {
 
   function init () {
     if (vm.authentication.isAuth) {
-      vm.userData = dataSvc.getCurUser()
+      vm.userData = dataSvc.getCurUser();
     };
   };
   
@@ -2329,7 +2329,7 @@ function navbarCtrl ($location, dataSvc, authService) {
 angular.module('app')
     .controller('pocsCtrl', pocsCtrl);
 
-pocsCtrl.$inject['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll']
+pocsCtrl.$inject = ['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll'];
 function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll) {
 
     var Pocs = dataSvc.managePocs();
@@ -2370,7 +2370,7 @@ function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll)
     function toggleEdit(contact) {
         $scope.showEdit = true;
         $scope.update = contact;
-        $location.hash('pocs')
+        $location.hash('pocs');
         $anchorScroll();
     };
 };
@@ -2403,7 +2403,7 @@ function toDoCtrl(authService, dataSvc, $window) {
             vm.authed = true;
             vm.userData = dataSvc.getCurUser().$promise.then( function (data) {
                 vm.toDos = data.toDos;
-            })
+            });
         };
     };
 
@@ -2434,7 +2434,7 @@ function toDoCtrl(authService, dataSvc, $window) {
     newProjectCtrl.$inject = ["$scope", "dataSvc", "$log", "$state", "$window"];
     angular
         .module('app')
-        .controller('newProjectCtrl', newProjectCtrl)
+        .controller('newProjectCtrl', newProjectCtrl);
 
     /** @ngInject */
     function newProjectCtrl($scope, dataSvc, $log, $state, $window){
@@ -2451,8 +2451,8 @@ function toDoCtrl(authService, dataSvc, $window) {
         
         function addCategory(category) {
             if (vm.categories.indexOf(category) == -1) {
-                vm.categories.push(category)
-                vm.addedCategory = ""
+                vm.categories.push(category);
+                vm.addedCategory = "";
                 $window.document.getElementById('newcategory').focus();
             };
         };
@@ -2471,7 +2471,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                 vm.submittedCategory = "";
             }
             else {
-                vm.categories.pop(category)
+                vm.categories.pop(category);
                 vm.submittedCategory = "";
             };
 
@@ -2482,15 +2482,15 @@ function toDoCtrl(authService, dataSvc, $window) {
             vm.new.categories = "";
             angular.forEach(vm.categories, function (val, i) {
                 if (i !== vm.categories.length - 1) {
-                    vm.new.categories = vm.new.categories + val + ","
+                    vm.new.categories = vm.new.categories + val + ",";
                 }
                 else {
-                    vm.new.categories = vm.new.categories + val
+                    vm.new.categories = vm.new.categories + val;
                 };
             });
             
             projMgr.save(vm.new, function (data) {
-                $log.log('saving')
+                $log.log('saving');
                 $state.transitionTo('app.projects.details', { id: data.id }, { reload: true });
             });
         };
@@ -2503,7 +2503,7 @@ function toDoCtrl(authService, dataSvc, $window) {
     projectDetsCtrl.$inject = ["dataSvc", "$stateParams", "$log", "$scope", "$state", "$document", "Upload", "$timeout"];
     angular
         .module('app')
-        .controller('projectDetsCtrl', projectDetsCtrl)
+        .controller('projectDetsCtrl', projectDetsCtrl);
 
     /** @ngInject */
     function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, Upload, $timeout) {
@@ -2536,7 +2536,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         $scope.saveComment = saveComment;           // Save a new comment
         $scope.saveResource = saveResource;         // Save a new resource
         $scope.saveTask = saveTask;                 // Save a new task
-        $scope.taskComplete = taskComplete          // Mark task complete
+        $scope.taskComplete = taskComplete;          // Mark task complete
         $scope.toggleDetails = toggleDetails;       // Show/hide task details
         $scope.toggleLead = toggleLead;             // Toggle user as a project lead
         $scope.unassignTask = unassignTask;         // Remove a user from a task
@@ -2554,7 +2554,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                         description: "",
                         priority: "Normal",
                         projectId: project.id
-                    }
+                    };
                 });
             } else {
                 $scope.newTask = {
@@ -2562,7 +2562,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                     description: "",
                     priority: "Normal",
                     projectId: $scope.project.id
-                }
+                };
                 populateChart($scope.project);
             }
         }
@@ -2630,11 +2630,11 @@ function toDoCtrl(authService, dataSvc, $window) {
                         $scope.project.workItems[t].assignedUsers = [];
                     } else {
                         $scope.project.workItems[t].assignedUsers.splice(u,1);
-                        $log.log('spliced',$scope.project.workItems[t].assignedUsers)
+                        $log.log('spliced',$scope.project.workItems[t].assignedUsers);
                     }
                     $scope.taskSelected = null;
                 // })
-            })
+            });
         }
         
         function delComment(id) {
@@ -2687,7 +2687,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function saveComment(workItem) {
-            $scope.newComment.author = $scope.curUser.rateName
+            $scope.newComment.author = $scope.curUser.rateName;
             $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
                 $state.reload();
@@ -2698,7 +2698,7 @@ function toDoCtrl(authService, dataSvc, $window) {
             if ($scope.newLink.url != null) {
                 $scope.newLink.projectId = $scope.project.id;
                 linkMgr.save($scope.newLink, function (data) {
-                    $scope.project.links.push(data)
+                    $scope.project.links.push(data);
                 });
             }
         }
@@ -2733,7 +2733,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                 user.projectLead = true;
             };
             teamMgr.update({ id: user.id }, user, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id })
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
             });
         }
 
@@ -2752,7 +2752,7 @@ function toDoCtrl(authService, dataSvc, $window) {
             $scope.errFiles = errFiles;
             angular.forEach(files, function (file) {
                 // attachMgr.save(file)
-                $log.log(file)
+                $log.log(file);
 
                 // file.upload = Upload.upload({
                 //     url: 'http://localhost:5000/api/Attachments',
@@ -2781,7 +2781,7 @@ function toDoCtrl(authService, dataSvc, $window) {
     projectListCtrl.$inject = ["$scope", "dataSvc", "$log", "$uibModal", "$document", "authService", "$filter"];
     angular
         .module('app')
-        .controller('projectListCtrl', projectListCtrl)
+        .controller('projectListCtrl', projectListCtrl);
 
     /** @ngInject */
     function projectListCtrl($scope, dataSvc, $log, $uibModal, $document, authService, $filter) {
@@ -2804,7 +2804,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                 angular.forEach(data, function(project) {
                     // Set a variable to hold a bool, iterate through each team member
                     angular.forEach(project.teamMembers, function(tm) {
-                        var tMember = ($filter('lowercase')(tm.userName))
+                        var tMember = ($filter('lowercase')(tm.userName));
                         if (username == tMember) {
                             // $scope.$apply(function () {
                                 vm.yourProjs.push(project);
@@ -2915,7 +2915,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         _init();
 
         function _init() {
-            if ($stateParams.topicId !== undefined) {
+            if ($stateParams.topicId !== angular.isUndefined) {
                 topicMgr.get({ id: $stateParams.topicId }, function (data) {
                     vm.topic = data;
                     vm.isNewTopic = false;
@@ -2927,7 +2927,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                     references: []
                 };
             } // end ifElse
-            vm.isNewTopic = vm.topic.id === undefined ? true : false;
+            vm.isNewTopic = vm.topic.id === angular.isUndefined ? true : false;
             setActiveTab('topic');
         }
 
@@ -2990,7 +2990,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delQuestion(q) {
             var i = vm.selectedSection.questions.indexOf(q);
-            if (q.id !== undefined) {
+            if (q.id !== angular.isUndefined) {
                 questionMgr.delete({ id: q.id });
             }
             vm.selectedSection.questions.splice(i, 1);
@@ -2998,7 +2998,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delReference(ref) {
             var i = vm.topic.references.indexOf(ref);
-            if (ref.id !== undefined) {
+            if (ref.id !== angular.isUndefined) {
                 referenceMgr.delete({ id: ref.id });
             }
             vm.topic.references.splice(i, 1);
@@ -3006,7 +3006,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delSection(sect) {
             var i = vm.selectedReference.sections.indexOf(sect);
-            if (sect.id !== undefined) {
+            if (sect.id !== angular.isUndefined) {
                 sectionMgr.delete({ id: sect.id });
             }
             vm.selectedReference.sections.splice(i, 1);
@@ -3015,7 +3015,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         function delTopic(topic) {
             topicMgr.delete({ id: topic.id }, function () {
                 _init();
-            })
+            });
         }
 
         function setActiveTab(activeTab) {
@@ -3033,7 +3033,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateQuestion(q) {
-            if (q.id !== undefined) {
+            if (q.id !== angular.isUndefined) {
                 questionMgr.update({ id: q.id }, q);
             } else if (q.question !== '' && q.answer !== '') {
                 questionMgr.save(q, function (data) {
@@ -3044,7 +3044,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateReference(ref) {
-            if (ref.id !== undefined) {
+            if (ref.id !== angular.isUndefined) {
                 referenceMgr.update({ id: ref.id }, ref);
             } else if (ref.title !== '') {
                 referenceMgr.save(ref, function (data) {
@@ -3055,7 +3055,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateSection(sect) {
-            if (sect.id !== undefined) {
+            if (sect.id !== angular.isUndefined) {
                 sectionMgr.update({ id: sect.id }, sect);
             } else if (sect.title !== '') {
                 sectionMgr.save(sect, function (data) {
@@ -3100,7 +3100,7 @@ function toDoCtrl(authService, dataSvc, $window) {
             var quizSelectors = {sections: vm.selectedSections};
             quizGenMgr.save(quizSelectors, function(quiz) {
                 vm.quiz = quiz;
-            })
+            });
         }
 
         function loadTopic() {
@@ -3119,9 +3119,9 @@ function toDoCtrl(authService, dataSvc, $window) {
 
 }());
 angular.module('app')
-.controller('rosterCtrl', rosterCtrl)
+.controller('rosterCtrl', rosterCtrl);
 
-rosterCtrl.$inject = ['$scope', 'dataSvc']
+rosterCtrl.$inject = ['$scope', 'dataSvc'];
 function rosterCtrl ($scope, dataSvc) {
     
     $scope.sailors = dataSvc.getUsers();
