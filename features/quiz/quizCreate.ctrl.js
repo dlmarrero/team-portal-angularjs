@@ -43,7 +43,7 @@
         _init();
 
         function _init() {
-            if ($stateParams.topicId !== angular.isUndefined) {
+            if ($stateParams.topicId !== undefined) {
                 topicMgr.get({ id: $stateParams.topicId }, function (data) {
                     vm.topic = data;
                     vm.isNewTopic = false;
@@ -55,7 +55,7 @@
                     references: []
                 };
             } // end ifElse
-            vm.isNewTopic = vm.topic.id === angular.isUndefined ? true : false;
+            vm.isNewTopic = vm.topic.id === undefined ? true : false;
             setActiveTab('topic');
         }
 
@@ -118,7 +118,7 @@
 
         function delQuestion(q) {
             var i = vm.selectedSection.questions.indexOf(q);
-            if (q.id !== angular.isUndefined) {
+            if (q.id !== undefined) {
                 questionMgr.delete({ id: q.id });
             }
             vm.selectedSection.questions.splice(i, 1);
@@ -126,7 +126,7 @@
 
         function delReference(ref) {
             var i = vm.topic.references.indexOf(ref);
-            if (ref.id !== angular.isUndefined) {
+            if (ref.id !== undefined) {
                 referenceMgr.delete({ id: ref.id });
             }
             vm.topic.references.splice(i, 1);
@@ -134,7 +134,7 @@
 
         function delSection(sect) {
             var i = vm.selectedReference.sections.indexOf(sect);
-            if (sect.id !== angular.isUndefined) {
+            if (sect.id !== undefined) {
                 sectionMgr.delete({ id: sect.id });
             }
             vm.selectedReference.sections.splice(i, 1);
@@ -161,7 +161,7 @@
         }
 
         function updateQuestion(q) {
-            if (q.id !== angular.isUndefined) {
+            if (q.id !== undefined) {
                 questionMgr.update({ id: q.id }, q);
             } else if (q.question !== '' && q.answer !== '') {
                 questionMgr.save(q, function (data) {
@@ -172,7 +172,7 @@
         }
 
         function updateReference(ref) {
-            if (ref.id !== angular.isUndefined) {
+            if (ref.id !== undefined) {
                 referenceMgr.update({ id: ref.id }, ref);
             } else if (ref.title !== '') {
                 referenceMgr.save(ref, function (data) {
@@ -183,7 +183,7 @@
         }
 
         function updateSection(sect) {
-            if (sect.id !== angular.isUndefined) {
+            if (sect.id !== undefined) {
                 sectionMgr.update({ id: sect.id }, sect);
             } else if (sect.title !== '') {
                 sectionMgr.save(sect, function (data) {

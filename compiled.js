@@ -533,6 +533,15 @@ angular
       label: 'Create Quiz'
     }
   })
+  .state('app.quiz.yourQuiz', {
+    url: '/yourquiz',
+    templateUrl: 'features/quiz/yourQuiz.html',
+    // controller: 'quizCreateCtrl',
+    // controllerAs: 'vm',
+    ncyBreadcrumb: {
+      label: 'Your Quiz'
+    }
+  })
   .state('app.quiz.edit', {
     url: '/edit/:topicId',
     templateUrl: 'features/quiz/quizCreate.html',
@@ -1874,7 +1883,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 angular.module('app')
     .factory('authInterceptorService', authInterceptorService);
 
-authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state']
+authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state'];
 function authInterceptorService($q, $location, localStorageService, $window, $state) {
 
     var authInterceptorServiceFactory = {};
@@ -1941,7 +1950,8 @@ function dataSvc($resource, authService) {
         manageReferences: manageReferences,
         manageSections: manageSections,
         manageTopics: manageTopics,
-        quizGen: quizGen
+        quizGen: quizGen,
+        checkQuiz: checkQuiz
     };
 
 
@@ -2093,6 +2103,12 @@ function dataSvc($resource, authService) {
 
     function quizGen() {
         return $resource(aspApiUrl + '/api/Quiz');
+    }
+
+    function checkQuiz() {
+        return $resource(aspApiUrl + '/api/Quiz/CheckAnswers', null, {
+            'send': { method: 'POST', isArray: true }
+        });
     }
 };
 angular.module('app')
@@ -2872,6 +2888,20 @@ function toDoCtrl(authService, dataSvc, $window) {
 (function () {
     'use strict';
 
+    angular
+        .module('app')
+        .directive('yourQuiz', yourQuiz);
+
+    function yourQuiz() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/quiz/yourQuiz.html',
+        }
+    }
+}());
+(function () {
+    'use strict';
+
     quizCreateCtrl.$inject = ["$scope", "$state", "$stateParams", "$log", "dataSvc"];
     angular
         .module('app')
@@ -2915,7 +2945,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         _init();
 
         function _init() {
-            if ($stateParams.topicId !== angular.isUndefined) {
+            if ($stateParams.topicId !== undefined) {
                 topicMgr.get({ id: $stateParams.topicId }, function (data) {
                     vm.topic = data;
                     vm.isNewTopic = false;
@@ -2927,7 +2957,7 @@ function toDoCtrl(authService, dataSvc, $window) {
                     references: []
                 };
             } // end ifElse
-            vm.isNewTopic = vm.topic.id === angular.isUndefined ? true : false;
+            vm.isNewTopic = vm.topic.id === undefined ? true : false;
             setActiveTab('topic');
         }
 
@@ -2990,7 +3020,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delQuestion(q) {
             var i = vm.selectedSection.questions.indexOf(q);
-            if (q.id !== angular.isUndefined) {
+            if (q.id !== undefined) {
                 questionMgr.delete({ id: q.id });
             }
             vm.selectedSection.questions.splice(i, 1);
@@ -2998,7 +3028,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delReference(ref) {
             var i = vm.topic.references.indexOf(ref);
-            if (ref.id !== angular.isUndefined) {
+            if (ref.id !== undefined) {
                 referenceMgr.delete({ id: ref.id });
             }
             vm.topic.references.splice(i, 1);
@@ -3006,7 +3036,7 @@ function toDoCtrl(authService, dataSvc, $window) {
 
         function delSection(sect) {
             var i = vm.selectedReference.sections.indexOf(sect);
-            if (sect.id !== angular.isUndefined) {
+            if (sect.id !== undefined) {
                 sectionMgr.delete({ id: sect.id });
             }
             vm.selectedReference.sections.splice(i, 1);
@@ -3033,7 +3063,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateQuestion(q) {
-            if (q.id !== angular.isUndefined) {
+            if (q.id !== undefined) {
                 questionMgr.update({ id: q.id }, q);
             } else if (q.question !== '' && q.answer !== '') {
                 questionMgr.save(q, function (data) {
@@ -3044,7 +3074,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateReference(ref) {
-            if (ref.id !== angular.isUndefined) {
+            if (ref.id !== undefined) {
                 referenceMgr.update({ id: ref.id }, ref);
             } else if (ref.title !== '') {
                 referenceMgr.save(ref, function (data) {
@@ -3055,7 +3085,7 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function updateSection(sect) {
-            if (sect.id !== angular.isUndefined) {
+            if (sect.id !== undefined) {
                 sectionMgr.update({ id: sect.id }, sect);
             } else if (sect.title !== '') {
                 sectionMgr.save(sect, function (data) {
@@ -3067,47 +3097,93 @@ function toDoCtrl(authService, dataSvc, $window) {
     }
 
 }());
-(function(){
+(function () {
     'use strict';
 
-    quizGenCtrl.$inject = ["$scope", "dataSvc"];
+    quizGenCtrl.$inject = ["$scope", "dataSvc", "$log"];
     angular
         .module('app')
         .controller('quizGenCtrl', quizGenCtrl);
 
     /** @ngInject */
-    function quizGenCtrl($scope, dataSvc){
+    function quizGenCtrl($scope, dataSvc, $log) {
         var topicMgr = dataSvc.manageTopics();
         var referenceMgr = dataSvc.manageReferences();
         var sectionMgr = dataSvc.manageSections();
         var questionMgr = dataSvc.manageQuestions();
         var quizGenMgr = dataSvc.quizGen();
-        
+        var quizSubMgr = dataSvc.checkQuiz();
+
         var vm = this;
+
+        vm.quizMode = false;
+        vm.quizSubmission = [];
         vm.selectedSections = [];
-        
+        vm.numberOfQuestions = 25;
+
         vm.generateQuiz = generateQuiz;
+        vm.gradeQuiz = gradeQuiz;
         vm.loadTopic = loadTopic;
         vm.selectSection = selectSection;
 
         init();
 
-        function init(){
+        function init() {
             vm.topics = topicMgr.query();
         }
 
         function generateQuiz() {
-            var quizSelectors = {sections: vm.selectedSections};
-            quizGenMgr.save(quizSelectors, function(quiz) {
+            vm.showResults = false;
+            var quizSelectors = { 
+                sections: vm.selectedSections, 
+                numberOfQuestions: vm.numberOfQuestions 
+            };
+            quizGenMgr.save(quizSelectors, function (quiz) {
                 vm.quiz = quiz;
+                // vm.quizMode = true;
             });
         }
 
+        function gradeQuiz() {
+            vm.quizSubmission = [];
+            var i = 0, arrLen = vm.quiz.questions.length;
+            for (; i < arrLen; i++) {
+                var q = vm.quiz.questions[i];
+                var newSub = {
+                    questionId: q.questionId,
+                    sectionId: q.sectionId,
+                    selected: q.selected
+                };
+                vm.quizSubmission.push(newSub);
+            }
+            var s = { submission: vm.quizSubmission };
+            quizSubMgr.send(s, function (data) {
+                vm.quizResults = data;
+                vm.showResults = true;
+            });
+
+
+        }
+
         function loadTopic() {
-            vm.references = referenceMgr.query({ topicId: vm.selectedTopic.id });
+            referenceMgr.query({ topicId: vm.selectedTopic.id }, function (data) {
+                vm.references = data;
+                var i = 0, arrLen = vm.references.length;
+                for (; i < arrLen; i++) {
+                    var n = 0, arrLen1 = vm.references[i].sections.length;
+                    for (; n < arrLen1; n++) {
+                        $log.log('vm.references[i].sections[n]', vm.references[i].sections[n]);
+                        vm.references[i].sections[n].selected = true;
+                        vm.selectedSections.push(vm.references[i].sections[n]);
+                    }
+                }
+            });
+
         }
 
         function selectSection(sect) {
+            $log.log('selectSection', selectSection);
+
             var i = vm.selectedSections.indexOf(sect);
             if (i === -1) {
                 vm.selectedSections.push(sect);

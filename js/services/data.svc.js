@@ -33,7 +33,8 @@ function dataSvc($resource, authService) {
         manageReferences: manageReferences,
         manageSections: manageSections,
         manageTopics: manageTopics,
-        quizGen: quizGen
+        quizGen: quizGen,
+        checkQuiz: checkQuiz
     };
 
 
@@ -185,5 +186,11 @@ function dataSvc($resource, authService) {
 
     function quizGen() {
         return $resource(aspApiUrl + '/api/Quiz');
+    }
+
+    function checkQuiz() {
+        return $resource(aspApiUrl + '/api/Quiz/CheckAnswers', null, {
+            'send': { method: 'POST', isArray: true }
+        });
     }
 };

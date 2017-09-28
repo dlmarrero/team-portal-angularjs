@@ -57,7 +57,7 @@
                             ng-blur="vm.updateReference(ref)" placeholder="Enter description of new reference..."></td>
                     <td style="text-align:center"><a tab class="nav-link btn" href='#sections' ng-click="vm.setReference(ref)" ng-class="{disabled: vm.topic.title === ''}"
                             data-toggle="tab" role="tab">Edit Sections</a></td>
-                    <td style="text-align:center"><a href="" ng-click="vm.delReference(ref)" style="color:red"><i class="fa fa-trash"></i></a></td>
+                    <td style="text-align:center"><a href="" ng-click="vm.delReference(ref)" style="color:red; font-size:18px"><i class="fa fa-trash"></i></a></td>
                 </tr>
             </table>
         </div>
@@ -86,7 +86,7 @@
                             ng-blur="vm.updateSection(sect)" placeholder="Enter description of new section..."></td>
                     <td style="text-align:center"><a tab class="nav-link btn" href='#questions' ng-click="vm.setSection(sect)" ng-class="{disabled: sect.title === ''}"
                             data-toggle="tab" role="tab">Edit Questions</a></td>
-                    <td style="text-align:center"><a href="" ng-click="vm.delSection(sect)" style="color:red"><i class="fa fa-trash"></i></a></td>
+                    <td style="text-align:center"><a href="" ng-click="vm.delSection(sect)" style="color:red; font-size:18px"><i class="fa fa-trash"></i></a></td>
                 </tr>
             </table>
         </div>
@@ -112,7 +112,7 @@
                             placeholder="Enter new question..." required></textarea></td>
                     <td><textarea rows="3" class="form-control" name="answer" ng-value="q.answer" ng-model="q.answer" ng-blur="vm.updateQuestion(q)"
                             placeholder="Enter description of new section..."></textarea></td>
-                    <td style="text-align:center"><a href="" ng-click="vm.delQuestion(q)" style="color:red"><i class="fa fa-trash"></i></a></td>
+                    <td style="text-align:center"><a href="" ng-click="vm.delQuestion(q)" style="color:red; font-size:18px"><i class="fa fa-trash"></i></a></td>
                 </tr>
             </table>
         </div>

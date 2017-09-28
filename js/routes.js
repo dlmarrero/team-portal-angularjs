@@ -223,6 +223,15 @@ angular
       label: 'Create Quiz'
     }
   })
+  .state('app.quiz.yourQuiz', {
+    url: '/yourquiz',
+    templateUrl: 'features/quiz/yourQuiz.html',
+    // controller: 'quizCreateCtrl',
+    // controllerAs: 'vm',
+    ncyBreadcrumb: {
+      label: 'Your Quiz'
+    }
+  })
   .state('app.quiz.edit', {
     url: '/edit/:topicId',
     templateUrl: 'features/quiz/quizCreate.html',

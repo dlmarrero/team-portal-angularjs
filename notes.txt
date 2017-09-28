@@ -18,12 +18,17 @@
 ************
 *   QUIZ   *
 ************
-- Topic list does not update when clicking on breadcrumb to go back
-- Back button in editor
-- Delete Topic
-- Create topic "enter" to submit
-- Add count of questions per ref/sect etc
-- Select quiz length functionality
-- Saving a generated quiz in the database with questions and correct answers should result in fewer
-    database trips/faster response time. Then delete quiz from database when done.
-- WBN: export to pdf functionality
+- Give score on submission
+- Set $watch so changes to topics list get updated on main page
+- Back/Done button in editor
+- Delete Topic functionality
+- Create topic - make form, enter key to submit
+- Add count of questions per section
+- Would be nice: export flashcards to pdf
+- toggleSelect all sections 
+    * click on ref to toggle its sections, 
+    * master selectAll checkbox)
+- Section links to display on showResults
+- Add question type functionality 
+    * t/f, fill in the blank, multi-choice, select all that apply
+- Make quiz form so "enter" key submits

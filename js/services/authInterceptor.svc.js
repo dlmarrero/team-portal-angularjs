@@ -1,7 +1,7 @@
 angular.module('app')
     .factory('authInterceptorService', authInterceptorService);
 
-authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state']
+authInterceptorService.$inject = ['$q', '$location', 'localStorageService', '$window', '$state'];
 function authInterceptorService($q, $location, localStorageService, $window, $state) {
 
     var authInterceptorServiceFactory = {};
