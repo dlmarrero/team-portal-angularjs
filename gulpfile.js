@@ -106,7 +106,7 @@ gulp.task('concat:dist', function () {
         'js/*.js', 
         'js/**/*.js', 
         'features/**/*.js'])
-        .pipe(concat('compiled.js'))
+        .pipe(concat('concat.js'))
         .pipe(ngAnnotate())
         .pipe(uglify({mangle: true}))
         .pipe(gulp.dest(paths.dist));
@@ -146,7 +146,7 @@ gulp.task('replace:bower', function () {
 });
 
 gulp.task('build:dist', function (callback) {
-    runSequence('clean:dist', 'copy:bower', 'copy:css', 'copy:img', 'copy:fonts', 'concat:js', 'copy:views', 'copy:html', 'replace:bower', callback);
+    runSequence('clean:dist', 'copy:bower', 'copy:css', 'copy:img', 'copy:fonts', 'concat:dist', 'copy:views', 'copy:html', 'replace:bower', callback);
 });
 
 gulp.task('cs', function (callback) {
