@@ -1,0 +1,9 @@
+<h4 ng-if="!$stateParams.id">Your Projects</h4>
+<hr>
+<div>
+    <span ng-if="vm.yourProjs.length == 0">You are not currently assigned to any projects.</span>
+    <div ng-repeat="project in vm.yourProjs | orderBy:['complete','id']">
+        <project-details project="project"></project-details>
+        <hr>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-block">
+        <h4><i class="fa fa-book"></i> Quiz Generator</h4>
+        <hr>
+        <ui-view>
+            <div ng-hide="vm.quizMode">
+                <div class="row">
+                    <div class="col-lg-10" style="padding-right:0">
+                        <select class="form-control" name="selectTopic" id="selectTopic" ng-options="topic.title for topic in vm.topics | orderBy:'title' track by topic.id"
+                            ng-model="vm.selectedTopic" ng-change="vm.loadTopic()">
+                        <option value="" selected>----Select a Topic----</option>
+                    </select>
+                    </div>
+                    <div class="col-lg-2" style="padding-left:0">
+                        <a ui-sref=".create" class="btn btn-primary" style="width:100%">
+                        <i class="fa fa-plus"></i> New Topic
+                    </a>
+                    </div>
+                </div>
+                <br>
+                <div style="text-align:center" ng-show="vm.selectedTopic.title.length">
+                    <h4>
+                        {{vm.selectedTopic.title}}&nbsp;<a ui-sref='.edit({ topicId: vm.selectedTopic.id })'><sup><i class="fa fa-pencil"></i></sup></a>
+                    </h4>
+                    Desired number of questions: 
+                    <input type="number" style="width:50px" ng-model="vm.numberOfQuestions" ng-value="vm.numberOfQuestions">
+                    <div ng-show="!vm.references.length">
+                        <h4>No references have been added to this topic.<br>Click the above pencil icon to begin.</h4>
+                    </div>
+                </div>
+                <div ng-repeat="ref in vm.references">
+                    <div>
+                        <p><span style="font-size:16px"><strong>Reference: </strong>{{ref.title}}</span></p>
+                        <p ng-show="ref.description.length"><em>{{ref.description}}</em></p>
+                    </div>
+                    <div style="padding-left:20px">
+                            <p ng-show="!ref.sections.length"><span style="font-size:16px">No sections have been added to this reference.</span></p>
+                        <div ng-repeat="sect in ref.sections">
+                            <div class="row">
+                                <div style="width:30px">
+                                    <input style="transform: scale(1.25);margin-top:7px" type="checkbox" id="sectBox" class="form-control" ng-model="sect.selected" ng-change="vm.selectSection(sect)">
+                                </div>
+                                <div>
+                                    <label for="sectBox" style="padding-right: 15px;font-size:16px">{{sect.title}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <a ui-sref=".yourQuiz" class="btn btn-info" ng-disabled="!vm.selectedSections.length" style="width:100%" ng-if="vm.selectedTopic" ng-click="vm.generateQuiz()">Generate Quiz</a>
+            </div>
+            <your-quiz ng-show="vm.quizMode"></your-quiz>
+        </ui-view>
+    </div>
+</div>

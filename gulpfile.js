@@ -53,7 +53,7 @@ gulp.task('serve', ['sass'], function () {
 gulp.task('serve:lite', function () {
 
     browserSync.init({
-        server: "./"
+        server: "./dist"
     });
 
     gulp.watch('**/*.css').on('change', browserSync.reload);
@@ -69,6 +69,12 @@ gulp.task('sass', function () {
         .pipe(browserSync.stream());
 });
 
+gulp.task('dist:sass', function () {
+    return gulp.src('./scss/style.scss')
+        .pipe(sass())
+        .pipe(gulp.dest(paths.dist + '/css'))
+});
+
 gulp.task('sass:watch', function () {
     gulp.watch('./scss/**/*.scss');
 });
@@ -78,20 +84,21 @@ gulp.task('clean:dist', function () {
 });
 
 gulp.task('copy:bower', function () {
-    return gulp.src(mainBowerFiles(['**/*.js', '!**/*.min.js']))
+    return gulp.src('./bower_components/**/*.min.js')
+        .pipe(rename({dirname: ""}))
         .pipe(gulp.dest(paths.dist + '/js/libs'))
-        .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(paths.dist + '/js/libs'));
+        // .pipe(uglify())
+        // .pipe(rename({ suffix: '.min' }))
+        // .pipe(gulp.dest(paths.dist + '/js/libs'));
 });
 
 gulp.task('copy:css', function () {
-    return gulp.src('./css/**/*')
+    return gulp.src('./css/*')
         .pipe(gulp.dest(paths.dist + '/css'));
 });
 
 gulp.task('copy:img', function () {
-    return gulp.src('./img/**/*')
+    return gulp.src('./img/*')
         .pipe(gulp.dest(paths.dist + '/img'));
 });
 
@@ -102,13 +109,13 @@ gulp.task('copy:fonts', function () {
 
 gulp.task('concat:dist', function () {
     gulp.src(
-        ['js/app.js', 
-        'js/*.js', 
-        'js/**/*.js', 
-        'features/**/*.js'])
-        .pipe(concat('concat.js'))
+        ['./js/app.js', 
+        './js/*.js', 
+        './js/**/*.js', 
+        './features/**/*.js'])
+        .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())
-        .pipe(uglify({mangle: true}))
+        // .pipe(uglify())
         .pipe(gulp.dest(paths.dist));
 })
 
@@ -116,14 +123,23 @@ gulp.task('concat:dev', function () {
     gulp.src(
         ['js/app.js', 
         'js/*.js', 
-        'js/**/*.js', 
-        'features/**/*.js'])
+        'js/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())
         // .pipe(uglify())
         .pipe(gulp.dest('.'))
         .pipe(browserSync.stream());
+})
+
+gulp.task('copy:js', function () {
+    return gulp.src('./js/**/*')
+        .pipe(gulp.dest(paths.dist + '/js'));
+})
+
+gulp.task('copy:features', function () {
+    return gulp.src('./features/**/**/*')
+        .pipe(gulp.dest(paths.dist + '/features'));
 })
 
 gulp.task('copy:views', function () {
@@ -146,7 +162,7 @@ gulp.task('replace:bower', function () {
 });
 
 gulp.task('build:dist', function (callback) {
-    runSequence('clean:dist', 'copy:bower', 'copy:css', 'copy:img', 'copy:fonts', 'concat:dist', 'copy:views', 'copy:html', 'replace:bower', callback);
+    runSequence('clean:dist', 'copy:bower', 'dist:sass', 'copy:css', 'copy:img', 'copy:fonts', 'concat:dist', 'copy:js', 'copy:views', 'copy:features', 'copy:html', 'replace:bower');
 });
 
 gulp.task('cs', function (callback) {

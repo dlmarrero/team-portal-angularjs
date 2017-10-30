@@ -1,0 +1,359 @@
+<div class="card">
+    <div class="card-header card-inverse card-primary">
+        <h3><i class="fa fa-anchor"></i>&nbsp;{{sailor.rate}} {{sailor.lastName}}, {{sailor.firstName}}</h3>
+    </div>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- PERSONAL DATA  -->
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Personal Data</strong>
+                    </div>
+                    <div class="card-block">
+                        <table ng-show="!enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Rate/Rank:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p>{{sailor.rate}}/{{sailor.rank}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.lastName}}, {{sailor.firstName}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>E-mail:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <a href="mailto:{{sailor.email}}">
+                                        <p>{{sailor.email}}</p>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <p style="text-align: right"><strong>Address:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p>{{sailor.street}}<br> {{sailor.city}}, {{sailor.state}} {{sailor.zip}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Phone Number:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p ng-hide="enableEdit">{{sailor.phoneNumber}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- EDITABLE PERSONAL DATA  -->
+                        <table ng-show="enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rate:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.rate" ng-value="sailor.rate">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rank:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.rank" ng-value="sailor.rank">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>First Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.firstName" ng-value="sailor.firstName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Last Name:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.lastName" ng-value="sailor.lastName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Email:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.email" ng-value="sailor.email">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Street Address:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.street" ng-value="sailor.street">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>City:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.city" ng-value="sailor.city">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>State:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.state" ng-value="sailor.state">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Zip:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.zip" ng-value="sailor.zip">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Phone Number:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <input type="text" ng-model="newSailor.phoneNumber" ng-value="sailor.phoneNumber">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- ADMINISTRATIVE DATA -->
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Administrative Data</strong>
+                    </div>
+                    <div class="card-block">
+                        <table ng-show="!enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Rank Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.rankDate | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Report Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.reportDate | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>ADSD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.adsd | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>PRD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.prd | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>EAOS:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.eaos | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Blue Badge:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.blueBadge}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Destination Command:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.destCommand}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Destination UIC:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.destUIC}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- EDITABLE ADMIN DATA  -->
+                        <table ng-show="enableEdit">
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Rank Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.rankDate" ng-value="sailor.rankDate | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Report Date:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.reportDate" ng-value="sailor.reportDate | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>ADSD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.adsd" ng-value="sailor.adsd | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>PRD:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.prd" ng-value="sailor.prd | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>EAOS:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.eaos" ng-value="sailor.eaos | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Blue Badge:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="checkbox" ng-model="newSailor.blueBadge" ng-value="sailor.blueBadge">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Destination Command:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="text" ng-model="newSailor.destCommand" ng-value="sailor.destCommand">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px"><strong>Destination UIC:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="text" ng-model="newSailor.destUIC" ng-value="sailor.destUIC">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Role Assignment</strong>
+                    </div>
+                    <div class="card-block">
+                        <table>
+                            <tr>
+                                <td valign="top">
+                                    <p style="text-align: right;"><strong>Current Role(s):</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p ng-repeat="role in sailor.roles" ng-show="sailor.roles != '[]'">
+                                        {{role}}
+                                    </p>
+                                    <p ng-show="sailor.roles == ''">Non-privileged user</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right"><strong>Add/Remove Role:</strong></p>
+                                </td>
+                                <td style="padding-left: 10px;" valign="top">
+                                    <select ng-model="addedRole" ng-change="addRole()" ng-disabled="enableEdit">
+                                        <option value="" selected>Select role</option>
+                                        <option ng-repeat="role in roles" value="{{role.id}}">{{role.name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <strong>Edit Account</strong>
+                    </div>
+                    <div class="card-block" ng-hide="enableEdit">
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="enableEdit=true"><i class="fa fa-pencil"></i>&nbsp; Edit User</button>
+                        <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#confirmDelModal"><i class="fa fa-trash"></i>&nbsp; Delete User</button>
+                    </div>
+                    <div class="card-block" ng-show="enableEdit">
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateUser()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="enableEdit=false"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
+                    </div>
+                    <!-- Modal -->
+                    <div id="confirmDelModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">CONFIRM</h5>
+                                    <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <P>Are you sure you want to delete the user account for: </P>
+                                    <h6>{{sailor.rate}} {{sailor.lastName}}, {{sailor.firstName}}</h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" ng-click="deleteUser()" remove-modal><i class="fa fa-trash"></i>&nbsp; Delete User</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        Last Updated:  {{sailor.updated | date:'dd MMM yyyy @ HH:mm'}}
+    </div>
+</div>
