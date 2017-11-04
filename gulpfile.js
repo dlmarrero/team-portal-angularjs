@@ -158,6 +158,7 @@ gulp.task('replace:bower', function () {
         './dist/**/*.js',
     ], { base: './' })
         .pipe(replace(/bower_components+.+(\/[a-z0-9][^/]*\.[a-z0-9]+(\'|\"))/ig, 'js/libs$1'))
+        .pipe(replace('<script src="js/libs/script>', '<script src="js/libs/ui-bootstrap-tpls.min.js"></script>'))
         .pipe(gulp.dest('./'));
 });
 

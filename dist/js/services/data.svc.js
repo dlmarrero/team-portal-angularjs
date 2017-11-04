@@ -4,7 +4,7 @@ angular.module('app')
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
     
-    var aspApiUrl = 'portal';
+    var aspApiUrl = 'http://localhost:5000';
     var authentication = authService.authentication;
 
     return {
