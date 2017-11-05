@@ -47,12 +47,12 @@
                                 <!-- </span> -->
                                 <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
                                 <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
-                                <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span ng-repeat="member in project.teamMembers | filter:{projectLead: true}"><i class="fa fa-caret-right-o"></i>{{member.rateName}}&nbsp;</span>
+                                <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span><i class="fa fa-caret-right-o"></i>{{project.team}}&nbsp;</span>
                                 </span>
                             </div>
-                            <div style="text-align:right;" ng-if="project.categories">
+                            <!-- <div style="text-align:right;" ng-if="project.categories">
                                 <span class="text-muted"><small><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;:&nbsp;{{category}}</small></span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

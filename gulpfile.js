@@ -123,7 +123,8 @@ gulp.task('concat:dev', function () {
     gulp.src(
         ['js/app.js', 
         'js/*.js', 
-        'js/**/*.js'])
+        './js/**/*.js', 
+        'features/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())

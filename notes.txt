@@ -13,6 +13,7 @@
 - Only one modal will load per refresh if submit is clicked
 - Configure cascade delete
 - When team lead or Complete is set, update projectList
+- Serious issues getting assigned users to update DOM, can't figure it out
 
 
 ************
@@ -32,3 +33,13 @@
 - Add question type functionality 
     * t/f, fill in the blank, multi-choice, select all that apply
 - Make quiz form so "enter" key submits
+
+***********
+* ROSTER  *
+***********
+- Team/tech lead checbox
+
+**********
+*  MISC  *
+**********
+- Separate training links in sidenav

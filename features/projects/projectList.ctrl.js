@@ -12,6 +12,7 @@
         var username = $filter('lowercase')(authService.authentication.userName);
         var vm = this;
 
+        vm.curUser = dataSvc.getCurUser();
         // vm.create = create;
         vm.data = {};
         vm.newProject = {};
@@ -24,15 +25,17 @@
             vm.data = projMgr.query(function (data) {
                 // Iterate through each project
                 angular.forEach(data, function(project) {
-                    // Set a variable to hold a bool, iterate through each team member
-                    angular.forEach(project.teamMembers, function(tm) {
-                        var tMember = ($filter('lowercase')(tm.userName));
-                        if (username == tMember) {
-                            // $scope.$apply(function () {
-                                vm.yourProjs.push(project);
-                            // });
-                        }
-                    });
+                    if (project.team === vm.curUser.team) {
+                        vm.yourProjs.push(project);
+                    };
+                    // angular.forEach(project.teamMembers, function(tm) {
+                    //     var tMember = ($filter('lowercase')(tm.userName));
+                    //     if (username == tMember) {
+                    //         // $scope.$apply(function () {
+                    //             vm.yourProjs.push(project);
+                    //         // });
+                    //     }
+                    // });
 
                     // angular.forEach(project[10], function(x) {
 
