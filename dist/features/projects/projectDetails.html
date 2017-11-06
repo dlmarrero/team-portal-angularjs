@@ -5,28 +5,26 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-lg-11">
+            <div class="col-lg-10">
                 <span ng-show="!editTitle" style="font-size:24px;font-weight:500">{{project.title}}&nbsp;</span>
                 <a ng-show="!editTitle" href="#" ng-click="editTitle=true">Edit</a>
                 <input type="text" ng-model="project.title" value="project.title" ng-show="editTitle" style="font-size: 20px;">
                 <a ng-show="editTitle" href="#" ng-click="updateProj()">Save</a>
-                <!-- <span ng-if="project.categories">
-                    <br>
-                    <i class="fa fa-tags"></i>
-                    <span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</span> -->
             </div>
-            <div class="col-lg-1 float-right" align="right">
-                <div align="center">
+            <div class="col-lg-2" style="text-align:right">
+                <div>
                     <span>Complete</span>
                     <br>
-                    <label class='form-control-label' for='complete'>
-                        <a href="#" ng-if="!project.complete" ng-click="projectComplete(true)">
-                            <i class="fa fa-square-o fa-2x"></i>
-                        </a>
-                        <a href="#" ng-if="project.complete" ng-click="projectComplete(false)">
-                            <i class="fa fa-check-square-o fa-2x"></i>
-                        </a>
-                    </label>
+                    <div style="padding-right: 20px">
+                        <label class='form-control-label' for='complete'>
+                            <a href="#" ng-if="!project.complete" ng-click="projectComplete(true)">
+                                <i class="fa fa-square-o fa-2x"></i>
+                            </a>
+                            <a href="#" ng-if="project.complete" ng-click="projectComplete(false)">
+                                <i class="fa fa-check-square-o fa-2x"></i>
+                            </a>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,45 +48,18 @@
                     <a href="#" ng-show="!editTeam" ng-click="editTeam = true">Edit</a>
                     <a href="#" ng-show="editTeam" ng-click="editTeam = false">Done</a>
                 </span>
-                <!-- <strong>Team Members:&nbsp;</strong>
-                <span class="float-right">
-                    <a href="#" ng-show="!editTeamMember" ng-click="editTeamMember = true">Edit</a>
-                    <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a>
-                </span> -->
                 <!-- Add Team Member  -->
-                <!-- <form> -->
                 <div class="input-group" ng-if="editTeam">
                     <select ng-model="project.team" ng-change="updateProj(project.team)">
                         <option ng-repeat="team in teams" value="{{team}}">{{team}}</option>
                     </select>
-                    <!-- <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control"> -->
-                    <!-- <span class="input-group-btn">
-                            <button type="submit" class="btn btn-info" ng-click="addTeamMembers(selected); selected=null">Add</button>
-                        </span> -->
                 </div>
-                <!-- </form> -->
                 <!-- Display Team Members  -->
                 <div ng-if="!editTeam">
                     <!-- <p ng-if="teamFeedback" style="color:rgb(2, 114, 2)">{{teamFeedback}}</p> -->
                     {{project.team}}
                     <p ng-if="!project.team">No team assigned</p>
                 </div>
-                <!-- <div ng-repeat="tm in project.teamMembers | orderBy:'projectLead'">
-                    <span ng-if="editTeam">
-                        <a href="#" ng-click="delTeamMember(tm.id)">
-                            <i class="fa fa-close"></i>
-                        </a>
-                    </span>&nbsp;{{tm.rateName}}
-                    <span ng-if="editTeamMember && !tm.projectLead">
-                        <a href="#" ng-click="toggleLead(tm)">Lead</a>
-                    </span>
-                    <span ng-if="editTeamMember && tm.projectLead">
-                        <a href="#" ng-click="toggleLead(tm)">Normal</a>
-                    </span>
-                    <span ng-if="tm.projectLead">
-                        <em>(Lead)</em>
-                    </span>
-                </div> -->
             </div>
         </div>
         <br>
@@ -264,8 +235,6 @@
                         <div class="input-group">
                             <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in teamMembers | filter:$viewValue"
                                 class="form-control" ng-value="taskSelected.rateName" autocomplete="off">
-                            <!-- <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
-                                class="form-control"> -->
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-info" ng-click="assignTask(taskSelected); taskSelected=null">Add</button>
                             </span>
@@ -291,7 +260,6 @@
             <div class="modal-footer">
                 <span style="color:rgb(1, 126, 1);position:absolute;left:10px">{{newTaskFeedback}}</span>
                 <button type="button" class="btn btn-primary" ng-click="saveTask()">Submit</button>
-                <!-- <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button> -->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Done</button>
             </div>
         </div>

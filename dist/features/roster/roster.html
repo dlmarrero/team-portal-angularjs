@@ -6,7 +6,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">TABLE SETTINGS</h5>
-                    <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                    <button type="button" class="close float-right" data-dismiss="modal">
+                        <i class="fa fa-remove"></i>
+                    </button>
                 </div>
                 <div class="modal-body" style="text-align: center">
                     <P>Select which columns to show in the roster table:</P>
@@ -16,7 +18,8 @@
                         <option value="admin">Administrative Data</option>
                         <option value="destination">Destination Command Data</option>
                     </select>
-                    <br><br>
+                    <br>
+                    <br>
                     <div class="card">
                         <div class="card-block">
                             <div class="row" style="align-content: left">
@@ -34,9 +37,9 @@
                                         <input type="checkbox" id="showName" ng-model="showName">
                                     </div>
                                     <div class="form-group">
-                                            <label for="showTeam">Team</label>
-                                            <input type="checkbox" id="showTeam" ng-model="showTeam">
-                                        </div>
+                                        <label for="showTeam">Team</label>
+                                        <input type="checkbox" id="showTeam" ng-model="showTeam">
+                                    </div>
                                     <div class="form-group">
                                         <label for="showEmail">Email</label>
                                         <input type="checkbox" id="showEmail" ng-model="showEmail">
@@ -119,22 +122,56 @@
                 <thead>
                     <tr>
                         <th style="width:10px;">#</th>
-                        <th class="td-centered" ng-show="showRate"><a href="#" ng-click="sortBy('rate')">Rate</a></th>
-                        <th class="td-centered" ng-show="showRank"><a href="#" ng-click="sortBy('rank')">Rank</a></th>
-                        <th class="td-centered" ng-show="showName"><a href="#" ng-click="sortBy('lastName')">Name</a></th>
-                        <th class="td-centered" ng-show="showTeam"><a href="#" ng-click="sortBy('team')">Team</a></th>
-                        <th class="td-centered" ng-show="showPhone"><a href="#" ng-click="sortBy('phoneNumber')">Phone</a></th>
-                        <th class="td-centered" ng-show="showAddress"><a href="#" ng-click="sortBy('street')">Address</a></th>
-                        <th class="td-centered" ng-show="showEmail"><a href="#" ng-click="sortBy('email')">Email</a></th>
-                        <th class="td-centered" ng-show="showAdsd"><a href="#" ng-click="sortBy('adsd')">ADSD</a></th>
-                        <th class="td-centered" ng-show="showReportDate"><a href="#" ng-click="sortBy('reportDate')">Report Date</a></th>
-                        <th class="td-centered" ng-show="showPrd"><a href="#" ng-click="sortBy('prd')">PRD</a></th>
-                        <th class="td-centered" ng-show="showEaos"><a href="#" ng-click="sortBy('eaos')">EAOS</a></th>
-                        <th class="td-centered" ng-show="showRankDate"><a href="#" ng-click="sortBy('rankDate')">Rank Date</a></th>
-                        <th class="td-centered" ng-show="showBlueBadge"><a href="#" ng-click="sortBy('blueBadge')">Blue Badge</a></th>
-                        <th class="td-centered" ng-show="showDestUic"><a href="#" ng-click="sortBy('destUIC')">Destination<br>UIC</a></th>
-                        <th class="td-centered" ng-show="showDestCommand"><a href="#" ng-click="sortBy('destCommand')">Destination<br>Command</a></th>
-                        <th class="td-centered" ng-show="showRoles"><a href="#" ng-click="sortBy('roles')">Roles</a></th>
+                        <th class="td-centered" ng-show="showRate">
+                            <a href="#" ng-click="sortBy('rate')">Rate</a>
+                        </th>
+                        <th class="td-centered" ng-show="showRank">
+                            <a href="#" ng-click="sortBy('rank')">Rank</a>
+                        </th>
+                        <th class="td-centered" ng-show="showName">
+                            <a href="#" ng-click="sortBy('lastName')">Name</a>
+                        </th>
+                        <th class="td-centered" ng-show="showTeam">
+                            <a href="#" ng-click="sortBy('team')">Team</a>
+                        </th>
+                        <th class="td-centered" ng-show="showPhone">
+                            <a href="#" ng-click="sortBy('phoneNumber')">Phone</a>
+                        </th>
+                        <th class="td-centered" ng-show="showAddress">
+                            <a href="#" ng-click="sortBy('street')">Address</a>
+                        </th>
+                        <th class="td-centered" ng-show="showEmail">
+                            <a href="#" ng-click="sortBy('email')">Email</a>
+                        </th>
+                        <th class="td-centered" ng-show="showAdsd">
+                            <a href="#" ng-click="sortBy('adsd')">ADSD</a>
+                        </th>
+                        <th class="td-centered" ng-show="showReportDate">
+                            <a href="#" ng-click="sortBy('reportDate')">Report Date</a>
+                        </th>
+                        <th class="td-centered" ng-show="showPrd">
+                            <a href="#" ng-click="sortBy('prd')">PRD</a>
+                        </th>
+                        <th class="td-centered" ng-show="showEaos">
+                            <a href="#" ng-click="sortBy('eaos')">EAOS</a>
+                        </th>
+                        <th class="td-centered" ng-show="showRankDate">
+                            <a href="#" ng-click="sortBy('rankDate')">Rank Date</a>
+                        </th>
+                        <th class="td-centered" ng-show="showBlueBadge">
+                            <a href="#" ng-click="sortBy('blueBadge')">Blue Badge</a>
+                        </th>
+                        <th class="td-centered" ng-show="showDestUic">
+                            <a href="#" ng-click="sortBy('destUIC')">Destination
+                                <br>UIC</a>
+                        </th>
+                        <th class="td-centered" ng-show="showDestCommand">
+                            <a href="#" ng-click="sortBy('destCommand')">Destination
+                                <br>Command</a>
+                        </th>
+                        <th class="td-centered" ng-show="showRoles">
+                            <a href="#" ng-click="sortBy('roles')">Roles</a>
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -146,7 +183,8 @@
                         <td class="td-centered" ng-show="showName">{{sailor.lastName}}, {{sailor.firstName}}</td>
                         <td class="td-centered" ng-show="showTeam">{{sailor.team}}</td>
                         <td class="td-centered" ng-show="showPhone">{{sailor.phoneNumber}}</td>
-                        <td class="td-centered" ng-show="showAddress">{{sailor.street}}<br>{{sailor.city}}, {{sailor.state}} {{sailor.zip}}</td>
+                        <td class="td-centered" ng-show="showAddress">{{sailor.street}}
+                            <br>{{sailor.city}}, {{sailor.state}} {{sailor.zip}}</td>
                         <td class="td-centered" ng-show="showEmail">{{sailor.email}}</td>
                         <td class="td-centered" ng-show="showAdsd">{{sailor.adsd | milDate}}</td>
                         <td class="td-centered" ng-show="showReportDate">{{sailor.reportDate | milDate}}</td>
