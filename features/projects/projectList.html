@@ -3,7 +3,7 @@
         <div class='card-block'>
             <div class="row">
                 <div class="col-lg-6">
-                    <h4>Projects</h4>
+                    <span style="font-size:1.5vw;font-weight:600">N57 Projects</span>
                 </div>
                 <div class="col-lg-6">
                     <a ui-sref="app.projects.new" class="btn btn-success float-right">
@@ -27,7 +27,7 @@
                 </ul>
             </div>
             <div style="width:100%">
-                <input type="search" ng-model="search.title" class="form-control" placeholder="Filter projects...">
+                <input type="search" ng-model="search" class="form-control" placeholder="Filter projects...">
             </div>
             <div class="tab-content">
                 <!-- CURRENT PROJECTS TAB  -->
@@ -37,17 +37,19 @@
                             <div>
                                 <span><strong>{{project.title}}</strong></span>
                             </div>
-                            <div ng-hide="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                            <div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                <!-- <div ng-hide="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"> -->
                                 {{project.description}}
                             </div>
-                            <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center">
-                                <span class="fade" style="padding-right: 50px;" ng-show="hover"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
+                            <div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                <!-- <div ng-show="hover" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" align="center"> -->
+                                <span class="fade" style="padding-right: 50px;"><i class="fa fa-cogs"></i>&nbsp;<a ui-sref="app.projects.details({ id: project.id })">Details</a></span>
                                 <!-- <span class="fade" style="padding-right: 50px;" ng-show="hover"><span class="badge badge-pill badge-info">{{project.workItems.length}}</span>&nbsp; -->
                                 <!-- <a href="#">Tasks</a> -->
                                 <!-- </span> -->
                                 <!-- ADD A VARIABLE IN THE CONTROLLER TO CHECK IF A PROJECT LEAD IS ASSIGNED  -->
                                 <!--         NG-IF TO DISPLAY "NONE" NEXT TO TEAM LEAD(S) IF EMPTY            -->
-                                <span class="fade" ng-show="hover"><i class="fa fa-users"></i>&nbsp;<span><i class="fa fa-caret-right-o"></i>{{project.team}}&nbsp;</span>
+                                <span class="fade"><i class="fa fa-users"></i>&nbsp;<span><i class="fa fa-caret-right-o"></i>{{project.team}}&nbsp;</span>
                                 </span>
                             </div>
                             <!-- <div style="text-align:right;" ng-if="project.categories">

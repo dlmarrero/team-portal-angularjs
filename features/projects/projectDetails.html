@@ -1,5 +1,5 @@
 <div ng-if="$stateParams.id">
-    <h4>Projects Details</h4>
+    <h4>Project Details</h4>
     <hr>
 </div>
 <div class="card">
@@ -228,7 +228,7 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-lg-6">
-                <button type='button' style="width:120px" class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Task</button>
+                <button type='button' style="width:120px" class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Tasks</button>
             </div>
             <div class="col-lg-6" style="text-align:right;" align="right">
                 <button type='button' class='btn btn-danger' ng-click='delProject()'>Delete Project</button>
@@ -259,27 +259,25 @@
                     <label for="description" class="form-label" style="float:left">Description:</label>
                     <textarea id="description" class="form-control" ng-model="newTask.description" required></textarea>
                     <hr>
-                    <!-- Assign Users  -->
-                    <!-- Does not update DOM -->
-                    <!-- <form name="assignForm">
+                    <form name="assignForm">
                         <label for="assign" class="form-label" style="float:left">Assign To:</label>
                         <div class="input-group">
                             <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in teamMembers | filter:$viewValue"
-                                class="form-control" ng-value="taskSelected.rateName" autocomplete="off"> -->
+                                class="form-control" ng-value="taskSelected.rateName" autocomplete="off">
                             <!-- <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
                                 class="form-control"> -->
-                            <!-- <span class="input-group-btn">
+                            <span class="input-group-btn">
                                 <button type="submit" class="btn btn-info" ng-click="assignTask(taskSelected); taskSelected=null">Add</button>
                             </span>
                         </div>
                     </form>
-                </ng-form> -->
+                </ng-form>
                 <!-- Display Selected Users  -->
-                <!-- <div ng-repeat="user in assignedUsers" style="text-align:left">
+                <div ng-repeat="user in assignedUsers" style="text-align:left">
                     <a href="#" ng-click="unassignTask(user, $index)">
                         <i class="fa fa-close"></i>
                     </a> &nbsp;{{user.rateName}}
-                </div> -->
+                </div>
                 <hr>
                 <div style="text-align:left">
                     <label for="priority" class="form-label">Priority: </label>
@@ -291,8 +289,10 @@
                 </ng-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <span style="color:rgb(1, 126, 1);position:absolute;left:10px">{{newTaskFeedback}}</span>
+                <button type="button" class="btn btn-primary" ng-click="saveTask()">Submit</button>
+                <!-- <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Done</button>
             </div>
         </div>
     </div>

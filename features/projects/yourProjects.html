@@ -1,4 +1,4 @@
-<h4 ng-if="!$stateParams.id">Your Projects</h4>
+<h4 ng-if="!$stateParams.id">{{vm.curUser.team}} Team Projects</h4>
 <hr>
 <div>
     <span ng-if="vm.yourProjs.length == 0">You are not currently assigned to any projects.</span>

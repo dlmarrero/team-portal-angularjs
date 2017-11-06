@@ -4,26 +4,20 @@
 * PROJECTS *
 ************
 - Filter current and past projects in controller
-- Sort team members by lead property
 - File upload
 - Complete checkbox positioning
-- Chart text positioning (don't allow page to scale, overflow:fixed maybe)
 - Breadcrumb should be project name
-- Remove taskSelected after adding
-- Only one modal will load per refresh if submit is clicked
+- Only one modal will load per refresh if submit is clicked (get rid of modals)
 - Configure cascade delete
-- When team lead or Complete is set, update projectList
-- Serious issues getting assigned users to update DOM, can't figure it out
+- When team or Complete is set, update projectList
 
 
 ************
 *   QUIZ   *
 ************
-- Give score on submission
 - Set $watch so changes to topics list get updated on main page
 - Back/Done button in editor
 - Delete Topic functionality
-- Create topic - make form, enter key to submit
 - Add count of questions per section
 - Would be nice: export flashcards to pdf
 - toggleSelect all sections 
@@ -32,7 +26,7 @@
 - Section links to display on showResults
 - Add question type functionality 
     * t/f, fill in the blank, multi-choice, select all that apply
-- Make quiz form so "enter" key submits
+- Generate Quiz button should not show if there are no refs
 
 ***********
 * ROSTER  *
@@ -42,4 +36,3 @@
 **********
 *  MISC  *
 **********
-- Separate training links in sidenav

@@ -1,32 +1,46 @@
 <div style="text-align:center">
     <h5>{{vm.selectedTopic.title}} Quiz</h5>
+    <p><strong ng-if="vm.showResults">Your Score: {{vm.score}}%</strong></p>
     <a href="" ui-sref="^">&lt; Back</a>
 </div>
 <hr>
 <div ng-show="!vm.showResults">
     <div ng-repeat="q in vm.quiz.questions">
-        <p><strong>{{$index+1}}. {{q.question}}</strong></p>
+        <p>
+            <strong>{{$index+1}}. {{q.question}}</strong>
+        </p>
         <label>
-        <input type="radio" ng-model="q.selected" ng-value="q.options[0]">  {{q.options[0]}}
-    </label><br>
+            <input type="radio" ng-model="q.selected" ng-value="q.options[0]"> {{q.options[0]}}
+        </label>
+        <br>
         <label>
-        <input type="radio" ng-model="q.selected" ng-value="q.options[1]">  {{q.options[1]}}
-    </label><br>
+            <input type="radio" ng-model="q.selected" ng-value="q.options[1]"> {{q.options[1]}}
+        </label>
+        <br>
         <label>
-        <input type="radio" ng-model="q.selected" ng-value="q.options[2]">  {{q.options[2]}}
-    </label><br>
+            <input type="radio" ng-model="q.selected" ng-value="q.options[2]"> {{q.options[2]}}
+        </label>
+        <br>
         <label>
-        <input type="radio" ng-model="q.selected" ng-value="q.options[3]">  {{q.options[3]}}
-    </label><br>
+            <input type="radio" ng-model="q.selected" ng-value="q.options[3]"> {{q.options[3]}}
+        </label>
+        <br>
         <hr>
     </div>
     <button class="btn btn-success" style="width:100%" ng-click="vm.gradeQuiz()">Submit</button>
 </div>
 <div ng-show="vm.showResults" ng-repeat="q in vm.quizResults">
-    <p><strong>{{$index+1}}. {{q.question}}</strong></p>
-    <p style="padding-left:20px"><span ng-class="q.selAnswer === q.corAnswer ? 'correct' : 'incorrect'"><strong>You Selected:  </strong></span> {{q.selAnswer || 'Nothing'}}</p>
-    <p style="padding-left:20px"><strong>Correct Answer:</strong>  {{q.corAnswer}}</p>
-    <p style="padding-left:20px"><strong>Section:</strong>  {{q.section}}</p>
+    <p>
+        <strong>{{$index+1}}. {{q.question}}</strong>
+    </p>
+    <p style="padding-left:20px">
+        <span ng-class="q.selAnswer === q.corAnswer ? 'correct' : 'incorrect'">
+            <strong>You Selected: </strong>
+        </span> {{q.selAnswer || 'Nothing'}}</p>
+    <p style="padding-left:20px">
+        <strong>Correct Answer:</strong> {{q.corAnswer}}</p>
+    <p style="padding-left:20px">
+        <strong>Section:</strong> {{q.section}}</p>
     <hr>
 </div>
 <a href="" ng-show="vm.showResults" ui-sref="^">&lt; Back</a>

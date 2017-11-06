@@ -103,7 +103,6 @@
 
         function assignTask(user) {
             $scope.assignedUsers.push(user);
-            console.log("in assignTask", $scope.assignedUsers)
         }
         // Testing task assignment after task creation
         $scope.a = a;
@@ -119,7 +118,12 @@
                 var taskIndex = $scope.project.workItems.indexOf(task);
 
                 teamMgr.save(submission, function (data) {
-                    $scope.project.workItems[taskIndex].assignedUsers.push(data);
+                    try {
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);
+                    } catch (error) {
+                        $scope.project.workItems[taskIndex].assignedUsers = [];
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);                        
+                    }
                 });
             }
         }
@@ -188,19 +192,23 @@
                     rateName: user.rateName
                 };
                 teamMgr.save(submission, function (data) {
-                    // var i = $scope.project.workItems.length-1
-                    // $scope.project.workItems[i].assignedUsers.push(data);
+                    try {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    } catch (error) {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers = [];
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    }
                 });
             });
-            $state.reload();
-            
         }
 
         function saveComment(workItem) {
             $scope.newComment.author = $scope.curUser.rateName;
             $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
-                $state.reload();
+                // $state.reload();
             });
         }
 
@@ -217,12 +225,14 @@
             taskMgr.save($scope.newTask, function (response) {
                 
                 $scope.project.workItems.push(response);
-                // saveAssignments(response.id);
-                // $scope.incomplete++;
-                // $scope.chart = [];
-                // $scope.chart.push($scope.complete);
-                // $scope.chart.push($scope.incomplete);
-                // $state.reload();
+                saveAssignments(response.id);
+                $scope.incomplete++;
+                $scope.chart = [];
+                $scope.chart.push($scope.complete);
+                $scope.chart.push($scope.incomplete);
+                $scope.newTaskFeedback = "Task successfully created: " + response.title;
+                $scope.newTask = {};
+                $scope.assignedUsers = [];
             });
         }
 

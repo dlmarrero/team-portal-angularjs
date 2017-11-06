@@ -1652,156 +1652,6 @@ function cardChartCtrl13($scope) {
   }
 }
 
-angular
-.module('app')
-.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
-  $stateProvider
-  .state('app.icons', {
-    url: "/icons",
-    abstract: true,
-    template: '<ui-view></ui-view>',
-    ncyBreadcrumb: {
-      label: 'Icons'
-    }
-  })
-  .state('app.icons.fontawesome', {
-    url: '/font-awesome',
-    templateUrl: 'views/icons/font-awesome.html',
-    ncyBreadcrumb: {
-      label: 'Font Awesome'
-    }
-  })
-  .state('app.icons.simplelineicons', {
-    url: '/simple-line-icons',
-    templateUrl: 'views/icons/simple-line-icons.html',
-    ncyBreadcrumb: {
-      label: 'Simple Line Icons'
-    }
-  })
-  .state('app.components', {
-    url: "/components",
-    abstract: true,
-    template: '<ui-view></ui-view>',
-    ncyBreadcrumb: {
-      label: 'Components'
-    }
-  })
-  .state('app.components.buttons', {
-    url: '/buttons',
-    templateUrl: 'views/components/buttons.html',
-    ncyBreadcrumb: {
-      label: 'Buttons'
-    }
-  })
-  .state('app.components.social-buttons', {
-    url: '/social-buttons',
-    templateUrl: 'views/components/social-buttons.html',
-    ncyBreadcrumb: {
-      label: 'Social Buttons'
-    }
-  })
-  .state('app.components.cards', {
-    url: '/cards',
-    templateUrl: 'views/components/cards.html',
-    ncyBreadcrumb: {
-      label: 'Cards'
-    }
-  })
-  .state('app.components.forms', {
-    url: '/forms',
-    templateUrl: 'views/components/forms.html',
-    ncyBreadcrumb: {
-      label: 'Forms'
-    }
-  })
-  .state('app.components.switches', {
-    url: '/switches',
-    templateUrl: 'views/components/switches.html',
-    ncyBreadcrumb: {
-      label: 'Switches'
-    }
-  })
-  .state('app.components.tables', {
-    url: '/tables',
-    templateUrl: 'views/components/tables.html',
-    ncyBreadcrumb: {
-      label: 'Tables'
-    }
-  })
-  .state('app.forms', {
-    url: '/forms',
-    templateUrl: 'views/forms.html',
-    ncyBreadcrumb: {
-      label: 'Forms'
-    },
-    resolve: {
-      loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-        return $ocLazyLoad.load([
-          {
-            serie: true,
-            files: ['js/libs/moment.min.js']
-          },
-          {
-            serie: true,
-            files: ['js/libs/daterangepicker.min.js', 'js/libs/angular-daterangepicker.min.js']
-          },
-          {
-            files: ['js/libs/mask.min.js']
-          },
-          {
-            files: ['js/libs/select.min.js']
-          }
-        ]);
-      }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/forms.js']
-        });
-      }]
-    }
-  })
-  .state('app.widgets', {
-    url: '/widgets',
-    templateUrl: 'views/widgets.html',
-    ncyBreadcrumb: {
-      label: 'Widgets'
-    },
-    resolve: {
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load controllers
-        return $ocLazyLoad.load({
-          files: ['js/controllers/widgets.js']
-        });
-      }]
-    }
-  })
-  .state('app.charts', {
-    url: '/charts',
-    templateUrl: 'views/charts.html',
-    ncyBreadcrumb: {
-      label: 'Charts'
-    },
-    resolve: {
-      // Plugins loaded before
-      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-      //     return $ocLazyLoad.load([
-      //         {
-      //             serial: true,
-      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
-      //         }
-      //     ]);
-      // }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/charts.js']
-        });
-      }]
-    }
-  })
-}]);
-
 angular.module('app')
 .factory('authService', authService);
 
@@ -2120,6 +1970,156 @@ function dataSvc($resource, authService) {
         });
     }
 };
+angular
+.module('app')
+.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
+  $stateProvider
+  .state('app.icons', {
+    url: "/icons",
+    abstract: true,
+    template: '<ui-view></ui-view>',
+    ncyBreadcrumb: {
+      label: 'Icons'
+    }
+  })
+  .state('app.icons.fontawesome', {
+    url: '/font-awesome',
+    templateUrl: 'views/icons/font-awesome.html',
+    ncyBreadcrumb: {
+      label: 'Font Awesome'
+    }
+  })
+  .state('app.icons.simplelineicons', {
+    url: '/simple-line-icons',
+    templateUrl: 'views/icons/simple-line-icons.html',
+    ncyBreadcrumb: {
+      label: 'Simple Line Icons'
+    }
+  })
+  .state('app.components', {
+    url: "/components",
+    abstract: true,
+    template: '<ui-view></ui-view>',
+    ncyBreadcrumb: {
+      label: 'Components'
+    }
+  })
+  .state('app.components.buttons', {
+    url: '/buttons',
+    templateUrl: 'views/components/buttons.html',
+    ncyBreadcrumb: {
+      label: 'Buttons'
+    }
+  })
+  .state('app.components.social-buttons', {
+    url: '/social-buttons',
+    templateUrl: 'views/components/social-buttons.html',
+    ncyBreadcrumb: {
+      label: 'Social Buttons'
+    }
+  })
+  .state('app.components.cards', {
+    url: '/cards',
+    templateUrl: 'views/components/cards.html',
+    ncyBreadcrumb: {
+      label: 'Cards'
+    }
+  })
+  .state('app.components.forms', {
+    url: '/forms',
+    templateUrl: 'views/components/forms.html',
+    ncyBreadcrumb: {
+      label: 'Forms'
+    }
+  })
+  .state('app.components.switches', {
+    url: '/switches',
+    templateUrl: 'views/components/switches.html',
+    ncyBreadcrumb: {
+      label: 'Switches'
+    }
+  })
+  .state('app.components.tables', {
+    url: '/tables',
+    templateUrl: 'views/components/tables.html',
+    ncyBreadcrumb: {
+      label: 'Tables'
+    }
+  })
+  .state('app.forms', {
+    url: '/forms',
+    templateUrl: 'views/forms.html',
+    ncyBreadcrumb: {
+      label: 'Forms'
+    },
+    resolve: {
+      loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+        return $ocLazyLoad.load([
+          {
+            serie: true,
+            files: ['js/libs/moment.min.js']
+          },
+          {
+            serie: true,
+            files: ['js/libs/daterangepicker.min.js', 'js/libs/angular-daterangepicker.min.js']
+          },
+          {
+            files: ['js/libs/mask.min.js']
+          },
+          {
+            files: ['js/libs/select.min.js']
+          }
+        ]);
+      }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/forms.js']
+        });
+      }]
+    }
+  })
+  .state('app.widgets', {
+    url: '/widgets',
+    templateUrl: 'views/widgets.html',
+    ncyBreadcrumb: {
+      label: 'Widgets'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/widgets.js']
+        });
+      }]
+    }
+  })
+  .state('app.charts', {
+    url: '/charts',
+    templateUrl: 'views/charts.html',
+    ncyBreadcrumb: {
+      label: 'Charts'
+    },
+    resolve: {
+      // Plugins loaded before
+      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+      //     return $ocLazyLoad.load([
+      //         {
+      //             serial: true,
+      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+      //         }
+      //     ]);
+      // }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/charts.js']
+        });
+      }]
+    }
+  })
+}]);
+
 angular.module('app')
     .controller('loginCtrl', loginCtrl);
 
@@ -2453,6 +2453,476 @@ function toDoCtrl(authService, dataSvc, $window) {
     };
 };
 
+(function(){
+    'use strict';
+
+    newProjectCtrl.$inject = ["$scope", "dataSvc", "$log", "$state", "$window"];
+    angular
+        .module('app')
+        .controller('newProjectCtrl', newProjectCtrl);
+
+    /** @ngInject */
+    function newProjectCtrl($scope, dataSvc, $log, $state, $window){
+        var projMgr = dataSvc.manageProjs();
+        var vm = this;
+        
+        vm.categories = [];
+        vm.addCategory = addCategory;
+        vm.removeCategory = removeCategory;
+        vm.submitCategory = submitCategory;
+        vm.teams = dataSvc.teams;
+
+        vm.new = {};
+        vm.submit = submitProject;
+        
+        function addCategory(category) {
+            if (vm.categories.indexOf(category) == -1) {
+                vm.categories.push(category);
+                vm.addedCategory = "";
+                $window.document.getElementById('newcategory').focus();
+            };
+        };
+        
+        function removeCategory(category) {
+            var i = vm.categories.indexOf(category);
+            vm.categories.splice(i, 1);
+        };
+        
+        function submitCategory(category) {
+            if (category == 'other') {
+                vm.newCategory = true;
+            }
+            else if (vm.categories.indexOf(category) == -1 ) {
+                vm.categories.push(category);
+                vm.submittedCategory = "";
+            }
+            else {
+                vm.categories.pop(category);
+                vm.submittedCategory = "";
+            };
+
+            vm.addedCategory = "";
+        };
+
+        function submitProject() {
+            vm.new.categories = "";
+            angular.forEach(vm.categories, function (val, i) {
+                if (i !== vm.categories.length - 1) {
+                    vm.new.categories = vm.new.categories + val + ",";
+                }
+                else {
+                    vm.new.categories = vm.new.categories + val;
+                };
+            });
+            
+            projMgr.save(vm.new, function (data) {
+                $log.log('saving');
+                $state.transitionTo('app.projects.details', { id: data.id }, { reload: true });
+            });
+        };
+    };
+
+}());
+(function () {
+    'use strict';
+
+    projectDetsCtrl.$inject = ["dataSvc", "$stateParams", "$log", "$scope", "$state", "$document", "$timeout"];
+    angular
+        .module('app')
+        .controller('projectDetsCtrl', projectDetsCtrl);
+
+    /** @ngInject */
+    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, $timeout) {
+        var attachMgr = dataSvc.manageAttachments();
+        var commentMgr = dataSvc.manageComments();
+        var linkMgr = dataSvc.manageLinks();
+        var projMgr = dataSvc.manageProjs();
+        var taskMgr = dataSvc.manageTasks();
+        var teamMgr = dataSvc.manageTeam();
+
+        $scope.assignedUsers = [];
+        $scope.curUser = dataSvc.getCurUser();
+        $scope.newComment = {};
+        $scope.newLink = {};
+        $scope.newTask = {};
+        $scope.showDetails = false;
+        $scope.taskSelected = null;
+        // $scope.teamFeedback = ""
+        $scope.teams = dataSvc.teams;
+        $scope.teamMembers = [];
+
+        // $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
+        $scope.assignTask = assignTask;             // Assign a user to a task
+        $scope.delAssignment = delAssignment;       // Delete a user from a task assignment
+        $scope.delComment = delComment;             // Delete a comment
+        $scope.delLink = delLink;                   // Delete a link
+        $scope.delProject = delProject;             // Delete a project
+        $scope.delTask = delTask;                   // Delete a task
+        // $scope.delTeamMember = delTeamMember;       // Remove team member from project
+        $scope.projectComplete = projectComplete;   // Mark project complete
+        $scope.saveAssignments = saveAssignments;   // Save users assigned to a task 
+        $scope.saveComment = saveComment;           // Save a new comment
+        $scope.saveResource = saveResource;         // Save a new resource
+        $scope.saveTask = saveTask;                 // Save a new task
+        $scope.taskComplete = taskComplete;          // Mark task complete
+        $scope.toggleDetails = toggleDetails;       // Show/hide task details
+        $scope.toggleLead = toggleLead;             // Toggle user as a project lead
+        $scope.unassignTask = unassignTask;         // Remove a user from a task
+        $scope.updateProj = updateProj;             // Save changes to project details
+        $scope.uploadFiles = uploadFiles;           // Upload file attachments
+
+        init();
+
+        function init() {
+            if ($stateParams.id) {
+                $scope.project = projMgr.get({ id: $stateParams.id }, function (project) {
+                    populateChart(project);
+                    $scope.newTask = {
+                        title: "",
+                        description: "",
+                        priority: "Normal",
+                        projectId: project.id
+                    };
+                    $scope.teamMembers = dataSvc.getTeamMembers(project.team);
+                });
+            } else {
+                $scope.newTask = {
+                    title: "",
+                    description: "",
+                    priority: "Normal",
+                    projectId: $scope.project.id
+                };
+                populateChart($scope.project);
+                $scope.teamMembers = dataSvc.getTeamMembers($scope.project.team);
+            }
+        }
+
+        function populateChart(project) {
+            // Set up work items chart
+            $scope.chart = [];
+            $scope.labels = ["Complete", "Incomplete"];
+            $scope.complete = 0;
+            $scope.incomplete = 0;
+            angular.forEach(project.workItems, function (item) {
+                if (item.complete) {
+                    $scope.complete += 1;
+                }
+                else {
+                    $scope.incomplete += 1;
+                };
+            });
+            $scope.chart.push($scope.complete);
+            $scope.chart.push($scope.incomplete);
+        }
+
+        function addTeamMembers(user) {
+            var teamMember = {
+                projectId: $scope.project.id,
+                sailorId: user.id,
+                userName: user.userName,
+                rateName: user.rateName
+            };
+            teamMgr.save(teamMember, function () {
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
+            });
+        }
+
+        function assignTask(user) {
+            $scope.assignedUsers.push(user);
+        }
+        // Testing task assignment after task creation
+        $scope.a = a;
+        function a(user, task) {
+            if (user) {
+                var submission = {
+                    workItemId: task.id,
+                    sailorId: user.id,
+                    userName: user.userName,
+                    rateName: user.rateName
+                };
+
+                var taskIndex = $scope.project.workItems.indexOf(task);
+
+                teamMgr.save(submission, function (data) {
+                    try {
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);
+                    } catch (error) {
+                        $scope.project.workItems[taskIndex].assignedUsers = [];
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);                        
+                    }
+                });
+            }
+        }
+
+        function delAssignment(teamMember, task) {
+            teamMgr.delete({ id: teamMember.id }, function () {
+                var t = $scope.project.workItems.indexOf(task);
+                var u = $scope.project.workItems[t].assignedUsers.indexOf(teamMember);
+                $log.log('$scope.project.workItems[t].assignedUsers.length', $scope.project.workItems[t].assignedUsers.length);
+
+                // $timeout(function() {
+                if ($scope.project.workItems[t].assignedUsers.length === 1) {
+                    $scope.project.workItems[t].assignedUsers = [];
+                } else {
+                    $scope.project.workItems[t].assignedUsers.splice(u, 1);
+                    $log.log('spliced', $scope.project.workItems[t].assignedUsers);
+                }
+                $scope.taskSelected = null;
+                // })
+            });
+        }
+
+        function delComment(id) {
+            commentMgr.delete({ id: id }, function () {
+                $state.reload();
+            });
+        }
+
+        function delLink(id) {
+            linkMgr.delete({ id: id }, function (data) {
+                var i = $scope.project.links.indexOf(data);
+                $scope.project.links.splice(i, 1);
+            });
+        }
+
+        function delProject() {
+            projMgr.delete({ id: $scope.project.id }, function () {
+                $state.transitionTo('app.projects', {}, { reload: true });
+            });
+        }
+
+        function delTask(task) {
+            taskMgr.delete({ id: task.id }, function () {
+                var i = $scope.project.workItems.indexOf(task);
+                $scope.project.workItems.splice(i, 1);
+            });
+        }
+
+        function delTeamMember(id) {
+            teamMgr.delete({ id: id }, function () {
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
+            });
+        }
+
+        function projectComplete(val) {
+            $scope.project.complete = val;
+            projMgr.update({ id: $scope.project.id }, $scope.project);
+        }
+
+        function saveAssignments(workItemId) {
+            angular.forEach($scope.assignedUsers, function (user) {
+                var submission = {
+                    workItemId: workItemId,
+                    sailorId: user.id,
+                    userName: user.userName,
+                    rateName: user.rateName
+                };
+                teamMgr.save(submission, function (data) {
+                    try {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    } catch (error) {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers = [];
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    }
+                });
+            });
+        }
+
+        function saveComment(workItem) {
+            $scope.newComment.author = $scope.curUser.rateName;
+            $scope.newComment.created = new Date();
+            commentMgr.save($scope.newComment, function (data) {
+                // $state.reload();
+            });
+        }
+
+        function saveResource() {
+            if ($scope.newLink.url != null) {
+                $scope.newLink.projectId = $scope.project.id;
+                linkMgr.save($scope.newLink, function (data) {
+                    $scope.project.links.push(data);
+                });
+            }
+        }
+
+        function saveTask() {
+            taskMgr.save($scope.newTask, function (response) {
+                
+                $scope.project.workItems.push(response);
+                saveAssignments(response.id);
+                $scope.incomplete++;
+                $scope.chart = [];
+                $scope.chart.push($scope.complete);
+                $scope.chart.push($scope.incomplete);
+                $scope.newTaskFeedback = "Task successfully created: " + response.title;
+                $scope.newTask = {};
+                $scope.assignedUsers = [];
+            });
+        }
+
+        function taskComplete(task, val) {
+            task.complete = val;
+            taskMgr.update({ id: task.id }, task, function () {
+                init();
+            });
+        }
+
+        function toggleDetails() {
+            $scope.showDetails = !$scope.showDetails;
+        }
+
+        function toggleLead(user) {
+            if (user.projectLead) {
+                user.projectLead = false;
+            }
+            else {
+                user.projectLead = true;
+            };
+            teamMgr.update({ id: user.id }, user, function () {
+                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
+            });
+        }
+
+        function unassignTask(user, index) {
+            $scope.assignedUsers.splice(index, 1);
+        }
+
+        function updateProj(assignedTeam) {
+            $scope.editTitle = false;
+            $scope.editDescription = false;
+            projMgr.update({ id: $scope.project.id }, $scope.project, function (project) {
+                // $scope.teamFeedback = "Successfully assigned to " + project.team + " team"
+                $scope.editTeam = false;
+            });
+        }
+
+        function uploadFiles(files, errFiles) {
+            $scope.files = files;
+            $scope.errFiles = errFiles;
+            angular.forEach(files, function (file) {
+                // attachMgr.save(file)
+                $log.log(file);
+
+                // file.upload = Upload.upload({
+                //     url: 'http://localhost:5000/api/Attachments',
+                //     data: { file: file }
+                // });
+
+                // file.upload.then(function (response) {
+                //     $timeout(function () {
+                //         file.result = response.data;
+                //     });
+                // }, function (response) {
+                //     if (response.status > 0)
+                //         $scope.errorMsg = response.status + ': ' + response.data;
+                // }, function (evt) {
+                //     file.progress = Math.min(100, parseInt(100.0 *
+                //         evt.loaded / evt.total));
+                // });
+            });
+        }
+    }
+
+}());
+(function () {
+    'use strict';
+
+    projectListCtrl.$inject = ["$scope", "dataSvc", "$log", "$uibModal", "$document", "authService", "$filter"];
+    angular
+        .module('app')
+        .controller('projectListCtrl', projectListCtrl);
+
+    /** @ngInject */
+    function projectListCtrl($scope, dataSvc, $log, $uibModal, $document, authService, $filter) {
+
+        var projMgr = dataSvc.manageProjs();
+        var username = $filter('lowercase')(authService.authentication.userName);
+        var vm = this;
+
+        vm.curUser = dataSvc.getCurUser();
+        // vm.create = create;
+        vm.data = {};
+        vm.newProject = {};
+        vm.yourProjs = [];
+
+        init();
+
+        function init() {
+            // ** Filter projects the user is part of and push to yourProjs[] **
+            vm.data = projMgr.query(function (data) {
+                // Iterate through each project
+                angular.forEach(data, function(project) {
+                    if (project.team === vm.curUser.team) {
+                        vm.yourProjs.push(project);
+                    };
+                    // angular.forEach(project.teamMembers, function(tm) {
+                    //     var tMember = ($filter('lowercase')(tm.userName));
+                    //     if (username == tMember) {
+                    //         // $scope.$apply(function () {
+                    //             vm.yourProjs.push(project);
+                    //         // });
+                    //     }
+                    // });
+
+                    // angular.forEach(project[10], function(x) {
+
+                    // $log.log(x)
+                    // })
+                    // if (project.teamMembers.indexOf(username)) {
+                    //     $log.log(project)
+                    // }
+                });
+            });
+        };
+
+    };
+
+}());
+
+// **** TODO: projectsCtrl ****
+// Resolve vm.data before initilizing
+// Filter projects by current or past
+// Filter a list of team leads
+// Add date created/modifed to back end
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .directive('projectDetails', projectDetails)
+        .directive('projectList', projectList)
+        .directive('yourProjects', yourProjects);
+
+    function projectDetails() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/projects/projectDetails.html',
+            controller: 'projectDetsCtrl',
+            scope: {
+                project: '=project'
+            }
+        };
+    }
+
+    function projectList() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/projects/projectlist.html'
+        };
+    }
+
+    function yourProjects() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/projects/yourProjects.html',
+            controller: 'projectListCtrl',
+            controllerAs: 'vm'
+        };
+    }
+}());
 (function () {
     'use strict';
 
@@ -2728,6 +3198,13 @@ function toDoCtrl(authService, dataSvc, $window) {
             quizSubMgr.send(s, function (data) {
                 vm.quizResults = data;
                 vm.showResults = true;
+                var correct = 0;
+                var incorrect = 0;
+                for (var i = 0; i < vm.quizResults.length; i++) {
+                    var question = vm.quizResults[i];
+                    question.selAnswer === question.corAnswer ? correct += 1 : incorrect += 1;
+                }
+                vm.score = correct / (correct + incorrect) * 100;
             });
 
 
@@ -2761,466 +3238,6 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
     }
 
-}());
-(function(){
-    'use strict';
-
-    newProjectCtrl.$inject = ["$scope", "dataSvc", "$log", "$state", "$window"];
-    angular
-        .module('app')
-        .controller('newProjectCtrl', newProjectCtrl);
-
-    /** @ngInject */
-    function newProjectCtrl($scope, dataSvc, $log, $state, $window){
-        var projMgr = dataSvc.manageProjs();
-        var vm = this;
-        
-        vm.categories = [];
-        vm.addCategory = addCategory;
-        vm.removeCategory = removeCategory;
-        vm.submitCategory = submitCategory;
-        vm.teams = dataSvc.teams;
-
-        vm.new = {};
-        vm.submit = submitProject;
-        
-        function addCategory(category) {
-            if (vm.categories.indexOf(category) == -1) {
-                vm.categories.push(category);
-                vm.addedCategory = "";
-                $window.document.getElementById('newcategory').focus();
-            };
-        };
-        
-        function removeCategory(category) {
-            var i = vm.categories.indexOf(category);
-            vm.categories.splice(i, 1);
-        };
-        
-        function submitCategory(category) {
-            if (category == 'other') {
-                vm.newCategory = true;
-            }
-            else if (vm.categories.indexOf(category) == -1 ) {
-                vm.categories.push(category);
-                vm.submittedCategory = "";
-            }
-            else {
-                vm.categories.pop(category);
-                vm.submittedCategory = "";
-            };
-
-            vm.addedCategory = "";
-        };
-
-        function submitProject() {
-            vm.new.categories = "";
-            angular.forEach(vm.categories, function (val, i) {
-                if (i !== vm.categories.length - 1) {
-                    vm.new.categories = vm.new.categories + val + ",";
-                }
-                else {
-                    vm.new.categories = vm.new.categories + val;
-                };
-            });
-            
-            projMgr.save(vm.new, function (data) {
-                $log.log('saving');
-                $state.transitionTo('app.projects.details', { id: data.id }, { reload: true });
-            });
-        };
-    };
-
-}());
-(function () {
-    'use strict';
-
-    projectDetsCtrl.$inject = ["dataSvc", "$stateParams", "$log", "$scope", "$state", "$document", "$timeout"];
-    angular
-        .module('app')
-        .controller('projectDetsCtrl', projectDetsCtrl);
-
-    /** @ngInject */
-    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, $timeout) {
-        var attachMgr = dataSvc.manageAttachments();
-        var commentMgr = dataSvc.manageComments();
-        var linkMgr = dataSvc.manageLinks();
-        var projMgr = dataSvc.manageProjs();
-        var taskMgr = dataSvc.manageTasks();
-        var teamMgr = dataSvc.manageTeam();
-
-        $scope.assignedUsers = [];
-        $scope.curUser = dataSvc.getCurUser();
-        $scope.newComment = {};
-        $scope.newLink = {};
-        $scope.newTask = {};
-        $scope.showDetails = false;
-        $scope.taskSelected = null;
-        // $scope.teamFeedback = ""
-        $scope.teams = dataSvc.teams;
-        $scope.teamMembers = [];
-
-        // $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
-        $scope.assignTask = assignTask;             // Assign a user to a task
-        $scope.delAssignment = delAssignment;       // Delete a user from a task assignment
-        $scope.delComment = delComment;             // Delete a comment
-        $scope.delLink = delLink;                   // Delete a link
-        $scope.delProject = delProject;             // Delete a project
-        $scope.delTask = delTask;                   // Delete a task
-        // $scope.delTeamMember = delTeamMember;       // Remove team member from project
-        $scope.projectComplete = projectComplete;   // Mark project complete
-        $scope.saveAssignments = saveAssignments;   // Save users assigned to a task 
-        $scope.saveComment = saveComment;           // Save a new comment
-        $scope.saveResource = saveResource;         // Save a new resource
-        $scope.saveTask = saveTask;                 // Save a new task
-        $scope.taskComplete = taskComplete;          // Mark task complete
-        $scope.toggleDetails = toggleDetails;       // Show/hide task details
-        $scope.toggleLead = toggleLead;             // Toggle user as a project lead
-        $scope.unassignTask = unassignTask;         // Remove a user from a task
-        $scope.updateProj = updateProj;             // Save changes to project details
-        $scope.uploadFiles = uploadFiles;           // Upload file attachments
-
-        init();
-
-        function init() {
-            if ($stateParams.id) {
-                $scope.project = projMgr.get({ id: $stateParams.id }, function (project) {
-                    populateChart(project);
-                    $scope.newTask = {
-                        title: "",
-                        description: "",
-                        priority: "Normal",
-                        projectId: project.id
-                    };
-                    $scope.teamMembers = dataSvc.getTeamMembers(project.team);
-                });
-            } else {
-                $scope.newTask = {
-                    title: "",
-                    description: "",
-                    priority: "Normal",
-                    projectId: $scope.project.id
-                };
-                populateChart($scope.project);
-                $scope.teamMembers = dataSvc.getTeamMembers($scope.project.team);
-            }
-        }
-
-        function populateChart(project) {
-            // Set up work items chart
-            $scope.chart = [];
-            $scope.labels = ["Complete", "Incomplete"];
-            $scope.complete = 0;
-            $scope.incomplete = 0;
-            angular.forEach(project.workItems, function (item) {
-                if (item.complete) {
-                    $scope.complete += 1;
-                }
-                else {
-                    $scope.incomplete += 1;
-                };
-            });
-            $scope.chart.push($scope.complete);
-            $scope.chart.push($scope.incomplete);
-        }
-
-        function addTeamMembers(user) {
-            var teamMember = {
-                projectId: $scope.project.id,
-                sailorId: user.id,
-                userName: user.userName,
-                rateName: user.rateName
-            };
-            teamMgr.save(teamMember, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
-            });
-        }
-
-        function assignTask(user) {
-            $scope.assignedUsers.push(user);
-            console.log("in assignTask", $scope.assignedUsers)
-        }
-        // Testing task assignment after task creation
-        $scope.a = a;
-        function a(user, task) {
-            if (user) {
-                var submission = {
-                    workItemId: task.id,
-                    sailorId: user.id,
-                    userName: user.userName,
-                    rateName: user.rateName
-                };
-
-                var taskIndex = $scope.project.workItems.indexOf(task);
-
-                teamMgr.save(submission, function (data) {
-                    $scope.project.workItems[taskIndex].assignedUsers.push(data);
-                });
-            }
-        }
-
-        function delAssignment(teamMember, task) {
-            teamMgr.delete({ id: teamMember.id }, function () {
-                var t = $scope.project.workItems.indexOf(task);
-                var u = $scope.project.workItems[t].assignedUsers.indexOf(teamMember);
-                $log.log('$scope.project.workItems[t].assignedUsers.length', $scope.project.workItems[t].assignedUsers.length);
-
-                // $timeout(function() {
-                if ($scope.project.workItems[t].assignedUsers.length === 1) {
-                    $scope.project.workItems[t].assignedUsers = [];
-                } else {
-                    $scope.project.workItems[t].assignedUsers.splice(u, 1);
-                    $log.log('spliced', $scope.project.workItems[t].assignedUsers);
-                }
-                $scope.taskSelected = null;
-                // })
-            });
-        }
-
-        function delComment(id) {
-            commentMgr.delete({ id: id }, function () {
-                $state.reload();
-            });
-        }
-
-        function delLink(id) {
-            linkMgr.delete({ id: id }, function (data) {
-                var i = $scope.project.links.indexOf(data);
-                $scope.project.links.splice(i, 1);
-            });
-        }
-
-        function delProject() {
-            projMgr.delete({ id: $scope.project.id }, function () {
-                $state.transitionTo('app.projects', {}, { reload: true });
-            });
-        }
-
-        function delTask(task) {
-            taskMgr.delete({ id: task.id }, function () {
-                var i = $scope.project.workItems.indexOf(task);
-                $scope.project.workItems.splice(i, 1);
-            });
-        }
-
-        function delTeamMember(id) {
-            teamMgr.delete({ id: id }, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
-            });
-        }
-
-        function projectComplete(val) {
-            $scope.project.complete = val;
-            projMgr.update({ id: $scope.project.id }, $scope.project);
-        }
-
-        function saveAssignments(workItemId) {
-            angular.forEach($scope.assignedUsers, function (user) {
-                var submission = {
-                    workItemId: workItemId,
-                    sailorId: user.id,
-                    userName: user.userName,
-                    rateName: user.rateName
-                };
-                teamMgr.save(submission, function (data) {
-                    // var i = $scope.project.workItems.length-1
-                    // $scope.project.workItems[i].assignedUsers.push(data);
-                });
-            });
-            $state.reload();
-            
-        }
-
-        function saveComment(workItem) {
-            $scope.newComment.author = $scope.curUser.rateName;
-            $scope.newComment.created = new Date();
-            commentMgr.save($scope.newComment, function (data) {
-                $state.reload();
-            });
-        }
-
-        function saveResource() {
-            if ($scope.newLink.url != null) {
-                $scope.newLink.projectId = $scope.project.id;
-                linkMgr.save($scope.newLink, function (data) {
-                    $scope.project.links.push(data);
-                });
-            }
-        }
-
-        function saveTask() {
-            taskMgr.save($scope.newTask, function (response) {
-                
-                $scope.project.workItems.push(response);
-                // saveAssignments(response.id);
-                // $scope.incomplete++;
-                // $scope.chart = [];
-                // $scope.chart.push($scope.complete);
-                // $scope.chart.push($scope.incomplete);
-                // $state.reload();
-            });
-        }
-
-        function taskComplete(task, val) {
-            task.complete = val;
-            taskMgr.update({ id: task.id }, task, function () {
-                init();
-            });
-        }
-
-        function toggleDetails() {
-            $scope.showDetails = !$scope.showDetails;
-        }
-
-        function toggleLead(user) {
-            if (user.projectLead) {
-                user.projectLead = false;
-            }
-            else {
-                user.projectLead = true;
-            };
-            teamMgr.update({ id: user.id }, user, function () {
-                $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
-            });
-        }
-
-        function unassignTask(user, index) {
-            $scope.assignedUsers.splice(index, 1);
-        }
-
-        function updateProj(assignedTeam) {
-            $scope.editTitle = false;
-            $scope.editDescription = false;
-            projMgr.update({ id: $scope.project.id }, $scope.project, function (project) {
-                // $scope.teamFeedback = "Successfully assigned to " + project.team + " team"
-                $scope.editTeam = false;
-            });
-        }
-
-        function uploadFiles(files, errFiles) {
-            $scope.files = files;
-            $scope.errFiles = errFiles;
-            angular.forEach(files, function (file) {
-                // attachMgr.save(file)
-                $log.log(file);
-
-                // file.upload = Upload.upload({
-                //     url: 'http://localhost:5000/api/Attachments',
-                //     data: { file: file }
-                // });
-
-                // file.upload.then(function (response) {
-                //     $timeout(function () {
-                //         file.result = response.data;
-                //     });
-                // }, function (response) {
-                //     if (response.status > 0)
-                //         $scope.errorMsg = response.status + ': ' + response.data;
-                // }, function (evt) {
-                //     file.progress = Math.min(100, parseInt(100.0 *
-                //         evt.loaded / evt.total));
-                // });
-            });
-        }
-    }
-
-}());
-(function () {
-    'use strict';
-
-    projectListCtrl.$inject = ["$scope", "dataSvc", "$log", "$uibModal", "$document", "authService", "$filter"];
-    angular
-        .module('app')
-        .controller('projectListCtrl', projectListCtrl);
-
-    /** @ngInject */
-    function projectListCtrl($scope, dataSvc, $log, $uibModal, $document, authService, $filter) {
-
-        var projMgr = dataSvc.manageProjs();
-        var username = $filter('lowercase')(authService.authentication.userName);
-        var vm = this;
-
-        vm.curUser = dataSvc.getCurUser();
-        // vm.create = create;
-        vm.data = {};
-        vm.newProject = {};
-        vm.yourProjs = [];
-
-        init();
-
-        function init() {
-            // ** Filter projects the user is part of and push to yourProjs[] **
-            vm.data = projMgr.query(function (data) {
-                // Iterate through each project
-                angular.forEach(data, function(project) {
-                    if (project.team === vm.curUser.team) {
-                        vm.yourProjs.push(project);
-                    };
-                    // angular.forEach(project.teamMembers, function(tm) {
-                    //     var tMember = ($filter('lowercase')(tm.userName));
-                    //     if (username == tMember) {
-                    //         // $scope.$apply(function () {
-                    //             vm.yourProjs.push(project);
-                    //         // });
-                    //     }
-                    // });
-
-                    // angular.forEach(project[10], function(x) {
-
-                    // $log.log(x)
-                    // })
-                    // if (project.teamMembers.indexOf(username)) {
-                    //     $log.log(project)
-                    // }
-                });
-            });
-        };
-
-    };
-
-}());
-
-// **** TODO: projectsCtrl ****
-// Resolve vm.data before initilizing
-// Filter projects by current or past
-// Filter a list of team leads
-// Add date created/modifed to back end
-
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .directive('projectDetails', projectDetails)
-        .directive('projectList', projectList)
-        .directive('yourProjects', yourProjects);
-
-    function projectDetails() {
-        return {
-            restrict: 'E',
-            templateUrl: 'features/projects/projectDetails.html',
-            controller: 'projectDetsCtrl',
-            scope: {
-                project: '=project'
-            }
-        };
-    }
-
-    function projectList() {
-        return {
-            restrict: 'E',
-            templateUrl: 'features/projects/projectlist.html'
-        };
-    }
-
-    function yourProjects() {
-        return {
-            restrict: 'E',
-            templateUrl: 'features/projects/yourProjects.html',
-            controller: 'projectListCtrl',
-            controllerAs: 'vm'
-        };
-    }
 }());
 angular.module('app')
 .controller('rosterCtrl', rosterCtrl);

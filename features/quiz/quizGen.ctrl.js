@@ -60,6 +60,13 @@
             quizSubMgr.send(s, function (data) {
                 vm.quizResults = data;
                 vm.showResults = true;
+                var correct = 0;
+                var incorrect = 0;
+                for (var i = 0; i < vm.quizResults.length; i++) {
+                    var question = vm.quizResults[i];
+                    question.selAnswer === question.corAnswer ? correct += 1 : incorrect += 1;
+                }
+                vm.score = correct / (correct + incorrect) * 100;
             });
 
 
