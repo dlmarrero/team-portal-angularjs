@@ -43,6 +43,7 @@ gulp.task('serve', ['sass'], function () {
 
     gulp.watch('index.html').on('change', browserSync.reload);
     gulp.watch('features/**/*.html').on('change', browserSync.reload);
+    gulp.watch('views/**/*.html').on('change', browserSync.reload);
 
     gulp.watch('js/*.js', ['concat:dev'])
     gulp.watch('js/**/*.js', ['concat:dev'])

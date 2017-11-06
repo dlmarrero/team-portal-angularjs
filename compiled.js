@@ -1652,6 +1652,156 @@ function cardChartCtrl13($scope) {
   }
 }
 
+angular
+.module('app')
+.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
+  $stateProvider
+  .state('app.icons', {
+    url: "/icons",
+    abstract: true,
+    template: '<ui-view></ui-view>',
+    ncyBreadcrumb: {
+      label: 'Icons'
+    }
+  })
+  .state('app.icons.fontawesome', {
+    url: '/font-awesome',
+    templateUrl: 'views/icons/font-awesome.html',
+    ncyBreadcrumb: {
+      label: 'Font Awesome'
+    }
+  })
+  .state('app.icons.simplelineicons', {
+    url: '/simple-line-icons',
+    templateUrl: 'views/icons/simple-line-icons.html',
+    ncyBreadcrumb: {
+      label: 'Simple Line Icons'
+    }
+  })
+  .state('app.components', {
+    url: "/components",
+    abstract: true,
+    template: '<ui-view></ui-view>',
+    ncyBreadcrumb: {
+      label: 'Components'
+    }
+  })
+  .state('app.components.buttons', {
+    url: '/buttons',
+    templateUrl: 'views/components/buttons.html',
+    ncyBreadcrumb: {
+      label: 'Buttons'
+    }
+  })
+  .state('app.components.social-buttons', {
+    url: '/social-buttons',
+    templateUrl: 'views/components/social-buttons.html',
+    ncyBreadcrumb: {
+      label: 'Social Buttons'
+    }
+  })
+  .state('app.components.cards', {
+    url: '/cards',
+    templateUrl: 'views/components/cards.html',
+    ncyBreadcrumb: {
+      label: 'Cards'
+    }
+  })
+  .state('app.components.forms', {
+    url: '/forms',
+    templateUrl: 'views/components/forms.html',
+    ncyBreadcrumb: {
+      label: 'Forms'
+    }
+  })
+  .state('app.components.switches', {
+    url: '/switches',
+    templateUrl: 'views/components/switches.html',
+    ncyBreadcrumb: {
+      label: 'Switches'
+    }
+  })
+  .state('app.components.tables', {
+    url: '/tables',
+    templateUrl: 'views/components/tables.html',
+    ncyBreadcrumb: {
+      label: 'Tables'
+    }
+  })
+  .state('app.forms', {
+    url: '/forms',
+    templateUrl: 'views/forms.html',
+    ncyBreadcrumb: {
+      label: 'Forms'
+    },
+    resolve: {
+      loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+        return $ocLazyLoad.load([
+          {
+            serie: true,
+            files: ['js/libs/moment.min.js']
+          },
+          {
+            serie: true,
+            files: ['js/libs/daterangepicker.min.js', 'js/libs/angular-daterangepicker.min.js']
+          },
+          {
+            files: ['js/libs/mask.min.js']
+          },
+          {
+            files: ['js/libs/select.min.js']
+          }
+        ]);
+      }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/forms.js']
+        });
+      }]
+    }
+  })
+  .state('app.widgets', {
+    url: '/widgets',
+    templateUrl: 'views/widgets.html',
+    ncyBreadcrumb: {
+      label: 'Widgets'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/widgets.js']
+        });
+      }]
+    }
+  })
+  .state('app.charts', {
+    url: '/charts',
+    templateUrl: 'views/charts.html',
+    ncyBreadcrumb: {
+      label: 'Charts'
+    },
+    resolve: {
+      // Plugins loaded before
+      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+      //     return $ocLazyLoad.load([
+      //         {
+      //             serial: true,
+      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+      //         }
+      //     ]);
+      // }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/charts.js']
+        });
+      }]
+    }
+  })
+}]);
+
 angular.module('app')
 .factory('authService', authService);
 
@@ -1659,6 +1809,7 @@ authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$locati
 function authService ($http, $q, localStorageService, $window, $location, $state) {
 
     var serviceBase = 'http://localhost:5000/';
+    // var serviceBase = 'portal/';
     var authServiceFactory = {};
 
     var _authentication = {
@@ -1771,6 +1922,7 @@ dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
     
     var aspApiUrl = 'http://localhost:5000';
+    // var aspApiUrl = 'portal';
     var authentication = authService.authentication;
     if (authentication.isAuth) {
         var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
@@ -1970,166 +2122,22 @@ function dataSvc($resource, authService) {
         });
     }
 };
-angular
-.module('app')
-.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
-  $stateProvider
-  .state('app.icons', {
-    url: "/icons",
-    abstract: true,
-    template: '<ui-view></ui-view>',
-    ncyBreadcrumb: {
-      label: 'Icons'
-    }
-  })
-  .state('app.icons.fontawesome', {
-    url: '/font-awesome',
-    templateUrl: 'views/icons/font-awesome.html',
-    ncyBreadcrumb: {
-      label: 'Font Awesome'
-    }
-  })
-  .state('app.icons.simplelineicons', {
-    url: '/simple-line-icons',
-    templateUrl: 'views/icons/simple-line-icons.html',
-    ncyBreadcrumb: {
-      label: 'Simple Line Icons'
-    }
-  })
-  .state('app.components', {
-    url: "/components",
-    abstract: true,
-    template: '<ui-view></ui-view>',
-    ncyBreadcrumb: {
-      label: 'Components'
-    }
-  })
-  .state('app.components.buttons', {
-    url: '/buttons',
-    templateUrl: 'views/components/buttons.html',
-    ncyBreadcrumb: {
-      label: 'Buttons'
-    }
-  })
-  .state('app.components.social-buttons', {
-    url: '/social-buttons',
-    templateUrl: 'views/components/social-buttons.html',
-    ncyBreadcrumb: {
-      label: 'Social Buttons'
-    }
-  })
-  .state('app.components.cards', {
-    url: '/cards',
-    templateUrl: 'views/components/cards.html',
-    ncyBreadcrumb: {
-      label: 'Cards'
-    }
-  })
-  .state('app.components.forms', {
-    url: '/forms',
-    templateUrl: 'views/components/forms.html',
-    ncyBreadcrumb: {
-      label: 'Forms'
-    }
-  })
-  .state('app.components.switches', {
-    url: '/switches',
-    templateUrl: 'views/components/switches.html',
-    ncyBreadcrumb: {
-      label: 'Switches'
-    }
-  })
-  .state('app.components.tables', {
-    url: '/tables',
-    templateUrl: 'views/components/tables.html',
-    ncyBreadcrumb: {
-      label: 'Tables'
-    }
-  })
-  .state('app.forms', {
-    url: '/forms',
-    templateUrl: 'views/forms.html',
-    ncyBreadcrumb: {
-      label: 'Forms'
-    },
-    resolve: {
-      loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-        return $ocLazyLoad.load([
-          {
-            serie: true,
-            files: ['js/libs/moment.min.js']
-          },
-          {
-            serie: true,
-            files: ['js/libs/daterangepicker.min.js', 'js/libs/angular-daterangepicker.min.js']
-          },
-          {
-            files: ['js/libs/mask.min.js']
-          },
-          {
-            files: ['js/libs/select.min.js']
-          }
-        ]);
-      }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/forms.js']
-        });
-      }]
-    }
-  })
-  .state('app.widgets', {
-    url: '/widgets',
-    templateUrl: 'views/widgets.html',
-    ncyBreadcrumb: {
-      label: 'Widgets'
-    },
-    resolve: {
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load controllers
-        return $ocLazyLoad.load({
-          files: ['js/controllers/widgets.js']
-        });
-      }]
-    }
-  })
-  .state('app.charts', {
-    url: '/charts',
-    templateUrl: 'views/charts.html',
-    ncyBreadcrumb: {
-      label: 'Charts'
-    },
-    resolve: {
-      // Plugins loaded before
-      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-      //     return $ocLazyLoad.load([
-      //         {
-      //             serial: true,
-      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
-      //         }
-      //     ]);
-      // }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/charts.js']
-        });
-      }]
-    }
-  })
-}]);
-
 angular.module('app')
     .controller('loginCtrl', loginCtrl);
 
-loginCtrl.$inject = ['$scope', '$location', 'authService', '$state'];
-function loginCtrl($scope, $location, authService, $state) {
+loginCtrl.$inject = ['$scope', '$location', 'authService', '$state', '$rootScope'];
+function loginCtrl($scope, $location, authService, $state, $rootScope) {
 
     $scope.login = login;
     $scope.loginData = {};
-    $scope.message = "";
+    // $rootScope.message = "";
 
+    $scope.$on('messageUpdate',function (event, data) {
+        $rootScope.message = data;
+        console.log("Data:",data);
+        console.log("Event:",event);
+        console.log("$scope.message",$scope.message)
+    });
 
     function login() {
         authService.login($scope.loginData)
@@ -2137,7 +2145,9 @@ function loginCtrl($scope, $location, authService, $state) {
                 $state.transitionTo('app.main', {}, { reload: true });
             },
             function (error_description) {
-                $scope.message = error_description.data.error_description; // Fix this
+                // $scope.message = error_description.data.error_description; // Fix this
+                console.log(error_description.data.error_description);
+                $rootScope.$broadcast('messageUpdate',error_description.data.error_description);
             });
     };
 
@@ -2692,6 +2702,19 @@ function toDoCtrl(authService, dataSvc, $window) {
         }
 
         function delTask(task) {
+            if (task.assignedUsers.length) {
+                for (var i = 0; i < task.assignedUsers.length; i++) {
+                    var user = task.assignedUsers[i];
+                    delAssignment(user, task);
+                }
+            } 
+            if (task.comments.length) {
+                for (var i = 0; i < task.comments.length; i++) {
+                    var comment = task.comments[i];
+                    delComment(comment.id);
+                }
+            } 
+            // Needs to wait for deletion
             taskMgr.delete({ id: task.id }, function () {
                 var i = $scope.project.workItems.indexOf(task);
                 $scope.project.workItems.splice(i, 1);
@@ -2842,10 +2865,11 @@ function toDoCtrl(authService, dataSvc, $window) {
         var vm = this;
 
         vm.curUser = dataSvc.getCurUser();
-        // vm.create = create;
         vm.data = {};
         vm.newProject = {};
         vm.yourProjs = [];
+        vm.completedProjs = [];
+        vm.incompleteProjs = [];
 
         init();
 
@@ -2853,27 +2877,15 @@ function toDoCtrl(authService, dataSvc, $window) {
             // ** Filter projects the user is part of and push to yourProjs[] **
             vm.data = projMgr.query(function (data) {
                 // Iterate through each project
-                angular.forEach(data, function(project) {
+                angular.forEach(data, function (project) {
                     if (project.team === vm.curUser.team) {
                         vm.yourProjs.push(project);
                     };
-                    // angular.forEach(project.teamMembers, function(tm) {
-                    //     var tMember = ($filter('lowercase')(tm.userName));
-                    //     if (username == tMember) {
-                    //         // $scope.$apply(function () {
-                    //             vm.yourProjs.push(project);
-                    //         // });
-                    //     }
-                    // });
-
-                    // angular.forEach(project[10], function(x) {
-
-                    // $log.log(x)
-                    // })
-                    // if (project.teamMembers.indexOf(username)) {
-                    //     $log.log(project)
-                    // }
                 });
+                for (var i = 0; i < data.length; i++) {
+                    var proj = data[i];
+                    proj.complete ? vm.completedProjs.push(proj) : vm.incompleteProjs.push(proj);
+                }
             });
         };
 
@@ -2884,7 +2896,6 @@ function toDoCtrl(authService, dataSvc, $window) {
 // **** TODO: projectsCtrl ****
 // Resolve vm.data before initilizing
 // Filter projects by current or past
-// Filter a list of team leads
 // Add date created/modifed to back end
 
 (function () {

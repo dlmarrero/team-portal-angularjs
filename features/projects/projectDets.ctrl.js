@@ -166,6 +166,19 @@
         }
 
         function delTask(task) {
+            if (task.assignedUsers.length) {
+                for (var i = 0; i < task.assignedUsers.length; i++) {
+                    var user = task.assignedUsers[i];
+                    delAssignment(user, task);
+                }
+            } 
+            if (task.comments.length) {
+                for (var i = 0; i < task.comments.length; i++) {
+                    var comment = task.comments[i];
+                    delComment(comment.id);
+                }
+            } 
+            // Needs to wait for deletion
             taskMgr.delete({ id: task.id }, function () {
                 var i = $scope.project.workItems.indexOf(task);
                 $scope.project.workItems.splice(i, 1);

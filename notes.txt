@@ -3,13 +3,14 @@
 ************
 * PROJECTS *
 ************
-- Filter current and past projects in controller
 - File upload
-- Complete checkbox positioning
-- Breadcrumb should be project name
-- Only one modal will load per refresh if submit is clicked (get rid of modals)
+- Only one modal will load per refresh if submit is clicked (get rid of modals || look at bootstrap angular.document)
 - Configure cascade delete
-- When team or Complete is set, update projectList
+    * Tasks: does not wait for prior deletions before executing task delete
+- When team or Complete is set, update projectList ($on)
+- Track datetimes for created/completed
+- Change to uib-tabset, should fix filtering
+- Comments don't show after post
 
 
 ************
@@ -27,6 +28,7 @@
 - Add question type functionality 
     * t/f, fill in the blank, multi-choice, select all that apply
 - Generate Quiz button should not show if there are no refs
+- Bug on bulk add
 
 ***********
 * ROSTER  *

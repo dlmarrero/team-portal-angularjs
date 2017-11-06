@@ -9,8 +9,9 @@ function rosterCtrl ($scope, dataSvc) {
     // Default settings for table column display
     $scope.showRate = true;
     $scope.showName = true;
+    $scope.showTeam = true;
     $scope.showPhone = true;
-    $scope.showAdsd = true;
+    $scope.showAdsd = false;
     $scope.showPrd = true;
     $scope.showEaos = true;
     $scope.showReportDate = true;

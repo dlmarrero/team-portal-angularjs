@@ -9,31 +9,29 @@
         <textarea class="form-control" id="description" ng-model="project.new.description"></textarea>
         <hr>
         <div class="row" style="padding-left: 20px">
-            <label for="category" class="form-label" style="padding-right: 10px">Categories:</label>
-            <div ng-repeat="category in project.categories" style="padding-bottom:10px;">
+            <label for="category" class="form-label" style="padding-right: 10px">Assign a Team:</label>
+            <!-- <div ng-repeat="category in project.categories" style="padding-bottom:10px;">
                 <span class="catspan">&nbsp;{{category}}&nbsp;
-                <a href="#" ng-click="project.removeCategory(category)">
-                    <small><i class="fa fa-close text-muted"></i></a></small>&nbsp;
+                    <a href="#" ng-click="project.removeCategory(category)">
+                        <small>
+                            <i class="fa fa-close text-muted"></i>
+                    </a>
+                    </small>&nbsp;
                 </span>
-            </div>
+            </div> -->
         </div>
-        <select name="category" id="category" ng-model="project.submittedCategory" ng-change="project.submitCategory(project.submittedCategory)"
-            class="form-control">
-            <option value="" selected>Select a Category</option>
-            <option value="Programming">Programming</option>
-            <option value="Networking">Networking</option>
-            <option value="Infrastructure">Infrastructure</option>
-            <option value="other">Other</option>
+        <select name="category" id="category" ng-model="project.new.team" class="form-control">
+            <option ng-repeat="team in project.teams" value="{{team}}">{{team}}</option>
         </select>
-        <div ng-if="project.newCategory">
-            <label for="newcategory" class="form-label">Enter Category:</label>
+        <!-- <div ng-if="project.newCategory">
+            <label for="newcategory" class="form-label">Assign a Team:</label>
             <div class="input-group">
                 <input type="text" id="newcategory" ng-model="project.addedCategory" class="form-control" autocomplete="off">
                 <span class="input-group-btn">
-                        <button type="button" class="btn btn-info" ng-click="project.addCategory(project.addedCategory)">Add</button>
+                    <button type="button" class="btn btn-info" ng-click="project.addCategory(project.addedCategory)">Add</button>
                 </span>
             </div>
-        </div>
+        </div> -->
         <hr>
         <div ng-init="project.new.priority='normal'">
             <label for="priority" class="form-label">Priority: </label>

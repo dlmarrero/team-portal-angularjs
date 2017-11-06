@@ -6,7 +6,7 @@
         .controller('projectDetsCtrl', projectDetsCtrl);
 
     /** @ngInject */
-    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, Upload, $timeout) {
+    function projectDetsCtrl(dataSvc, $stateParams, $log, $scope, $state, $document, $timeout) {
         var attachMgr = dataSvc.manageAttachments();
         var commentMgr = dataSvc.manageComments();
         var linkMgr = dataSvc.manageLinks();
@@ -21,16 +21,18 @@
         $scope.newTask = {};
         $scope.showDetails = false;
         $scope.taskSelected = null;
-        $scope.users = dataSvc.getUsers();
+        // $scope.teamFeedback = ""
+        $scope.teams = dataSvc.teams;
+        $scope.teamMembers = [];
 
-        $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
-        $scope.assignTask = assignTask;             // Assign a user to a ask
+        // $scope.addTeamMembers = addTeamMembers;     // Add a user to a project
+        $scope.assignTask = assignTask;             // Assign a user to a task
         $scope.delAssignment = delAssignment;       // Delete a user from a task assignment
         $scope.delComment = delComment;             // Delete a comment
         $scope.delLink = delLink;                   // Delete a link
         $scope.delProject = delProject;             // Delete a project
         $scope.delTask = delTask;                   // Delete a task
-        $scope.delTeamMember = delTeamMember;       // Remove team member from project
+        // $scope.delTeamMember = delTeamMember;       // Remove team member from project
         $scope.projectComplete = projectComplete;   // Mark project complete
         $scope.saveAssignments = saveAssignments;   // Save users assigned to a task 
         $scope.saveComment = saveComment;           // Save a new comment
@@ -55,6 +57,7 @@
                         priority: "Normal",
                         projectId: project.id
                     };
+                    $scope.teamMembers = dataSvc.getTeamMembers(project.team);
                 });
             } else {
                 $scope.newTask = {
@@ -64,6 +67,7 @@
                     projectId: $scope.project.id
                 };
                 populateChart($scope.project);
+                $scope.teamMembers = dataSvc.getTeamMembers($scope.project.team);
             }
         }
 
@@ -110,33 +114,38 @@
                     userName: user.userName,
                     rateName: user.rateName
                 };
-                
+
                 var taskIndex = $scope.project.workItems.indexOf(task);
-                
-                teamMgr.save(submission, function(data) {
-                    $scope.project.workItems[taskIndex].assignedUsers.push(data);
+
+                teamMgr.save(submission, function (data) {
+                    try {
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);
+                    } catch (error) {
+                        $scope.project.workItems[taskIndex].assignedUsers = [];
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);                        
+                    }
                 });
             }
         }
 
         function delAssignment(teamMember, task) {
-            teamMgr.delete({id: teamMember.id}, function() {
+            teamMgr.delete({ id: teamMember.id }, function () {
                 var t = $scope.project.workItems.indexOf(task);
                 var u = $scope.project.workItems[t].assignedUsers.indexOf(teamMember);
                 $log.log('$scope.project.workItems[t].assignedUsers.length', $scope.project.workItems[t].assignedUsers.length);
-                
+
                 // $timeout(function() {
-                    if ($scope.project.workItems[t].assignedUsers.length === 1) {
-                        $scope.project.workItems[t].assignedUsers = [];
-                    } else {
-                        $scope.project.workItems[t].assignedUsers.splice(u,1);
-                        $log.log('spliced',$scope.project.workItems[t].assignedUsers);
-                    }
-                    $scope.taskSelected = null;
+                if ($scope.project.workItems[t].assignedUsers.length === 1) {
+                    $scope.project.workItems[t].assignedUsers = [];
+                } else {
+                    $scope.project.workItems[t].assignedUsers.splice(u, 1);
+                    $log.log('spliced', $scope.project.workItems[t].assignedUsers);
+                }
+                $scope.taskSelected = null;
                 // })
             });
         }
-        
+
         function delComment(id) {
             commentMgr.delete({ id: id }, function () {
                 $state.reload();
@@ -157,12 +166,12 @@
         }
 
         function delTask(task) {
-            taskMgr.delete({id: task.id}, function() {
+            taskMgr.delete({ id: task.id }, function () {
                 var i = $scope.project.workItems.indexOf(task);
-                $scope.project.workItems.splice(i,1);
+                $scope.project.workItems.splice(i, 1);
             });
         }
-        
+
         function delTeamMember(id) {
             teamMgr.delete({ id: id }, function () {
                 $scope.project.teamMembers = teamMgr.query({ projectId: $scope.project.id });
@@ -182,7 +191,16 @@
                     userName: user.userName,
                     rateName: user.rateName
                 };
-                teamMgr.save(submission);
+                teamMgr.save(submission, function (data) {
+                    try {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    } catch (error) {
+                        var i = $scope.project.workItems.length-1
+                        $scope.project.workItems[i].assignedUsers = [];
+                        $scope.project.workItems[i].assignedUsers.push(data);
+                    }
+                });
             });
         }
 
@@ -190,7 +208,7 @@
             $scope.newComment.author = $scope.curUser.rateName;
             $scope.newComment.created = new Date();
             commentMgr.save($scope.newComment, function (data) {
-                $state.reload();
+                // $state.reload();
             });
         }
 
@@ -205,12 +223,16 @@
 
         function saveTask() {
             taskMgr.save($scope.newTask, function (response) {
-                saveAssignments(response.id);
+                
                 $scope.project.workItems.push(response);
+                saveAssignments(response.id);
                 $scope.incomplete++;
                 $scope.chart = [];
                 $scope.chart.push($scope.complete);
                 $scope.chart.push($scope.incomplete);
+                $scope.newTaskFeedback = "Task successfully created: " + response.title;
+                $scope.newTask = {};
+                $scope.assignedUsers = [];
             });
         }
 
@@ -241,10 +263,13 @@
             $scope.assignedUsers.splice(index, 1);
         }
 
-        function updateProj() {
+        function updateProj(assignedTeam) {
             $scope.editTitle = false;
             $scope.editDescription = false;
-            projMgr.update({ id: $scope.project.id }, $scope.project);
+            projMgr.update({ id: $scope.project.id }, $scope.project, function (project) {
+                // $scope.teamFeedback = "Successfully assigned to " + project.team + " team"
+                $scope.editTeam = false;
+            });
         }
 
         function uploadFiles(files, errFiles) {

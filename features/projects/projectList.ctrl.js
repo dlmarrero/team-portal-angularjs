@@ -13,10 +13,11 @@
         var vm = this;
 
         vm.curUser = dataSvc.getCurUser();
-        // vm.create = create;
         vm.data = {};
         vm.newProject = {};
         vm.yourProjs = [];
+        vm.completedProjs = [];
+        vm.incompleteProjs = [];
 
         init();
 
@@ -24,27 +25,15 @@
             // ** Filter projects the user is part of and push to yourProjs[] **
             vm.data = projMgr.query(function (data) {
                 // Iterate through each project
-                angular.forEach(data, function(project) {
+                angular.forEach(data, function (project) {
                     if (project.team === vm.curUser.team) {
                         vm.yourProjs.push(project);
                     };
-                    // angular.forEach(project.teamMembers, function(tm) {
-                    //     var tMember = ($filter('lowercase')(tm.userName));
-                    //     if (username == tMember) {
-                    //         // $scope.$apply(function () {
-                    //             vm.yourProjs.push(project);
-                    //         // });
-                    //     }
-                    // });
-
-                    // angular.forEach(project[10], function(x) {
-
-                    // $log.log(x)
-                    // })
-                    // if (project.teamMembers.indexOf(username)) {
-                    //     $log.log(project)
-                    // }
                 });
+                for (var i = 0; i < data.length; i++) {
+                    var proj = data[i];
+                    proj.complete ? vm.completedProjs.push(proj) : vm.incompleteProjs.push(proj);
+                }
             });
         };
 
@@ -55,5 +44,4 @@
 // **** TODO: projectsCtrl ****
 // Resolve vm.data before initilizing
 // Filter projects by current or past
-// Filter a list of team leads
 // Add date created/modifed to back end

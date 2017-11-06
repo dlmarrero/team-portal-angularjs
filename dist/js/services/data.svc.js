@@ -4,14 +4,20 @@ angular.module('app')
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
     
-    var aspApiUrl = 'http://localhost:5000';
+    // var aspApiUrl = 'http://localhost:5000';
+    var aspApiUrl = 'portal';
     var authentication = authService.authentication;
+    if (authentication.isAuth) {
+        var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
+    };
 
     return {
         // USERS
         getUsers: getUsers,
         getCurUser: getCurUser,
         manageUser: manageUser,
+        getTeamMembers: getTeamMembers,
+        teams: ['Virtualization', 'Infrastructure', 'IT Support', 'Training'],
         // ROLES
         addRole: addRole,
         getRoles: getRoles,
@@ -47,9 +53,14 @@ function dataSvc($resource, authService) {
         return $resource(aspApiUrl + '/api/account/users').query();
     };
 
+    function getTeamMembers(team) {
+        // Get all members of a team
+        return $resource(aspApiUrl + '/api/account/team?team=:team').query({ team: team});
+    }
+
     function getCurUser() {
         if (authentication.isAuth) {
-            return $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
+            return curUser
         };
     }
 

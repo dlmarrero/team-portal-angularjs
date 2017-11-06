@@ -10,8 +10,11 @@ function sailorDetsCtrl($scope, $state, $stateParams, dataSvc) {
     $scope.addedRole = "";
     $scope.addRole = addRole;
     $scope.deleteUser = deleteUser;
+    $scope.addedTeam = "";
     $scope.roles = dataSvc.getRoles();
     $scope.sailor = {};
+    $scope.teams = dataSvc.teams;
+    $scope.teamFeedback = "";
     $scope.updateUser = updateUser;
 
     init();
@@ -35,9 +38,12 @@ function sailorDetsCtrl($scope, $state, $stateParams, dataSvc) {
         });
     };
 
-    function updateUser() {
+    function updateUser(teamChange) {
         userMgr.update({ id: $stateParams.id }, $scope.newSailor, function (data) {
             $scope.sailor = data;
+            if (teamChange) {
+                $scope.teamFeedback = "Successfully assigned to " + data.team + " team"
+            }
         });
         $scope.enableEdit = false;
     };

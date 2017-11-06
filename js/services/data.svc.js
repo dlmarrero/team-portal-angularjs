@@ -5,6 +5,7 @@ dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
     
     var aspApiUrl = 'http://localhost:5000';
+    // var aspApiUrl = 'portal';
     var authentication = authService.authentication;
     if (authentication.isAuth) {
         var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();

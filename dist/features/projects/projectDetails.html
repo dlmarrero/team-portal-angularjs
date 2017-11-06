@@ -1,5 +1,5 @@
 <div ng-if="$stateParams.id">
-    <h4>Projects Details</h4>
+    <h4>Project Details</h4>
     <hr>
 </div>
 <div class="card">
@@ -10,14 +10,22 @@
                 <a ng-show="!editTitle" href="#" ng-click="editTitle=true">Edit</a>
                 <input type="text" ng-model="project.title" value="project.title" ng-show="editTitle" style="font-size: 20px;">
                 <a ng-show="editTitle" href="#" ng-click="updateProj()">Save</a>
-                <span ng-if="project.categories"><br><i class="fa fa-tags"></i><span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</span>
+                <!-- <span ng-if="project.categories">
+                    <br>
+                    <i class="fa fa-tags"></i>
+                    <span ng-repeat="category in project.categories | split">&nbsp;: {{category}}</span> -->
             </div>
             <div class="col-lg-1 float-right" align="right">
                 <div align="center">
-                    <span>Complete</span><br>
+                    <span>Complete</span>
+                    <br>
                     <label class='form-control-label' for='complete'>
-                        <a href="#" ng-if="!project.complete" ng-click="projectComplete(true)"><i class="fa fa-square-o fa-2x"></i></a>
-                        <a href="#" ng-if="project.complete" ng-click="projectComplete(false)"><i class="fa fa-check-square-o fa-2x"></i></a>
+                        <a href="#" ng-if="!project.complete" ng-click="projectComplete(true)">
+                            <i class="fa fa-square-o fa-2x"></i>
+                        </a>
+                        <a href="#" ng-if="project.complete" ng-click="projectComplete(false)">
+                            <i class="fa fa-check-square-o fa-2x"></i>
+                        </a>
                     </label>
                 </div>
             </div>
@@ -28,35 +36,59 @@
             <div class="col-lg-8 bordered">
                 <strong>Description:</strong>
                 <span class="float-right">
-                            <a href="#" ng-show="!editDescription" ng-click="editDescription = true">Edit</a>
-                            <a href="#" ng-show="editDescription" ng-click="updateProj()">Save</a>
-                        </span>
+                    <a href="#" ng-show="!editDescription" ng-click="editDescription = true">Edit</a>
+                    <a href="#" ng-show="editDescription" ng-click="updateProj()">Save</a>
+                </span>
                 <br>
                 <p ng-show="!editDescription" style="white-space: pre-wrap;">{{project.description}}</p>
-                <textarea style="width:100%;height:180px;" ng-model="project.description" value="project.description" ng-show="editDescription"></textarea><br>
+                <textarea style="width:100%;height:180px;" ng-model="project.description" value="project.description" ng-show="editDescription"></textarea>
+                <br>
             </div>
             <div class="col-lg-4 bordered">
-                <strong>Team Members:&nbsp;</strong>
+                <strong>Assigned Team:&nbsp;</strong>
                 <span class="float-right">
-                        <a href="#" ng-show="!editTeamMember" ng-click="editTeamMember = true">Edit</a>
-                        <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a>
-                        </span>
+                    <a href="#" ng-show="!editTeam" ng-click="editTeam = true">Edit</a>
+                    <a href="#" ng-show="editTeam" ng-click="editTeam = false">Done</a>
+                </span>
+                <!-- <strong>Team Members:&nbsp;</strong>
+                <span class="float-right">
+                    <a href="#" ng-show="!editTeamMember" ng-click="editTeamMember = true">Edit</a>
+                    <a href="#" ng-show="editTeamMember" ng-click="editTeamMember = false">Done</a>
+                </span> -->
                 <!-- Add Team Member  -->
-                <form>
-                    <div class="input-group" ng-if="editTeamMember">
-                        <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control">
-                        <span class="input-group-btn">
-                                <button type="submit" class="btn btn-info" ng-click="addTeamMembers(selected); selected=null">Add</button>
-                            </span>
-                    </div>
-                </form>
-                <!-- Display Team Members  -->
-                <div ng-repeat="tm in project.teamMembers | orderBy:'projectLead'">
-                    <span ng-if="editTeamMember"><a href="#" ng-click="delTeamMember(tm.id)"><i class="fa fa-close"></i></a></span>&nbsp;{{tm.rateName}}
-                    <span ng-if="editTeamMember && !tm.projectLead"><a href="#" ng-click="toggleLead(tm)">Lead</a></span>
-                    <span ng-if="editTeamMember && tm.projectLead"><a href="#" ng-click="toggleLead(tm)">Normal</a></span>
-                    <span ng-if="tm.projectLead"><em>(Lead)</em></span>
+                <!-- <form> -->
+                <div class="input-group" ng-if="editTeam">
+                    <select ng-model="project.team" ng-change="updateProj(project.team)">
+                        <option ng-repeat="team in teams" value="{{team}}">{{team}}</option>
+                    </select>
+                    <!-- <input type="text" ng-model="selected" uib-typeahead="user as user.rateName for user in users | filter:$viewValue" class="form-control"> -->
+                    <!-- <span class="input-group-btn">
+                            <button type="submit" class="btn btn-info" ng-click="addTeamMembers(selected); selected=null">Add</button>
+                        </span> -->
                 </div>
+                <!-- </form> -->
+                <!-- Display Team Members  -->
+                <div ng-if="!editTeam">
+                    <!-- <p ng-if="teamFeedback" style="color:rgb(2, 114, 2)">{{teamFeedback}}</p> -->
+                    {{project.team}}
+                    <p ng-if="!project.team">No team assigned</p>
+                </div>
+                <!-- <div ng-repeat="tm in project.teamMembers | orderBy:'projectLead'">
+                    <span ng-if="editTeam">
+                        <a href="#" ng-click="delTeamMember(tm.id)">
+                            <i class="fa fa-close"></i>
+                        </a>
+                    </span>&nbsp;{{tm.rateName}}
+                    <span ng-if="editTeamMember && !tm.projectLead">
+                        <a href="#" ng-click="toggleLead(tm)">Lead</a>
+                    </span>
+                    <span ng-if="editTeamMember && tm.projectLead">
+                        <a href="#" ng-click="toggleLead(tm)">Normal</a>
+                    </span>
+                    <span ng-if="tm.projectLead">
+                        <em>(Lead)</em>
+                    </span>
+                </div> -->
             </div>
         </div>
         <br>
@@ -65,15 +97,19 @@
             <div class="col-lg-12 bordered" style="min-height:100px">
                 <strong>Resources:</strong>
                 <span class="float-right">
-                            <a href="#" ng-show="!editResources" ng-click="editResources = true">Edit</a>
-                            <a href="#" ng-show="editResources" ng-click="editResources = false">Done</a>
-                        </span>
-                <small><a href="#" data-toggle="modal" data-target="#newLinkModal">Add</a></small>
+                    <a href="#" ng-show="!editResources" ng-click="editResources = true">Edit</a>
+                    <a href="#" ng-show="editResources" ng-click="editResources = false">Done</a>
+                </span>
+                <small>
+                    <a href="#" data-toggle="modal" data-target="#newLinkModal">Add</a>
+                </small>
                 <!-- <button type='button' class='btn btn-primary' data-toggle="modal" data-target="#newLinkModal">Add Link</button> -->
                 <ul ng-repeat="link in project.links">
                     <li>
                         <a ng-href="{{link.url}}" target="blank">{{link.title}}</a>
-                        <a href="#" ng-if="editResources" ng-click="delLink(link.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
+                        <a href="#" ng-if="editResources" ng-click="delLink(link.id)">
+                            <i class="fa fa-trash-o" style="color:red"></i>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -85,23 +121,37 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <strong>Tasks:</strong>
-                        <br><br>
+                        <br>
+                        <br>
                         <div ng-repeat="task in project.workItems">
-                            <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)"><i class="fa fa-square-o"></i></a>
-                            <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)"><i class="fa fa-check-square-o"></i></a>&nbsp;{{task.title}}
-                            <a href="#" ng-click="showDetails=true" ng-hide="showDetails"><small>More</small></a>
-                            <a href="#" ng-click="showDetails=false" ng-show="showDetails"><small>Less</small></a>
+                            <a href="#" ng-if="!task.complete" ng-click="taskComplete(task, true)">
+                                <i class="fa fa-square-o"></i>
+                            </a>
+                            <a href="#" ng-if="task.complete" ng-click="taskComplete(task, false)">
+                                <i class="fa fa-check-square-o"></i>
+                            </a>&nbsp;{{task.title}}
+                            <a href="#" ng-click="showDetails=true" ng-hide="showDetails">
+                                <small>More</small>
+                            </a>
+                            <a href="#" ng-click="showDetails=false" ng-show="showDetails">
+                                <small>Less</small>
+                            </a>
                             <!-- Task Details  -->
                             <div class="details-slide" style="overflow:auto" ng-show="showDetails" ng-class="task.priority == 'high' ? 'callout callout-danger' : 'callout callout-success'">
                                 <strong>Description:</strong>
                                 <br>{{task.description}}
                                 <hr>
                                 <strong>Assigned To:</strong>
-                                <small><a href="#" ng-show="!editAssignment" ng-click="editAssignment=true">Edit</a></small>
-                                <small><a href="#" ng-show="editAssignment" ng-click="editAssignment=false">Done</a></small><br>
+                                <small>
+                                    <a href="#" ng-show="!editAssignment" ng-click="editAssignment=true">Edit</a>
+                                </small>
+                                <small>
+                                    <a href="#" ng-show="editAssignment" ng-click="editAssignment=false">Done</a>
+                                </small>
+                                <br>
                                 <form name="assignForm" autocomplete="off" ng-if="editAssignment">
                                     <div class="input-group">
-                                        <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
+                                        <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in teamMembers | filter:$viewValue"
                                             class="form-control" ng-value="taskSelected.rateName">
                                         <span class="input-group-btn">
                                             <button type="submit" ng-if="editAssignment" class="btn btn-info" ng-click="a(taskSelected, task); taskSelected=null;">Add</button>
@@ -109,29 +159,49 @@
                                     </div>
                                 </form>
                                 <div ng-repeat="tm in task.assignedUsers">
-                                    <span ng-if="editTeamMember"><a href="#" ng-click="delTeamMember(tm.id)"><i class="fa fa-close"></i></a></span>&nbsp;{{tm.rateName}}
-                                    <a href="#" ng-show="editAssignment" ng-click="delAssignment(tm, task)"><i class="fa fa-trash-o" style="color:red"></i></a>
+                                    <span ng-if="editTeamMember">
+                                        <a href="#" ng-click="delTeamMember(tm.id)">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </span>&nbsp;{{tm.rateName}}
+                                    <a href="#" ng-show="editAssignment" ng-click="delAssignment(tm, task)">
+                                        <i class="fa fa-trash-o" style="color:red"></i>
+                                    </a>
                                 </div>
-                                <span ng-if="!task.assignedUsers.length">No one is assigned to this task<br></span>
+                                <span ng-if="!task.assignedUsers.length">No one is assigned to this task
+                                    <br>
+                                </span>
                                 <hr>
                                 <strong>Comments ({{task.comments.length || 0}}):</strong>
-                                <small><a href="#" data-toggle="modal" data-target="#newCommentModal" ng-click="newComment.workItemId = task.id">Add</a></small><br>
+                                <small>
+                                    <a href="#" data-toggle="modal" data-target="#newCommentModal" ng-click="newComment.workItemId = task.id">Add</a>
+                                </small>
+                                <br>
                                 <ul ng-repeat="comment in task.comments" style="padding-left:20px">
                                     <li>
-                                        <small><strong>
-                                                    {{comment.author}}:&nbsp;
-                                                    <span ng-if="comment.stuck" style="color:red">STUCK!</span>
-                                                    <a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)"><i class="fa fa-trash-o" style="color:red"></i></a>
-                                                </strong></small>
+                                        <small>
+                                            <strong>
+                                                {{comment.author}}:&nbsp;
+                                                <span ng-if="comment.stuck" style="color:red">STUCK!</span>
+                                                <a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)">
+                                                    <i class="fa fa-trash-o" style="color:red"></i>
+                                                </a>
+                                            </strong>
+                                        </small>
                                         <p>
-                                            {{comment.body}}<br>
-                                            <small><em>{{comment.created | date:'ddMMMyy @ HHmm'}}</em></small>
+                                            {{comment.body}}
+                                            <br>
+                                            <small>
+                                                <em>{{comment.created | date:'ddMMMyy @ HHmm'}}</em>
+                                            </small>
                                         </p>
                                     </li>
                                 </ul>
                                 <button ng-show="!confirmDelTask" class="btn btn-danger btn-sm" style="float:right" ng-click="confirmDelTask=true">Delete Task</button>
                                 <div style="float:right" ng-show="confirmDelTask">
-                                    <strong><em>Are you sure you want to delete this task?&nbsp;</em></strong>
+                                    <strong>
+                                        <em>Are you sure you want to delete this task?&nbsp;</em>
+                                    </strong>
                                     <button class="btn btn-danger btn-sm" ng-click="delTask(task); confirmDelTask=false">Yes</button>
                                     <button class="btn btn-success btn-sm" ng-click="confirmDelTask=false">No</button>
                                 </div>
@@ -139,12 +209,11 @@
                             <hr>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="loadfade" style="text-align: center;" style="max-height:230px">
-                            <strong id="taskChart">
+                    <div class="col-lg-4" style="text-align: center;line-height:100%">
+                        <div class="col-lg-12 loadfade" style="max-height:230px;font-size:14px;padding-bottom:5px">
+                            <strong>
                                 {{complete}}/{{complete+incomplete}}
-                                <br>
-                                TASKS COMPLETED
+                                <br> TASKS COMPLETED
                             </strong>
                         </div>
                         <div class="col-lg-12" style="text-align:center">
@@ -159,7 +228,7 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-lg-6">
-                <button type='button' style="width:120px" class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Task</button>
+                <button type='button' style="width:120px" class='btn btn-success' data-toggle="modal" data-target="#newTaskModal">Add Tasks</button>
             </div>
             <div class="col-lg-6" style="text-align:right;" align="right">
                 <button type='button' class='btn btn-danger' ng-click='delProject()'>Delete Project</button>
@@ -177,7 +246,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add a Task</h5>
-                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                <button type="button" class="close float-right" data-dismiss="modal">
+                    <i class="fa fa-remove"></i>
+                </button>
             </div>
             <div class="modal-body" style="text-align: center">
                 <!-- FORM  -->
@@ -188,12 +259,13 @@
                     <label for="description" class="form-label" style="float:left">Description:</label>
                     <textarea id="description" class="form-control" ng-model="newTask.description" required></textarea>
                     <hr>
-                    <!-- Assign Users  -->
                     <form name="assignForm">
                         <label for="assign" class="form-label" style="float:left">Assign To:</label>
                         <div class="input-group">
-                            <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
-                                class="form-control">
+                            <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in teamMembers | filter:$viewValue"
+                                class="form-control" ng-value="taskSelected.rateName" autocomplete="off">
+                            <!-- <input type="text" id="assign" ng-model="taskSelected" uib-typeahead="user as user.rateName for user in project.teamMembers | filter:$viewValue"
+                                class="form-control"> -->
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-info" ng-click="assignTask(taskSelected); taskSelected=null">Add</button>
                             </span>
@@ -202,7 +274,9 @@
                 </ng-form>
                 <!-- Display Selected Users  -->
                 <div ng-repeat="user in assignedUsers" style="text-align:left">
-                    <a href="#" ng-click="unassignTask(user, $index)"><i class="fa fa-close"></i></a> &nbsp;{{user.rateName}}
+                    <a href="#" ng-click="unassignTask(user, $index)">
+                        <i class="fa fa-close"></i>
+                    </a> &nbsp;{{user.rateName}}
                 </div>
                 <hr>
                 <div style="text-align:left">
@@ -215,8 +289,10 @@
                 </ng-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <span style="color:rgb(1, 126, 1);position:absolute;left:10px">{{newTaskFeedback}}</span>
+                <button type="button" class="btn btn-primary" ng-click="saveTask()">Submit</button>
+                <!-- <button type="button" class="btn btn-primary" ng-click="saveTask()" remove-modal>Submit</button> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Done</button>
             </div>
         </div>
     </div>
@@ -229,13 +305,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Post a Comment</h5>
-                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                <button type="button" class="close float-right" data-dismiss="modal">
+                    <i class="fa fa-remove"></i>
+                </button>
             </div>
             <div class="modal-body" style="text-align: center">
                 <!-- FORM  -->
                 <ng-form name="newCommentForm">
                     <label class='form-control-label float-right' for='stuck'>Stuck?&nbsp;&nbsp;
-                    <input type='checkbox' id='stuck' ng-model='newComment.stuck'>
+                        <input type='checkbox' id='stuck' ng-model='newComment.stuck'>
                     </label>
 
                     <label for="comment" class="form-label" style="float:left">Comment:</label>
@@ -258,7 +336,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add a Resource</h5>
-                <button type="button" class="close float-right" data-dismiss="modal"><i class="fa fa-remove"></i></button>
+                <button type="button" class="close float-right" data-dismiss="modal">
+                    <i class="fa fa-remove"></i>
+                </button>
             </div>
             <div class="modal-body" style="text-align: center">
                 <!-- FORM  -->
@@ -270,8 +350,7 @@
                     <input type="text" id="url" class="form-control" ng-model="newLink.url">
                     <!-- <hr>
                     <label for="fileupload" class="form-label" style="float:left">Upload a File:&nbsp;
-                        <button ngf-select="uploadFiles($files, $invalidFiles)" multiple
-                            ngf-max-size="10MB">
+                        <button ngf-select="uploadFiles($files, $invalidFiles)" multiple ngf-max-size="10MB">
                             Select Files
                         </button>
                     </label>
@@ -295,4 +374,3 @@
         </div>
     </div>
 </div>
-

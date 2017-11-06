@@ -14,6 +14,7 @@
         vm.addCategory = addCategory;
         vm.removeCategory = removeCategory;
         vm.submitCategory = submitCategory;
+        vm.teams = dataSvc.teams;
 
         vm.new = {};
         vm.submit = submitProject;

@@ -13,7 +13,7 @@
             "args": [
                 "cs"
             ]
-        }
+        },
         {
             "type": "node",
             "request": "launch",
