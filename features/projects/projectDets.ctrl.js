@@ -122,7 +122,7 @@
                         $scope.project.workItems[taskIndex].assignedUsers.push(data);
                     } catch (error) {
                         $scope.project.workItems[taskIndex].assignedUsers = [];
-                        $scope.project.workItems[taskIndex].assignedUsers.push(data);                        
+                        $scope.project.workItems[taskIndex].assignedUsers.push(data);
                     }
                 });
             }
@@ -132,23 +132,24 @@
             teamMgr.delete({ id: teamMember.id }, function () {
                 var t = $scope.project.workItems.indexOf(task);
                 var u = $scope.project.workItems[t].assignedUsers.indexOf(teamMember);
-                $log.log('$scope.project.workItems[t].assignedUsers.length', $scope.project.workItems[t].assignedUsers.length);
 
                 // $timeout(function() {
                 if ($scope.project.workItems[t].assignedUsers.length === 1) {
                     $scope.project.workItems[t].assignedUsers = [];
                 } else {
                     $scope.project.workItems[t].assignedUsers.splice(u, 1);
-                    $log.log('spliced', $scope.project.workItems[t].assignedUsers);
                 }
                 $scope.taskSelected = null;
                 // })
             });
         }
 
-        function delComment(id) {
-            commentMgr.delete({ id: id }, function () {
-                $state.reload();
+        function delComment(comment) {
+            var i = _findTaskIndex(comment.workItemId);
+            var c = $scope.project.workItems[i].comments.indexOf(comment);
+
+            commentMgr.delete({ id: comment.id }, function () {
+                $scope.project.workItems[i].comments.splice(c,1);
             });
         }
 
@@ -166,19 +167,6 @@
         }
 
         function delTask(task) {
-            if (task.assignedUsers.length) {
-                for (var i = 0; i < task.assignedUsers.length; i++) {
-                    var user = task.assignedUsers[i];
-                    delAssignment(user, task);
-                }
-            } 
-            if (task.comments.length) {
-                for (var i = 0; i < task.comments.length; i++) {
-                    var comment = task.comments[i];
-                    delComment(comment.id);
-                }
-            } 
-            // Needs to wait for deletion
             taskMgr.delete({ id: task.id }, function () {
                 var i = $scope.project.workItems.indexOf(task);
                 $scope.project.workItems.splice(i, 1);
@@ -206,12 +194,11 @@
                 };
                 teamMgr.save(submission, function (data) {
                     try {
-                        var i = $scope.project.workItems.length-1
+                        var i = $scope.project.workItems.length - 1
                         $scope.project.workItems[i].assignedUsers.push(data);
                     } catch (error) {
-                        var i = $scope.project.workItems.length-1
-                        $scope.project.workItems[i].assignedUsers = [];
-                        $scope.project.workItems[i].assignedUsers.push(data);
+                        var i = $scope.project.workItems.length - 1
+                        $scope.project.workItems[i].assignedUsers = [data];
                     }
                 });
             });
@@ -220,9 +207,18 @@
         function saveComment(workItem) {
             $scope.newComment.author = $scope.curUser.rateName;
             $scope.newComment.created = new Date();
-            commentMgr.save($scope.newComment, function (data) {
-                // $state.reload();
+
+            var i = _findTaskIndex($scope.newComment.workItemId);
+
+            commentMgr.save($scope.newComment, function (comment) {
+                if ($scope.project.workItems[i].comments.length) {
+                    $scope.project.workItems[i].comments.push(comment)
+                } else {
+                    $scope.project.workItems[i].comments = [comment]
+                }
             });
+            angular.element('#newCommentModal').modal('hide');
+            $scope.newComment = {};
         }
 
         function saveResource() {
@@ -232,11 +228,12 @@
                     $scope.project.links.push(data);
                 });
             }
+            angular.element('#newLinkModal').modal('hide');
         }
 
         function saveTask() {
             taskMgr.save($scope.newTask, function (response) {
-                
+
                 $scope.project.workItems.push(response);
                 saveAssignments(response.id);
                 $scope.incomplete++;
@@ -309,6 +306,19 @@
                 //         evt.loaded / evt.total));
                 // });
             });
+        }
+
+        function _findTaskIndex(taskId) {
+            for (var i = 0; i < $scope.project.workItems.length; i++) {
+                var task = $scope.project.workItems[i];
+                console.table(task);
+                console.log('task.id', task.id);
+                console.log('taskid', taskId);
+                if (task.id === taskId) {
+                    var i = $scope.project.workItems.indexOf(task);
+                    return i;
+                };
+            };
         }
     }
 

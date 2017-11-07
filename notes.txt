@@ -4,13 +4,9 @@
 * PROJECTS *
 ************
 - File upload
-- Only one modal will load per refresh if submit is clicked (get rid of modals || look at bootstrap angular.document)
-- Configure cascade delete
-    * Tasks: does not wait for prior deletions before executing task delete
 - When team or Complete is set, update projectList ($on)
 - Track datetimes for created/completed
 - Change to uib-tabset, should fix filtering
-- Comments don't show after post
 
 
 ************

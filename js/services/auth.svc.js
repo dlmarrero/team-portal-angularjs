@@ -5,7 +5,7 @@ authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$locati
 function authService ($http, $q, localStorageService, $window, $location, $state) {
 
     var serviceBase = 'http://localhost:5000/';
-    // var serviceBase = 'portal/';
+    // // // var serviceBase = 'portal/';
     var authServiceFactory = {};
 
     var _authentication = {

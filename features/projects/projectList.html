@@ -19,7 +19,7 @@
                         <a tab class="nav-link active" data-toggle="tab" href="#yourProjs" role="tab">Your Projects</a>
                     </li> -->
                     <li class="nav-item">
-                        <a tab class="nav-link active" data-toggle="tab" href="#current" role="tab">Current Projects&nbsp;&nbsp;<span class="badge-pill badge-info">{{projects.completedProjs.length}}</span></a>
+                        <a tab class="nav-link active" data-toggle="tab" href="#current" role="tab">Current Projects&nbsp;&nbsp;<span class="badge-pill badge-info" style="color: white">{{projects.completedProjs.length}}</span></a>
                     </li>
                     <li class="nav-item">
                         <a tab class="nav-link" data-toggle="tab" href="#pastProjs" role="tab">Past Projects&nbsp;&nbsp;<span class="badge-pill badge-info" style="color:white">{{projects.incompleteProjs.length}}</span></a>
@@ -32,7 +32,7 @@
             <div class="tab-content">
                 <!-- CURRENT PROJECTS TAB  -->
                 <div class="tab-pane active" id="current" name="current" role="tabpanel">
-                    <div ng-repeat="project in projects.incompleteProjs | filter:search | orderBy:'-id'">
+                    <div ng-repeat="project in projects.completedProjs | filter:search | orderBy:'-id'">
                         <div class="projRow">
                             <div>
                                 <span><strong>{{project.title}}</strong></span>
@@ -56,7 +56,7 @@
 
                 <!-- PAST PROJECTS  -->
                 <div class="tab-pane active" id="pastProjs" role="tabpanel">
-                    <div ng-repeat="project in projects.completedProjs | filter:search | orderBy:'-id'">
+                    <div ng-repeat="project in projects.incompleteProjs | filter:search | orderBy:'-id'">
                         <div class="projRow">
                             <div>
                                 <span><strong>{{project.title}}</strong></span>

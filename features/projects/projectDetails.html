@@ -148,13 +148,13 @@
                                     <a href="#" data-toggle="modal" data-target="#newCommentModal" ng-click="newComment.workItemId = task.id">Add</a>
                                 </small>
                                 <br>
-                                <ul ng-repeat="comment in task.comments" style="padding-left:20px">
+                                <ul ng-repeat="comment in task.comments | orderBy: '-created'" style="padding-left:20px">
                                     <li>
                                         <small>
                                             <strong>
                                                 {{comment.author}}:&nbsp;
                                                 <span ng-if="comment.stuck" style="color:red">STUCK!</span>
-                                                <a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment.id)">
+                                                <a href="#" ng-if="comment.author == curUser.rateName" ng-click="delComment(comment)">
                                                     <i class="fa fa-trash-o" style="color:red"></i>
                                                 </a>
                                             </strong>
@@ -290,7 +290,7 @@
                 </ng-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="saveComment(task)" remove-modal>Submit</button>
+                <button type="button" class="btn btn-primary" ng-click="saveComment(task)">Submit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -336,7 +336,7 @@
                 </ng-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="saveResource()" remove-modal>Submit</button>
+                <button type="button" class="btn btn-primary" ng-click="saveResource()">Submit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
