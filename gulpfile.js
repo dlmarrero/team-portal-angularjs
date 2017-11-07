@@ -21,6 +21,28 @@ gulp.paths = {
 
 var paths = gulp.paths;
 
+gulp.task('replace:devVars', function () {
+    gulp.src('js/services/auth.svc.js',  {base: "./"})
+        .pipe(replace("// var serviceBase = 'http://localhost:5000/';", "var serviceBase = 'http://localhost:5000/';"))
+        .pipe(replace("var serviceBase = 'portal/';", "// var serviceBase = 'portal/';"))
+        .pipe(gulp.dest('./'));
+    gulp.src('js/services/data.svc.js',  {base: "./"})
+        .pipe(replace("// var aspApiUrl = 'http://localhost:5000';", "var aspApiUrl = 'http://localhost:5000';"))
+        .pipe(replace("var aspApiUrl = 'portal';", "// var aspApiUrl = 'portal';"))
+        .pipe(gulp.dest('./'))
+});
+
+gulp.task('replace:prodVars', function () {
+    gulp.src('js/services/auth.svc.js',  {base: "./"})
+        .pipe(replace("var serviceBase = 'http://localhost:5000/';", "// var serviceBase = 'http://localhost:5000/';"))
+        .pipe(replace("// var serviceBase = 'portal/';", "var serviceBase = 'portal/';"))
+        .pipe(gulp.dest('./'));
+    gulp.src('js/services/data.svc.js',  {base: "./"})
+        .pipe(replace("var aspApiUrl = 'http://localhost:5000';", "// var aspApiUrl = 'http://localhost:5000';"))
+        .pipe(replace("// var aspApiUrl = 'portal';", "var aspApiUrl = 'portal';"))
+        .pipe(gulp.dest('./'))
+});
+
 gulp.task('eslint', function () {
     return gulp.src(
         ['js/app.js', 
@@ -165,11 +187,11 @@ gulp.task('replace:bower', function () {
 });
 
 gulp.task('build:dist', function (callback) {
-    runSequence('clean:dist', 'copy:bower', 'dist:sass', 'copy:css', 'copy:img', 'copy:fonts', 'concat:dist', 'copy:js', 'copy:views', 'copy:features', 'copy:html', 'replace:bower');
+    runSequence('replace:prodVars', 'clean:dist', 'copy:bower', 'dist:sass', 'copy:css', 'copy:img', 'copy:fonts', 'concat:dist', 'copy:js', 'copy:views', 'copy:features', 'copy:html', 'replace:bower');
 });
 
 gulp.task('cs', function (callback) {
-    runSequence('concat:dev', 'serve', callback);
+    runSequence('replace:devVars', 'concat:dev', 'serve', callback);
 });
 
 gulp.task('default', ['serve']);

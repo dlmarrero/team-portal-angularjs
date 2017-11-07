@@ -10,9 +10,6 @@ function loginCtrl($scope, $location, authService, $state, $rootScope) {
 
     $scope.$on('messageUpdate',function (event, data) {
         $rootScope.message = data;
-        console.log("Data:",data);
-        console.log("Event:",event);
-        console.log("$scope.message",$scope.message)
     });
 
     function login() {

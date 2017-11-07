@@ -1808,8 +1808,8 @@ angular.module('app')
 authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state'];
 function authService ($http, $q, localStorageService, $window, $location, $state) {
 
-    var serviceBase = 'http://localhost:5000/';
-    // var serviceBase = 'portal/';
+    // var serviceBase = 'http://localhost:5000/';
+    var serviceBase = 'portal/';
     var authServiceFactory = {};
 
     var _authentication = {
@@ -1921,8 +1921,8 @@ angular.module('app')
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
     
-    var aspApiUrl = 'http://localhost:5000';
-    // var aspApiUrl = 'portal';
+    // var aspApiUrl = 'http://localhost:5000';
+    var aspApiUrl = 'portal';
     var authentication = authService.authentication;
     if (authentication.isAuth) {
         var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
