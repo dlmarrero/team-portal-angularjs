@@ -32,9 +32,19 @@
                 });
                 for (var i = 0; i < data.length; i++) {
                     var proj = data[i];
-                    proj.complete ? vm.completedProjs.push(proj) : vm.incompleteProjs.push(proj);
+                    //proj.complete ? vm.completedProjs.push(proj) : vm.incompleteProjs.push(proj);
+                    if (proj.complete) {
+                        vm.completedProjs.push(proj);
+                        console.log("completed" + i);
+                    } else {
+                        vm.incompleteProjs.push(proj);
+                        console.log("incomplete" + i);
+                    }
                 }
+                console.log('completed:', vm.completedProjs.length);
+                console.log('incomplete:', vm.incompleteProjs.length);
             });
+            
         };
 
     };
