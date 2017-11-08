@@ -7,6 +7,7 @@
 - When team or Complete is set, update projectList ($on)
 - Track datetimes for created/completed
 - Change to uib-tabset, should fix filtering
+- Avoid using init on task completion
 
 
 ************

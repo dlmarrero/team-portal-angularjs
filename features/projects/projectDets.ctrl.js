@@ -241,7 +241,9 @@
                 $scope.chart.push($scope.complete);
                 $scope.chart.push($scope.incomplete);
                 $scope.newTaskFeedback = "Task successfully created: " + response.title;
-                $scope.newTask = {};
+                $scope.newTask.title = "";
+                $scope.newTask.description = "";
+                $scope.newTask.priority = "Normal";
                 $scope.assignedUsers = [];
             });
         }
