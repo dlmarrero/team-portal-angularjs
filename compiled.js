@@ -1809,7 +1809,7 @@ authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$locati
 function authService ($http, $q, localStorageService, $window, $location, $state, $rootScope) {
 
     var serviceBase = 'http://localhost:5000/';
-    // // // // // // // // var serviceBase = 'portal/';
+    // var serviceBase = 'portal';
     
     var authServiceFactory = {};
 
@@ -1925,7 +1925,7 @@ dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
 
     var aspApiUrl = 'http://localhost:5000';
-    // // // // // // // var aspApiUrl = 'portal';
+    // var aspApiUrl = 'portal';
     var authentication = authService.authentication;
 
     return {
@@ -2902,15 +2902,11 @@ function toDoCtrl(authService, dataSvc, $window) {
                     var proj = data[i];
                     //proj.complete ? vm.completedProjs.push(proj) : vm.incompleteProjs.push(proj);
                     if (proj.complete) {
-                        vm.completedProjs.push(proj);
-                        console.log("completed" + i);
-                    } else {
                         vm.incompleteProjs.push(proj);
-                        console.log("incomplete" + i);
+                    } else {
+                        vm.completedProjs.push(proj);
                     }
                 }
-                console.log('completed:', vm.completedProjs.length);
-                console.log('incomplete:', vm.incompleteProjs.length);
             });
             
         };
