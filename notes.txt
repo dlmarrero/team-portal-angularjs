@@ -31,9 +31,45 @@
 * ROSTER  *
 ***********
 - Team/tech lead checbox
+- Is it OK to allow all to view alpha roster?
+- Update alpha roster when details are changed
+
+
+************
+* REGISTER *
+************
+- IE does not like form validation
 
 
 **********
-*  MISC  *
+*  MAIN  *
 **********
-- No popup if 401, just redirect
+
+
+*********
+* ASIDE *
+*********
+- Contact dups (add DAPA)
+
+
+***********
+* PROFILE *
+***********
+- Changing name in profile results in breaking getCurUser
+
+
+***********
+* BACKEND *
+***********
+- Remove seed data
+
+
+*******************
+* FUTURE FEATURES *
+*******************
+- Appointments
+- Announcements
+- Notifications
+- Weekly reports
+- Watch availability
+- Collateral trackers

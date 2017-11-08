@@ -252,7 +252,6 @@ app-root {
 //
 
 @include media-breakpoint-down(md) {
-
   .app-header {
     position: fixed !important;
     z-index: $zindex-sticky;
@@ -311,20 +310,20 @@ app-root {
     margin-right: - $aside-menu-width;
   }
 
-  .sidebar-mobile-show {
+  // .sidebar-mobile-show {
 
-    .sidebar {
-      width: $mobile-sidebar-width;
-      margin-left: 0;
+  //   .sidebar {
+  //     width: $mobile-sidebar-width;
+  //     margin-left: 0;
 
-      .sidebar-nav {
-        height: calc(100vh - #{$navbar-height});
-      }
-    }
+  //     .sidebar-nav {
+  //       height: calc(100vh - #{$navbar-height});
+  //     }
+  //   }
 
-    .main {
-      margin-right: - $mobile-sidebar-width !important;
-      margin-left: $mobile-sidebar-width !important;
-    }
-  }
+  //   .main {
+  //     margin-right: - $mobile-sidebar-width !important;
+  //     margin-left: $mobile-sidebar-width !important;
+  //   }
+  // }
 }

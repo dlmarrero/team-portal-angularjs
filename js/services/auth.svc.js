@@ -1,11 +1,12 @@
 angular.module('app')
 .factory('authService', authService);
 
-authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state'];
-function authService ($http, $q, localStorageService, $window, $location, $state) {
+authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state', '$rootScope'];
+function authService ($http, $q, localStorageService, $window, $location, $state, $rootScope) {
 
-    // // // var serviceBase = 'http://localhost:5000/';
-    var serviceBase = 'portal/';
+    var serviceBase = 'http://localhost:5000/';
+    // // // // // // // // var serviceBase = 'portal/';
+    
     var authServiceFactory = {};
 
     var _authentication = {
@@ -17,7 +18,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
         _logOut();
 
-        return $http.post(serviceBase + 'api/account/register', registration)
+        return $http.post(serviceBase + '/api/account/register', registration)
             .then(function (response) {
                 return response;
             });
@@ -29,7 +30,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
         var deferred = $q.defer();
 
-        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (success) {
+        $http.post(serviceBase + '/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (success) {
             
             localStorageService.set('authorizationData', { token: success.data.access_token, userName: loginData.userName });
 
@@ -37,6 +38,8 @@ function authService ($http, $q, localStorageService, $window, $location, $state
             _authentication.userName = loginData.userName;
 
             deferred.resolve(success);
+
+            // $rootScope.$broadcast('authUpdate', _authentication);
 
         },function (error, status) {
             _logOut();

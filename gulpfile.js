@@ -34,12 +34,12 @@ gulp.task('replace:devVars', function () {
 
 gulp.task('replace:prodVars', function () {
     gulp.src('js/services/auth.svc.js',  {base: "./"})
-        .pipe(replace("var serviceBase = 'http://localhost:5000/';", "// var serviceBase = 'http://localhost:5000/';"))
-        .pipe(replace("// var serviceBase = 'portal/';", "var serviceBase = 'portal/';"))
+        .pipe(replace("  var serviceBase = 'http://localhost:5000/';", "  // var serviceBase = 'http://localhost:5000/';"))
+        .pipe(replace("  // var serviceBase = 'portal/';", "  var serviceBase = 'portal/';"))
         .pipe(gulp.dest('./'));
     gulp.src('js/services/data.svc.js',  {base: "./"})
-        .pipe(replace("var aspApiUrl = 'http://localhost:5000';", "// var aspApiUrl = 'http://localhost:5000';"))
-        .pipe(replace("// var aspApiUrl = 'portal';", "var aspApiUrl = 'portal';"))
+        .pipe(replace("  var aspApiUrl = 'http://localhost:5000';", "  // var aspApiUrl = 'http://localhost:5000';"))
+        .pipe(replace("  // var aspApiUrl = 'portal';", "  var aspApiUrl = 'portal';"))
         .pipe(gulp.dest('./'))
 });
 

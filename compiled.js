@@ -1805,11 +1805,12 @@ angular
 angular.module('app')
 .factory('authService', authService);
 
-authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state'];
-function authService ($http, $q, localStorageService, $window, $location, $state) {
+authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state', '$rootScope'];
+function authService ($http, $q, localStorageService, $window, $location, $state, $rootScope) {
 
     var serviceBase = 'http://localhost:5000/';
-    // // // var serviceBase = 'portal/';
+    // // // // // // // // var serviceBase = 'portal/';
+    
     var authServiceFactory = {};
 
     var _authentication = {
@@ -1821,7 +1822,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
         _logOut();
 
-        return $http.post(serviceBase + 'api/account/register', registration)
+        return $http.post(serviceBase + '/api/account/register', registration)
             .then(function (response) {
                 return response;
             });
@@ -1833,7 +1834,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
         var deferred = $q.defer();
 
-        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (success) {
+        $http.post(serviceBase + '/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (success) {
             
             localStorageService.set('authorizationData', { token: success.data.access_token, userName: loginData.userName });
 
@@ -1841,6 +1842,8 @@ function authService ($http, $q, localStorageService, $window, $location, $state
             _authentication.userName = loginData.userName;
 
             deferred.resolve(success);
+
+            // $rootScope.$broadcast('authUpdate', _authentication);
 
         },function (error, status) {
             _logOut();
@@ -1903,8 +1906,8 @@ function authInterceptorService($q, $location, localStorageService, $window, $st
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            $window.alert('You are not authorized to visit this page.  Please log in with sufficient credentials.');
-            $state.transitionTo('app.login', {}, { reload: true });
+            $window.alert('You are not authorized to view this page.  Please log in with sufficient credentials.');
+            $state.transitionTo('app.main', {}, { reload: true });
         }
         return $q.reject(rejection);
     };
@@ -1920,13 +1923,10 @@ angular.module('app')
 
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
-    
+
     var aspApiUrl = 'http://localhost:5000';
-    // // // var aspApiUrl = 'portal';
+    // // // // // // // var aspApiUrl = 'portal';
     var authentication = authService.authentication;
-    if (authentication.isAuth) {
-        var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
-    };
 
     return {
         // USERS
@@ -1972,13 +1972,14 @@ function dataSvc($resource, authService) {
 
     function getTeamMembers(team) {
         // Get all members of a team
-        return $resource(aspApiUrl + '/api/account/team?team=:team').query({ team: team});
+        return $resource(aspApiUrl + '/api/account/team?team=:team').query({ team: team });
     }
 
     function getCurUser() {
         if (authentication.isAuth) {
-            return curUser
+            var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
         };
+        return curUser
     }
 
     function manageUser() {
@@ -2042,7 +2043,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageComments() {
         return $resource(aspApiUrl + '/api/Comments/:id', null, {
             'update': { method: 'PUT' }
@@ -2054,7 +2055,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageProjs() {
         // QUERY all projects
         // SAVE new project
@@ -2071,7 +2072,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageTeam() {
         // SAVE new team member
         // DELETE team member
@@ -2335,8 +2336,8 @@ angular
 .module('app')
 .controller('navbarCtrl', navbarCtrl);
 
-navbarCtrl.$inject = ['$location', 'dataSvc', 'authService'];
-function navbarCtrl ($location, dataSvc, authService) {
+navbarCtrl.$inject = ['$location', 'dataSvc', 'authService', '$scope'];
+function navbarCtrl ($location, dataSvc, authService, $scope) {
 
   var vm = this;
   
@@ -2344,11 +2345,19 @@ function navbarCtrl ($location, dataSvc, authService) {
   vm.logOut = logOut;
   vm.userData = {};
 
+  // $scope.$on('authUpdate', function (event, data) {
+  //   vm.authentication = data;
+  //   console.log('Received broadcast');
+  //   console.log(vm.authentication);
+  //   init();
+  // })
+
   init();
 
   function init () {
     if (vm.authentication.isAuth) {
       vm.userData = dataSvc.getCurUser();
+      console.log("navbar ctrl found authdata");
     };
   };
   
