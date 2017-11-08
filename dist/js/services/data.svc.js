@@ -3,13 +3,10 @@ angular.module('app')
 
 dataSvc.$inject = ['$resource', 'authService'];
 function dataSvc($resource, authService) {
-    
-    // // // var aspApiUrl = 'http://localhost:5000';
+
+    // var aspApiUrl = 'http://localhost:5000';
     var aspApiUrl = 'portal';
     var authentication = authService.authentication;
-    if (authentication.isAuth) {
-        var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
-    };
 
     return {
         // USERS
@@ -55,13 +52,14 @@ function dataSvc($resource, authService) {
 
     function getTeamMembers(team) {
         // Get all members of a team
-        return $resource(aspApiUrl + '/api/account/team?team=:team').query({ team: team});
+        return $resource(aspApiUrl + '/api/account/team?team=:team').query({ team: team });
     }
 
     function getCurUser() {
         if (authentication.isAuth) {
-            return curUser
+            var curUser = $resource(aspApiUrl + '/api/account?username=' + authService.authentication.userName).get();
         };
+        return curUser
     }
 
     function manageUser() {
@@ -125,7 +123,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageComments() {
         return $resource(aspApiUrl + '/api/Comments/:id', null, {
             'update': { method: 'PUT' }
@@ -137,7 +135,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageProjs() {
         // QUERY all projects
         // SAVE new project
@@ -154,7 +152,7 @@ function dataSvc($resource, authService) {
             'update': { method: 'PUT' }
         });
     };
-    
+
     function manageTeam() {
         // SAVE new team member
         // DELETE team member

@@ -1,6 +1,7 @@
 <div class="card">
     <div class="card-header card-inverse card-primary">
-        <h3><i class="fa fa-anchor"></i>&nbsp;{{userData.rate}} {{userData.lastName}}, {{userData.firstName}}</h3>
+        <h3>
+            <i class="fa fa-anchor"></i>&nbsp;{{userData.rate}} {{userData.lastName}}, {{userData.firstName}}</h3>
     </div>
     <div class="card-block">
         <div class="row">
@@ -14,7 +15,9 @@
                         <table ng-show="!enableEdit">
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Rate/Rank:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Rate/Rank:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <p>{{userData.rate}}/{{userData.rank}}</p>
@@ -22,7 +25,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Name:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Name:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.lastName}}, {{userData.firstName}}</p>
@@ -30,7 +35,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>E-mail:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>E-mail:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <a href="mailto:{{userData.email}}">
@@ -40,15 +47,20 @@
                             </tr>
                             <tr>
                                 <td valign="top">
-                                    <p style="text-align: right"><strong>Address:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Address:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
-                                    <p>{{userData.street}}<br> {{userData.city}}, {{userData.state}} {{userData.zip}}</p>
+                                    <p>{{userData.street}}
+                                        <br> {{userData.city}}, {{userData.state}} {{userData.zip}}</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Phone Number:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Phone Number:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p ng-hide="enableEdit">{{userData.phoneNumber}}</p>
@@ -59,7 +71,9 @@
                         <table ng-show="enableEdit">
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Rate:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Rate:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.rate" ng-value="userData.rate">
@@ -67,7 +81,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Rank:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Rank:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.rank" ng-value="userData.rank">
@@ -75,7 +91,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>First Name:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>First Name:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.firstName" ng-value="userData.firstName">
@@ -83,7 +101,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Last Name:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Last Name:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.lastName" ng-value="userData.lastName">
@@ -91,7 +111,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Email:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Email:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.email" ng-value="userData.email">
@@ -99,7 +121,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Street Address:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Street Address:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.street" ng-value="userData.street">
@@ -107,7 +131,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>City:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>City:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.city" ng-value="userData.city">
@@ -115,7 +141,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>State:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>State:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.state" ng-value="userData.state">
@@ -123,7 +151,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Zip:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Zip:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.zip" ng-value="userData.zip">
@@ -131,7 +161,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Phone Number:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Phone Number:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px">
                                     <input type="text" ng-model="newData.phoneNumber" ng-value="userData.phoneNumber">
@@ -151,7 +183,9 @@
                         <table ng-show="!enableEdit">
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Rank Date:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Rank Date:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.rankDate | milDate}}</p>
@@ -159,7 +193,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Report Date:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Report Date:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.reportDate | milDate}}</p>
@@ -167,7 +203,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>ADSD:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>ADSD:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.adsd | milDate}}</p>
@@ -175,7 +213,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>PRD:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>PRD:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.prd | milDate}}</p>
@@ -183,7 +223,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>EAOS:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>EAOS:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.eaos | milDate}}</p>
@@ -191,7 +233,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Blue Badge:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Blue Badge:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.blueBadge}}</p>
@@ -199,7 +243,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Destination Command:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Destination Command:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.destCommand}}</p>
@@ -207,7 +253,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right"><strong>Destination UIC:</strong></p>
+                                    <p style="text-align: right">
+                                        <strong>Destination UIC:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p>{{userData.destUIC}}</p>
@@ -218,7 +266,9 @@
                         <table ng-show="enableEdit">
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Rank Date:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Rank Date:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newData.rankDate" value="{{userData.rankDate | date:'yyyy-MM-dd'}}">
@@ -226,7 +276,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Report Date:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Report Date:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newData.reportDate" value="{{userData.reportDate | date:'yyyy-MM-dd'}}">
@@ -234,7 +286,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>ADSD:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>ADSD:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newData.adsd" value="{{userData.adsd | date:'yyyy-MM-dd'}}">
@@ -242,7 +296,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>PRD:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>PRD:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newData.prd" value="{{userData.prd | date:'yyyy-MM-dd'}}">
@@ -250,7 +306,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>EAOS:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>EAOS:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newData.eaos" value="{{userData.eaos | date:'yyyy-MM-dd'}}">
@@ -258,7 +316,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Blue Badge:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Blue Badge:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="checkbox" ng-model="newData.blueBadge" ng-value="userData.blueBadge">
@@ -266,7 +326,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Destination Command:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Destination Command:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="text" ng-model="newData.destCommand" ng-value="userData.destCommand">
@@ -274,7 +336,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="text-align: right;padding-top: 15px"><strong>Destination UIC:</strong></p>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Destination UIC:</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="text" ng-model="newData.destUIC" ng-value="userData.destUIC">
@@ -287,13 +351,28 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header" style="text-align: center">
-                        <strong>Role Assignment</strong>
+                        <strong>Team/Role Assignment</strong>
                     </div>
                     <div class="card-block">
                         <table>
                             <tr>
                                 <td valign="top">
-                                    <p style="text-align: right;"><strong>Current Role(s):</strong></p>
+                                    <p style="text-align: right;">
+                                        <strong>Current Team:</strong>
+                                    </p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p ng-if="userData.team !== null">
+                                        {{userData.team}}
+                                    </p>
+                                    <p ng-if="userData.team == null">Not assigned to a team</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <p style="text-align: right;">
+                                        <strong>Current Role(s):</strong>
+                                    </p>
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <p ng-repeat="role in userData.roles" ng-show="userData.roles != '[]'">
@@ -310,17 +389,20 @@
                         <strong>Edit Account</strong>
                     </div>
                     <div class="card-block" ng-hide="enableEdit">
-                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="enableEdit=true"><i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
+                        <button type="button" class="btn btn-outline-primary btn-block" ng-click="enableEdit=true">
+                            <i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
                     </div>
                     <div class="card-block" ng-show="enableEdit">
-                        <button type="button" class="btn btn-success btn-block" ng-click="updateProfile()"><i class="fa fa-save"></i>&nbsp; Save Changes</button>
-                        <button type="button" class="btn btn-danger btn-block" ng-click="enableEdit=false"><i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateProfile()">
+                            <i class="fa fa-save"></i>&nbsp; Save Changes</button>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="enableEdit=false">
+                            <i class="fa fa-remove"></i>&nbsp; Cancel Changes</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-footer">
-        Last Updated:  {{userData.updated | date:'dd MMM yyyy @ HH:mm'}}
+        Last Updated: {{userData.updated | date:'dd MMM yyyy @ HH:mm'}}
     </div>
 </div>

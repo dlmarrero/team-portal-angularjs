@@ -21,8 +21,8 @@ function authInterceptorService($q, $location, localStorageService, $window, $st
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            $window.alert('You are not authorized to visit this page.  Please log in with sufficient credentials.');
-            $state.transitionTo('app.login', {}, { reload: true });
+            $window.alert('You are not authorized to view this page.  Please log in with sufficient credentials.');
+            $state.transitionTo('app.main', {}, { reload: true });
         }
         return $q.reject(rejection);
     };
