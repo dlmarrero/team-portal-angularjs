@@ -39,6 +39,7 @@
 * REGISTER *
 ************
 - IE does not like form validation
+- Needs looking into to see what happens with invalid inputs... Sparks got 400 error
 
 
 **********
