@@ -79,6 +79,50 @@ angular
     return function(input) {
         return input.split(',');
     };
+})
+.filter('tel', function () {
+    return function (tel) {
+        if (!tel) { return ''; }
+
+        var value = tel.toString().trim().replace(/^\+/, '');
+
+        if (value.match(/[^0-9]/)) {
+            return tel;
+        }
+
+        var country, city, number;
+
+        switch (value.length) {
+            case 10: // +1PPP####### -> C (PPP) ###-####
+                country = 1;
+                city = value.slice(0, 3);
+                number = value.slice(3);
+                break;
+
+            case 11: // +CPPP####### -> CCC (PP) ###-####
+                country = value[0];
+                city = value.slice(1, 4);
+                number = value.slice(4);
+                break;
+
+            case 12: // +CCCPP####### -> CCC (PP) ###-####
+                country = value.slice(0, 3);
+                city = value.slice(3, 5);
+                number = value.slice(5);
+                break;
+
+            default:
+                return tel;
+        }
+
+        if (country == 1) {
+            country = "";
+        }
+
+        number = number.slice(0, 3) + '-' + number.slice(3);
+
+        return (country + " (" + city + ") " + number).trim();
+    };
 });
 angular
 .module('app')
@@ -2123,6 +2167,143 @@ function dataSvc($resource, authService) {
         });
     }
 };
+angular
+.module('app')
+.controller('navbarCtrl', navbarCtrl);
+
+navbarCtrl.$inject = ['$location', 'dataSvc', 'authService', '$scope'];
+function navbarCtrl ($location, dataSvc, authService, $scope) {
+
+  var vm = this;
+  
+  vm.authentication = authService.authentication;
+  vm.logOut = logOut;
+  vm.userData = {};
+
+  // $scope.$on('authUpdate', function (event, data) {
+  //   vm.authentication = data;
+  //   console.log('Received broadcast');
+  //   console.log(vm.authentication);
+  //   init();
+  // })
+
+  init();
+
+  function init () {
+    if (vm.authentication.isAuth) {
+      vm.userData = dataSvc.getCurUser();
+      console.log("navbar ctrl found authdata");
+    };
+  };
+  
+  function logOut () {
+    authService.logOut();
+    $location.path('/dashboard');
+  };
+};
+
+angular.module('app')
+    .controller('pocsCtrl', pocsCtrl);
+
+pocsCtrl.$inject = ['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll'];
+function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll) {
+
+    var Pocs = dataSvc.managePocs();
+
+    $scope.addPoc = addPoc;
+    $scope.deletePoc = deletePoc;
+    $scope.pocs = {};
+    $scope.saveUpdate = saveUpdate;
+    $scope.toggleEdit = toggleEdit;
+
+    init();
+
+    function init() {
+        $scope.pocs = Pocs.query();
+        $scope.showAdd = false;
+        $scope.showEdit = false;
+        $scope.update = {};
+        $scope.newPoc = {};
+    };
+
+    function addPoc(newPoc) {
+        Pocs.save(newPoc).$promise.then(function () {
+            init();
+        });
+    };
+
+    function deletePoc(pocId) {
+        Pocs.delete({ id: pocId }).$promise.then(function () {
+            init();
+        });
+    };
+
+    function saveUpdate(updatedPoc) {
+        Pocs.update({ id: updatedPoc.id }, updatedPoc);
+            init();
+    };
+
+    function toggleEdit(contact) {
+        $scope.showEdit = true;
+        $scope.update = contact;
+        $location.hash('pocs');
+        $anchorScroll();
+    };
+};
+
+angular
+    .module('app')
+    .controller('toDoCtrl', toDoCtrl);
+
+toDoCtrl.$inject = ['authService', 'dataSvc', '$window'];
+function toDoCtrl(authService, dataSvc, $window) {
+
+    var auth = authService.authentication;
+    var toDoMgr = dataSvc.manageToDos();
+    var vm = this;
+
+    vm.authed = false;
+    vm.newToDo = {};
+    vm.toDos = [];
+    vm.userData = {};
+    vm.showAdd = false;
+
+    vm.addToDo = addToDo;
+    vm.delToDo = delToDo;
+    vm.toggleAdd = toggleAdd;
+
+    init();
+
+    function init() {
+        if (auth.isAuth) {
+            vm.authed = true;
+            vm.userData = dataSvc.getCurUser().$promise.then( function (data) {
+                vm.toDos = data.toDos;
+            });
+        };
+    };
+
+    function addToDo() {
+        vm.newToDo.sailorId = vm.userData.id;
+        toDoMgr.save(vm.newToDo, function (data) {
+            vm.toDos.push(data);
+            vm.newToDo = {};
+            vm.newToDo.priority = "low";
+            $window.document.getElementById('toDoItem').focus();
+        });
+    };
+
+    function delToDo(toDoId) {
+        toDoMgr.delete({ id: toDoId }, function (data) {
+            vm.toDos = dataSvc.getToDos(vm.userData.id);
+        });
+    };
+
+    function toggleAdd() {
+        vm.showAdd = !vm.showAdd;
+    };
+};
+
 angular.module('app')
     .controller('loginCtrl', loginCtrl);
 
@@ -2300,9 +2481,9 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
 
     // REGISTER NEW USER
     function signUp() {
+        $scope.registration.phoneNumber = $scope.registration.phoneNumber.replace(/[^0-9]+/g, '');
         authService.saveRegistration($scope.registration)
             .then(function (response) {
-                // $scope.savedSuccessfully = true;
                 $rootScope.$broadcast('registerFeedback',{feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true});
                 startTimer();
             },
@@ -2315,7 +2496,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                 };
                 var message = "Failed to register user. " + errors.join(' ');
                 $rootScope.$broadcast('registerFeedback',{feedback: message, savedSuccessfully: false});
-                // $scope.message = "Failed to register user. " + errors.join(' ');
             });
     };
 
@@ -2335,147 +2515,326 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                 function (error_description) {
                     $scope.message = error_description.data.error_description; // Fix this error syntax
                 });
-        }, 2000);
+        }, 1000);
     };
 };
 
-angular
-.module('app')
-.controller('navbarCtrl', navbarCtrl);
+(function () {
+    'use strict';
 
-navbarCtrl.$inject = ['$location', 'dataSvc', 'authService', '$scope'];
-function navbarCtrl ($location, dataSvc, authService, $scope) {
+    angular
+        .module('app')
+        .directive('yourQuiz', yourQuiz);
 
-  var vm = this;
-  
-  vm.authentication = authService.authentication;
-  vm.logOut = logOut;
-  vm.userData = {};
+    function yourQuiz() {
+        return {
+            restrict: 'E',
+            templateUrl: 'features/quiz/yourQuiz.html',
+        }
+    }
+}());
+(function () {
+    'use strict';
 
-  // $scope.$on('authUpdate', function (event, data) {
-  //   vm.authentication = data;
-  //   console.log('Received broadcast');
-  //   console.log(vm.authentication);
-  //   init();
-  // })
+    quizCreateCtrl.$inject = ["$scope", "$state", "$stateParams", "$log", "dataSvc"];
+    angular
+        .module('app')
+        .controller('quizCreateCtrl', quizCreateCtrl);
 
-  init();
+    /** @ngInject */
+    function quizCreateCtrl($scope, $state, $stateParams, $log, dataSvc) {
+        var bulkMgr = dataSvc.manageBulkAdd();
+        var questionMgr = dataSvc.manageQuestions();
+        var quizGenMgr = dataSvc.quizGen();
+        var referenceMgr = dataSvc.manageReferences();
+        var sectionMgr = dataSvc.manageSections();
+        var topicMgr = dataSvc.manageTopics();
 
-  function init () {
-    if (vm.authentication.isAuth) {
-      vm.userData = dataSvc.getCurUser();
-      console.log("navbar ctrl found authdata");
-    };
-  };
-  
-  function logOut () {
-    authService.logOut();
-    $location.path('/dashboard');
-  };
-};
+        var vm = this;
 
-angular.module('app')
-    .controller('pocsCtrl', pocsCtrl);
+        vm.bulkAdd = null;
+        vm.isNewReference = null;
+        vm.isNewSection = null;
+        vm.isNewTopic = null;
+        vm.selectedReference = null;
+        vm.selectedSection = null;
+        vm.topic = {};
 
-pocsCtrl.$inject = ['$scope', 'dataSvc', '$window', '$resource', '$location', '$anchorScroll'];
-function pocsCtrl($scope, dataSvc, $window, $location, $resource, $anchorScroll) {
+        vm.addQuestion = addQuestion;           // Add new empty question to section
+        vm.addReference = addReference;         // Add new empty reference to topic
+        vm.addSection = addSection;             // Add new empty section to selected reference
+        vm.bulkAddQuestions = bulkAddQuestions;  // Bulk add questions
+        vm.createTopic = createTopic;           // Save new topic
+        vm.delQuestion = delQuestion;           // Delete a question
+        vm.delReference = delReference;         // Delete a reference
+        vm.delSection = delSection;             // Delete a section
+        vm.delTopic = delTopic;                 // Delete a topic
+        vm.setActiveTab = setActiveTab;         // Set active nav pill
+        vm.setReference = setReference;         // Set selected reference for sections view
+        vm.setSection = setSection;             // Set selected section for questions view
+        vm.updateQuestion = updateQuestion;     // Save changes to a question onBlur
+        vm.updateReference = updateReference;   // Save changes to a reference onBlur
+        vm.updateSection = updateSection;       // Save changes to a section onBlur
 
-    var Pocs = dataSvc.managePocs();
+        _init();
 
-    $scope.addPoc = addPoc;
-    $scope.deletePoc = deletePoc;
-    $scope.pocs = {};
-    $scope.saveUpdate = saveUpdate;
-    $scope.toggleEdit = toggleEdit;
+        function _init() {
+            if ($stateParams.topicId !== undefined) {
+                topicMgr.get({ id: $stateParams.topicId }, function (data) {
+                    vm.topic = data;
+                    vm.isNewTopic = false;
+                });
+            } else {
+                vm.topic = {
+                    title: '',
+                    description: '',
+                    references: []
+                };
+            } // end ifElse
+            vm.isNewTopic = vm.topic.id === undefined ? true : false;
+            setActiveTab('topic');
+        }
 
-    init();
+        function addQuestion() {
+            var newQuestion = {
+                sectionId: vm.selectedSection.id,
+                question: '',
+                answer: ''
+            };
+            vm.selectedSection.questions.push(newQuestion);
+        }
 
-    function init() {
-        $scope.pocs = Pocs.query();
-        $scope.showAdd = false;
-        $scope.showEdit = false;
-        $scope.update = {};
-        $scope.newPoc = {};
-    };
+        function addReference() {
+            var newReference = {
+                topicId: vm.topic.id,
+                title: '',
+                description: '',
+                sections: []
+            };
+            vm.topic.references.push(newReference);
+        }
 
-    function addPoc(newPoc) {
-        Pocs.save(newPoc).$promise.then(function () {
-            init();
-        });
-    };
+        function addSection() {
+            var newSection = {
+                referenceId: vm.selectedReference.id,
+                title: '',
+                description: '',
+                questions: []
+            };
+            vm.selectedReference.sections.push(newSection);
+        }
 
-    function deletePoc(pocId) {
-        Pocs.delete({ id: pocId }).$promise.then(function () {
-            init();
-        });
-    };
+        function bulkAddQuestions() {
+            if (vm.bulkAdd !== '') {
+                var bulk = {
+                    sectionId: vm.selectedSection.id,
+                    bulk: vm.bulkAdd
+                };
+                bulkMgr.send(bulk, function (data) {
+                    vm.selectedSection.questions = data;
+                    vm.bulkAdd = '';
+                    vm.showBulkAdd = false;
+                });
+            }
+        }
 
-    function saveUpdate(updatedPoc) {
-        Pocs.update({ id: updatedPoc.id }, updatedPoc);
-            init();
-    };
+        function createTopic() {
+            if (vm.topic.title != '' && vm.isNewTopic) {
+                topicMgr.save(vm.topic, function (data) {
+                    vm.topic = data;
+                    vm.isNewTopic = false;
+                    setActiveTab('references');
+                });
+            } else if (vm.topic.title != '' && !vm.isNewTopic) {
+                topicMgr.update({ id: vm.topic.id }, vm.topic, function () {
+                    setActiveTab('references');
+                });
+            }
+        }
 
-    function toggleEdit(contact) {
-        $scope.showEdit = true;
-        $scope.update = contact;
-        $location.hash('pocs');
-        $anchorScroll();
-    };
-};
+        function delQuestion(q) {
+            var i = vm.selectedSection.questions.indexOf(q);
+            if (q.id !== undefined) {
+                questionMgr.delete({ id: q.id });
+            }
+            vm.selectedSection.questions.splice(i, 1);
+        }
 
-angular
-    .module('app')
-    .controller('toDoCtrl', toDoCtrl);
+        function delReference(ref) {
+            var i = vm.topic.references.indexOf(ref);
+            if (ref.id !== undefined) {
+                referenceMgr.delete({ id: ref.id });
+            }
+            vm.topic.references.splice(i, 1);
+        }
 
-toDoCtrl.$inject = ['authService', 'dataSvc', '$window'];
-function toDoCtrl(authService, dataSvc, $window) {
+        function delSection(sect) {
+            var i = vm.selectedReference.sections.indexOf(sect);
+            if (sect.id !== undefined) {
+                sectionMgr.delete({ id: sect.id });
+            }
+            vm.selectedReference.sections.splice(i, 1);
+        }
 
-    var auth = authService.authentication;
-    var toDoMgr = dataSvc.manageToDos();
-    var vm = this;
-
-    vm.authed = false;
-    vm.newToDo = {};
-    vm.toDos = [];
-    vm.userData = {};
-    vm.showAdd = false;
-
-    vm.addToDo = addToDo;
-    vm.delToDo = delToDo;
-    vm.toggleAdd = toggleAdd;
-
-    init();
-
-    function init() {
-        if (auth.isAuth) {
-            vm.authed = true;
-            vm.userData = dataSvc.getCurUser().$promise.then( function (data) {
-                vm.toDos = data.toDos;
+        function delTopic(topic) {
+            topicMgr.delete({ id: topic.id }, function () {
+                _init();
             });
-        };
-    };
+        }
 
-    function addToDo() {
-        vm.newToDo.sailorId = vm.userData.id;
-        toDoMgr.save(vm.newToDo, function (data) {
-            vm.toDos.push(data);
-            vm.newToDo = {};
-            vm.newToDo.priority = "low";
-            $window.document.getElementById('toDoItem').focus();
-        });
-    };
+        function setActiveTab(activeTab) {
+            vm.activeTab = activeTab;
+        }
 
-    function delToDo(toDoId) {
-        toDoMgr.delete({ id: toDoId }, function (data) {
-            vm.toDos = dataSvc.getToDos(vm.userData.id);
-        });
-    };
+        function setReference(ref) {
+            vm.selectedReference = ref;
+            vm.setActiveTab('sections');
+        }
 
-    function toggleAdd() {
-        vm.showAdd = !vm.showAdd;
-    };
-};
+        function setSection(sect) {
+            vm.selectedSection = sect;
+            vm.setActiveTab('questions');
+        }
 
+        function updateQuestion(q) {
+            if (q.id !== undefined) {
+                questionMgr.update({ id: q.id }, q);
+            } else if (q.question !== '' && q.answer !== '') {
+                questionMgr.save(q, function (data) {
+                    var i = vm.selectedSection.questions.indexOf(q);
+                    vm.selectedSection.questions[i].id = data.id;
+                });
+            }
+        }
+
+        function updateReference(ref) {
+            if (ref.id !== undefined) {
+                referenceMgr.update({ id: ref.id }, ref);
+            } else if (ref.title !== '') {
+                referenceMgr.save(ref, function (data) {
+                    var i = vm.topic.references.indexOf(ref);
+                    vm.topic.references[i].id = data.id;
+                });
+            }
+        }
+
+        function updateSection(sect) {
+            if (sect.id !== undefined) {
+                sectionMgr.update({ id: sect.id }, sect);
+            } else if (sect.title !== '') {
+                sectionMgr.save(sect, function (data) {
+                    var i = vm.selectedReference.sections.indexOf(sect);
+                    vm.selectedReference.sections[i].id = data.id;
+                });
+            }
+        }
+    }
+
+}());
+(function () {
+    'use strict';
+
+    quizGenCtrl.$inject = ["$scope", "dataSvc", "$log"];
+    angular
+        .module('app')
+        .controller('quizGenCtrl', quizGenCtrl);
+
+    /** @ngInject */
+    function quizGenCtrl($scope, dataSvc, $log) {
+        var topicMgr = dataSvc.manageTopics();
+        var referenceMgr = dataSvc.manageReferences();
+        var sectionMgr = dataSvc.manageSections();
+        var questionMgr = dataSvc.manageQuestions();
+        var quizGenMgr = dataSvc.quizGen();
+        var quizSubMgr = dataSvc.checkQuiz();
+
+        var vm = this;
+
+        vm.quizMode = false;
+        vm.quizSubmission = [];
+        vm.selectedSections = [];
+        vm.numberOfQuestions = 25;
+
+        vm.generateQuiz = generateQuiz;
+        vm.gradeQuiz = gradeQuiz;
+        vm.loadTopic = loadTopic;
+        vm.selectSection = selectSection;
+
+        init();
+
+        function init() {
+            vm.topics = topicMgr.query();
+        }
+
+        function generateQuiz() {
+            vm.showResults = false;
+            var quizSelectors = { 
+                sections: vm.selectedSections, 
+                numberOfQuestions: vm.numberOfQuestions 
+            };
+            quizGenMgr.save(quizSelectors, function (quiz) {
+                vm.quiz = quiz;
+                // vm.quizMode = true;
+            });
+        }
+
+        function gradeQuiz() {
+            vm.quizSubmission = [];
+            var i = 0, arrLen = vm.quiz.questions.length;
+            for (; i < arrLen; i++) {
+                var q = vm.quiz.questions[i];
+                var newSub = {
+                    questionId: q.questionId,
+                    sectionId: q.sectionId,
+                    selected: q.selected
+                };
+                vm.quizSubmission.push(newSub);
+            }
+            var s = { submission: vm.quizSubmission };
+            quizSubMgr.send(s, function (data) {
+                vm.quizResults = data;
+                vm.showResults = true;
+                var correct = 0;
+                var incorrect = 0;
+                for (var i = 0; i < vm.quizResults.length; i++) {
+                    var question = vm.quizResults[i];
+                    question.selAnswer === question.corAnswer ? correct += 1 : incorrect += 1;
+                }
+                vm.score = correct / (correct + incorrect) * 100;
+            });
+
+
+        }
+
+        function loadTopic() {
+            referenceMgr.query({ topicId: vm.selectedTopic.id }, function (data) {
+                vm.references = data;
+                var i = 0, arrLen = vm.references.length;
+                for (; i < arrLen; i++) {
+                    var n = 0, arrLen1 = vm.references[i].sections.length;
+                    for (; n < arrLen1; n++) {
+                        $log.log('vm.references[i].sections[n]', vm.references[i].sections[n]);
+                        vm.references[i].sections[n].selected = true;
+                        vm.selectedSections.push(vm.references[i].sections[n]);
+                    }
+                }
+            });
+
+        }
+
+        function selectSection(sect) {
+            $log.log('selectSection', selectSection);
+
+            var i = vm.selectedSections.indexOf(sect);
+            if (i === -1) {
+                vm.selectedSections.push(sect);
+            } else {
+                vm.selectedSections.splice(i, 1);
+            }
+        }
+    }
+
+}());
 (function(){
     'use strict';
 
@@ -2964,322 +3323,6 @@ function toDoCtrl(authService, dataSvc, $window) {
             controllerAs: 'vm'
         };
     }
-}());
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .directive('yourQuiz', yourQuiz);
-
-    function yourQuiz() {
-        return {
-            restrict: 'E',
-            templateUrl: 'features/quiz/yourQuiz.html',
-        }
-    }
-}());
-(function () {
-    'use strict';
-
-    quizCreateCtrl.$inject = ["$scope", "$state", "$stateParams", "$log", "dataSvc"];
-    angular
-        .module('app')
-        .controller('quizCreateCtrl', quizCreateCtrl);
-
-    /** @ngInject */
-    function quizCreateCtrl($scope, $state, $stateParams, $log, dataSvc) {
-        var bulkMgr = dataSvc.manageBulkAdd();
-        var questionMgr = dataSvc.manageQuestions();
-        var quizGenMgr = dataSvc.quizGen();
-        var referenceMgr = dataSvc.manageReferences();
-        var sectionMgr = dataSvc.manageSections();
-        var topicMgr = dataSvc.manageTopics();
-
-        var vm = this;
-
-        vm.bulkAdd = null;
-        vm.isNewReference = null;
-        vm.isNewSection = null;
-        vm.isNewTopic = null;
-        vm.selectedReference = null;
-        vm.selectedSection = null;
-        vm.topic = {};
-
-        vm.addQuestion = addQuestion;           // Add new empty question to section
-        vm.addReference = addReference;         // Add new empty reference to topic
-        vm.addSection = addSection;             // Add new empty section to selected reference
-        vm.bulkAddQuestions = bulkAddQuestions;  // Bulk add questions
-        vm.createTopic = createTopic;           // Save new topic
-        vm.delQuestion = delQuestion;           // Delete a question
-        vm.delReference = delReference;         // Delete a reference
-        vm.delSection = delSection;             // Delete a section
-        vm.delTopic = delTopic;                 // Delete a topic
-        vm.setActiveTab = setActiveTab;         // Set active nav pill
-        vm.setReference = setReference;         // Set selected reference for sections view
-        vm.setSection = setSection;             // Set selected section for questions view
-        vm.updateQuestion = updateQuestion;     // Save changes to a question onBlur
-        vm.updateReference = updateReference;   // Save changes to a reference onBlur
-        vm.updateSection = updateSection;       // Save changes to a section onBlur
-
-        _init();
-
-        function _init() {
-            if ($stateParams.topicId !== undefined) {
-                topicMgr.get({ id: $stateParams.topicId }, function (data) {
-                    vm.topic = data;
-                    vm.isNewTopic = false;
-                });
-            } else {
-                vm.topic = {
-                    title: '',
-                    description: '',
-                    references: []
-                };
-            } // end ifElse
-            vm.isNewTopic = vm.topic.id === undefined ? true : false;
-            setActiveTab('topic');
-        }
-
-        function addQuestion() {
-            var newQuestion = {
-                sectionId: vm.selectedSection.id,
-                question: '',
-                answer: ''
-            };
-            vm.selectedSection.questions.push(newQuestion);
-        }
-
-        function addReference() {
-            var newReference = {
-                topicId: vm.topic.id,
-                title: '',
-                description: '',
-                sections: []
-            };
-            vm.topic.references.push(newReference);
-        }
-
-        function addSection() {
-            var newSection = {
-                referenceId: vm.selectedReference.id,
-                title: '',
-                description: '',
-                questions: []
-            };
-            vm.selectedReference.sections.push(newSection);
-        }
-
-        function bulkAddQuestions() {
-            if (vm.bulkAdd !== '') {
-                var bulk = {
-                    sectionId: vm.selectedSection.id,
-                    bulk: vm.bulkAdd
-                };
-                bulkMgr.send(bulk, function (data) {
-                    vm.selectedSection.questions = data;
-                    vm.bulkAdd = '';
-                    vm.showBulkAdd = false;
-                });
-            }
-        }
-
-        function createTopic() {
-            if (vm.topic.title != '' && vm.isNewTopic) {
-                topicMgr.save(vm.topic, function (data) {
-                    vm.topic = data;
-                    vm.isNewTopic = false;
-                    setActiveTab('references');
-                });
-            } else if (vm.topic.title != '' && !vm.isNewTopic) {
-                topicMgr.update({ id: vm.topic.id }, vm.topic, function () {
-                    setActiveTab('references');
-                });
-            }
-        }
-
-        function delQuestion(q) {
-            var i = vm.selectedSection.questions.indexOf(q);
-            if (q.id !== undefined) {
-                questionMgr.delete({ id: q.id });
-            }
-            vm.selectedSection.questions.splice(i, 1);
-        }
-
-        function delReference(ref) {
-            var i = vm.topic.references.indexOf(ref);
-            if (ref.id !== undefined) {
-                referenceMgr.delete({ id: ref.id });
-            }
-            vm.topic.references.splice(i, 1);
-        }
-
-        function delSection(sect) {
-            var i = vm.selectedReference.sections.indexOf(sect);
-            if (sect.id !== undefined) {
-                sectionMgr.delete({ id: sect.id });
-            }
-            vm.selectedReference.sections.splice(i, 1);
-        }
-
-        function delTopic(topic) {
-            topicMgr.delete({ id: topic.id }, function () {
-                _init();
-            });
-        }
-
-        function setActiveTab(activeTab) {
-            vm.activeTab = activeTab;
-        }
-
-        function setReference(ref) {
-            vm.selectedReference = ref;
-            vm.setActiveTab('sections');
-        }
-
-        function setSection(sect) {
-            vm.selectedSection = sect;
-            vm.setActiveTab('questions');
-        }
-
-        function updateQuestion(q) {
-            if (q.id !== undefined) {
-                questionMgr.update({ id: q.id }, q);
-            } else if (q.question !== '' && q.answer !== '') {
-                questionMgr.save(q, function (data) {
-                    var i = vm.selectedSection.questions.indexOf(q);
-                    vm.selectedSection.questions[i].id = data.id;
-                });
-            }
-        }
-
-        function updateReference(ref) {
-            if (ref.id !== undefined) {
-                referenceMgr.update({ id: ref.id }, ref);
-            } else if (ref.title !== '') {
-                referenceMgr.save(ref, function (data) {
-                    var i = vm.topic.references.indexOf(ref);
-                    vm.topic.references[i].id = data.id;
-                });
-            }
-        }
-
-        function updateSection(sect) {
-            if (sect.id !== undefined) {
-                sectionMgr.update({ id: sect.id }, sect);
-            } else if (sect.title !== '') {
-                sectionMgr.save(sect, function (data) {
-                    var i = vm.selectedReference.sections.indexOf(sect);
-                    vm.selectedReference.sections[i].id = data.id;
-                });
-            }
-        }
-    }
-
-}());
-(function () {
-    'use strict';
-
-    quizGenCtrl.$inject = ["$scope", "dataSvc", "$log"];
-    angular
-        .module('app')
-        .controller('quizGenCtrl', quizGenCtrl);
-
-    /** @ngInject */
-    function quizGenCtrl($scope, dataSvc, $log) {
-        var topicMgr = dataSvc.manageTopics();
-        var referenceMgr = dataSvc.manageReferences();
-        var sectionMgr = dataSvc.manageSections();
-        var questionMgr = dataSvc.manageQuestions();
-        var quizGenMgr = dataSvc.quizGen();
-        var quizSubMgr = dataSvc.checkQuiz();
-
-        var vm = this;
-
-        vm.quizMode = false;
-        vm.quizSubmission = [];
-        vm.selectedSections = [];
-        vm.numberOfQuestions = 25;
-
-        vm.generateQuiz = generateQuiz;
-        vm.gradeQuiz = gradeQuiz;
-        vm.loadTopic = loadTopic;
-        vm.selectSection = selectSection;
-
-        init();
-
-        function init() {
-            vm.topics = topicMgr.query();
-        }
-
-        function generateQuiz() {
-            vm.showResults = false;
-            var quizSelectors = { 
-                sections: vm.selectedSections, 
-                numberOfQuestions: vm.numberOfQuestions 
-            };
-            quizGenMgr.save(quizSelectors, function (quiz) {
-                vm.quiz = quiz;
-                // vm.quizMode = true;
-            });
-        }
-
-        function gradeQuiz() {
-            vm.quizSubmission = [];
-            var i = 0, arrLen = vm.quiz.questions.length;
-            for (; i < arrLen; i++) {
-                var q = vm.quiz.questions[i];
-                var newSub = {
-                    questionId: q.questionId,
-                    sectionId: q.sectionId,
-                    selected: q.selected
-                };
-                vm.quizSubmission.push(newSub);
-            }
-            var s = { submission: vm.quizSubmission };
-            quizSubMgr.send(s, function (data) {
-                vm.quizResults = data;
-                vm.showResults = true;
-                var correct = 0;
-                var incorrect = 0;
-                for (var i = 0; i < vm.quizResults.length; i++) {
-                    var question = vm.quizResults[i];
-                    question.selAnswer === question.corAnswer ? correct += 1 : incorrect += 1;
-                }
-                vm.score = correct / (correct + incorrect) * 100;
-            });
-
-
-        }
-
-        function loadTopic() {
-            referenceMgr.query({ topicId: vm.selectedTopic.id }, function (data) {
-                vm.references = data;
-                var i = 0, arrLen = vm.references.length;
-                for (; i < arrLen; i++) {
-                    var n = 0, arrLen1 = vm.references[i].sections.length;
-                    for (; n < arrLen1; n++) {
-                        $log.log('vm.references[i].sections[n]', vm.references[i].sections[n]);
-                        vm.references[i].sections[n].selected = true;
-                        vm.selectedSections.push(vm.references[i].sections[n]);
-                    }
-                }
-            });
-
-        }
-
-        function selectSection(sect) {
-            $log.log('selectSection', selectSection);
-
-            var i = vm.selectedSections.indexOf(sect);
-            if (i === -1) {
-                vm.selectedSections.push(sect);
-            } else {
-                vm.selectedSections.splice(i, 1);
-            }
-        }
-    }
-
 }());
 angular.module('app')
 .controller('rosterCtrl', rosterCtrl);

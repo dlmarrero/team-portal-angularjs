@@ -113,9 +113,9 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
 
     // REGISTER NEW USER
     function signUp() {
+        $scope.registration.phoneNumber = $scope.registration.phoneNumber.replace(/[^0-9]+/g, '');
         authService.saveRegistration($scope.registration)
             .then(function (response) {
-                // $scope.savedSuccessfully = true;
                 $rootScope.$broadcast('registerFeedback',{feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true});
                 startTimer();
             },
@@ -128,7 +128,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                 };
                 var message = "Failed to register user. " + errors.join(' ');
                 $rootScope.$broadcast('registerFeedback',{feedback: message, savedSuccessfully: false});
-                // $scope.message = "Failed to register user. " + errors.join(' ');
             });
     };
 
@@ -148,6 +147,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                 function (error_description) {
                     $scope.message = error_description.data.error_description; // Fix this error syntax
                 });
-        }, 2000);
+        }, 1000);
     };
 };

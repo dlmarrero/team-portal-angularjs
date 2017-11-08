@@ -182,7 +182,7 @@
                         <td class="td-centered" ng-show="showRank">{{sailor.rank}}</td>
                         <td class="td-centered" ng-show="showName">{{sailor.lastName}}, {{sailor.firstName}}</td>
                         <td class="td-centered" ng-show="showTeam">{{sailor.team}}</td>
-                        <td class="td-centered" ng-show="showPhone">{{sailor.phoneNumber}}</td>
+                        <td class="td-centered" ng-show="showPhone">{{sailor.phoneNumber | tel}}</td>
                         <td class="td-centered" ng-show="showAddress">{{sailor.street}}
                             <br>{{sailor.city}}, {{sailor.state}} {{sailor.zip}}</td>
                         <td class="td-centered" ng-show="showEmail">{{sailor.email}}</td>
