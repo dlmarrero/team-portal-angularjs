@@ -1,18 +1,23 @@
 angular.module('app')
     .controller('registerCtrl', registerCtrl);
 
-registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state'];
-function registerCtrl($scope, $location, $timeout, authService, $state) {
+registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state', '$rootScope'];
+function registerCtrl($scope, $location, $timeout, authService, $state, $rootScope) {
 
     $scope.getRank = getRank;
-    $scope.message = "";
+    // $scope.message = "";
     $scope.passwordStrength = passwordStrength;
     $scope.registration = {};
     $scope.registration.blueBadge = false; // Just default this to false on backend
-    $scope.savedSuccessfully = false;
+    // $scope.savedSuccessfully = false;
     $scope.signUp = signUp;
     $scope.startTimer = startTimer;
     $scope.validatePassword = validatePassword;
+
+    $scope.$on('registerFeedback', function (event, data) {
+        $rootScope.registerMessage = data.feedback;
+        $rootScope.savedSuccessfully = data.savedSuccessfully;
+    })
 
 
     function getRank(rate) {
@@ -110,8 +115,8 @@ function registerCtrl($scope, $location, $timeout, authService, $state) {
     function signUp() {
         authService.saveRegistration($scope.registration)
             .then(function (response) {
-                $scope.savedSuccessfully = true;
-                $scope.message = "Registration succssful!  Logging you in...";
+                // $scope.savedSuccessfully = true;
+                $rootScope.$broadcast('registerFeedback',{feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true});
                 startTimer();
             },
             function (response) {
@@ -121,7 +126,9 @@ function registerCtrl($scope, $location, $timeout, authService, $state) {
                         errors.push(response.data.modelState[key][i]);
                     };
                 };
-                $scope.message = "Failed to register user. " + errors.join(' ');
+                var message = "Failed to register user. " + errors.join(' ');
+                $rootScope.$broadcast('registerFeedback',{feedback: message, savedSuccessfully: false});
+                // $scope.message = "Failed to register user. " + errors.join(' ');
             });
     };
 

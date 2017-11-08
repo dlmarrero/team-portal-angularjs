@@ -172,8 +172,8 @@
                 </div>
                 <div class="button-group" style="text-align:center;">
                     <!--WOULD LIKE TO ANIMATE THIS  -->
-                    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
-                        {{message}}
+                    <div data-ng-hide="registerMessage == null" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                        {{registerMessage}}
                     </div>
                     <em ng-show="register.$valid"><span class="highlight" style="font-size: 16px">Your username is:  {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span></em><br>
                     <button type="submit" data-ng-click="signUp()" ng-class="register.$invalid ? 'btn btn-lg btn-secondary btn-block': 'btn btn-lg btn-primary btn-block'" ng-disabled="register.$invalid">Submit</button>

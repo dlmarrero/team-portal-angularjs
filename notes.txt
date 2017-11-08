@@ -50,7 +50,6 @@
 *********
 * ASIDE *
 *********
-- Contact dups (add DAPA)
 
 
 ***********
