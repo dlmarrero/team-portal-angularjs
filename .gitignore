@@ -1,3 +1,4 @@
 compiled.js
-dist/
+./dist
 compiled.js
+dist/features/accounts/register.ctrl.js
