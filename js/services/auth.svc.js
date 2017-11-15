@@ -4,8 +4,8 @@ angular.module('app')
 authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state', '$rootScope'];
 function authService ($http, $q, localStorageService, $window, $location, $state, $rootScope) {
 
-    // var serviceBase = 'http://localhost:5000/';
-    var serviceBase = 'portal';
+    var serviceBase = 'http://localhost:5000/';
+    // var serviceBase = 'portal';
     
     var authServiceFactory = {};
 
