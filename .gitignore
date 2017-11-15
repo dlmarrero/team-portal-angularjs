@@ -1,4 +1,5 @@
 compiled.js
-./dist
-compiled.js
-dist/features/accounts/register.ctrl.js
+dist
+notes.txt
+bower_components
+node_modules

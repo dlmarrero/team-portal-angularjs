@@ -26,7 +26,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
     var _login = function (loginData) {
 
-        var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+        var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName)  + "&password=" + encodeURIComponent(loginData.password);
 
         var deferred = $q.defer();
 
