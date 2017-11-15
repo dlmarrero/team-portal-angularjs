@@ -234,6 +234,16 @@
                             <tr>
                                 <td>
                                     <p style="text-align: right">
+                                        <strong>Soft EAOS:</strong>
+                                    </p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <p>{{sailor.seaos | milDate}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right">
                                         <strong>Blue Badge:</strong>
                                     </p>
                                 </td>
@@ -312,6 +322,16 @@
                                 </td>
                                 <td style="padding-left: 10px;">
                                     <input type="date" ng-model="newSailor.heaos" ng-value="sailor.heaos | date:'yyyy-MM-dd'">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: right;padding-top: 15px">
+                                        <strong>Soft EAOS:</strong>
+                                    </p>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <input type="date" ng-model="newSailor.seaos" ng-value="sailor.seaos | date:'yyyy-MM-dd'">
                                 </td>
                             </tr>
                             <tr>
