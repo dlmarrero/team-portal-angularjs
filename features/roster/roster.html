@@ -55,8 +55,8 @@
                                         <input type="checkbox" id="showPhone" ng-model="showPhone">
                                     </div>
                                     <div class="form-group">
-                                        <label for="showRankDate">Rank Date</label>
-                                        <input type="checkbox" id="showRankDate" ng-model="showRankDate">
+                                        <label for="showtirDate">TIR Date</label>
+                                        <input type="checkbox" id="showtirDate" ng-model="showtirDate">
                                     </div>
                                     <div class="form-group">
                                         <label for="showAdsd">ADSD</label>
@@ -155,8 +155,8 @@
                         <th class="td-centered" ng-show="showEaos">
                             <a href="#" ng-click="sortBy('eaos')">EAOS</a>
                         </th>
-                        <th class="td-centered" ng-show="showRankDate">
-                            <a href="#" ng-click="sortBy('rankDate')">Rank Date</a>
+                        <th class="td-centered" ng-show="showtirDate">
+                            <a href="#" ng-click="sortBy('tirDate')">TIR Date</a>
                         </th>
                         <th class="td-centered" ng-show="showBlueBadge">
                             <a href="#" ng-click="sortBy('blueBadge')">Blue Badge</a>
@@ -190,7 +190,7 @@
                         <td class="td-centered" ng-show="showReportDate">{{sailor.reportDate | milDate}}</td>
                         <td class="td-centered" ng-show="showPrd">{{sailor.prd | milDate}}</td>
                         <td class="td-centered" ng-show="showEaos">{{sailor.eaos | milDate}}</td>
-                        <td class="td-centered" ng-show="showRankDate">{{sailor.rankDate | milDate}}</td>
+                        <td class="td-centered" ng-show="showtirDate">{{sailor.tirDate | milDate}}</td>
                         <td class="td-centered" ng-show="showBlueBadge">{{sailor.blueBadge}}</td>
                         <td class="td-centered" ng-show="showDestUic">{{sailor.destUIC}}</td>
                         <td class="td-centered" ng-show="showDestCommand">{{sailor.destCommand}}</td>

@@ -18,7 +18,7 @@ function rosterCtrl ($scope, dataSvc) {
     $scope.showRank = false;
     $scope.showEmail = false;
     $scope.showAddress = false;
-    $scope.showRankDate = false;
+    $scope.showTirDate = false;
     $scope.showBlueBadge = false;
     $scope.showDestUic = false;
     $scope.showDestCommand = false;
@@ -43,7 +43,7 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showEmail = true;
                 $scope.showAddress = true;
                 $scope.showPhone = true;
-                $scope.showRankDate = false;
+                $scope.showTirDate = false;
                 $scope.showAdsd = false;
                 $scope.showPrd = false;
                 $scope.showEaos = false;
@@ -60,7 +60,7 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showEmail = false;
                 $scope.showAddress = false;
                 $scope.showPhone = false;
-                $scope.showRankDate = true;
+                $scope.showTirDate = true;
                 $scope.showAdsd = true;
                 $scope.showPrd = true;
                 $scope.showEaos = true;
@@ -77,7 +77,7 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showEmail = false;
                 $scope.showAddress = false;
                 $scope.showPhone = false;
-                $scope.showRankDate = false;
+                $scope.showTirDate = false;
                 $scope.showAdsd = false;
                 $scope.showPrd = false;
                 $scope.showEaos = false;
