@@ -9058,3 +9058,6 @@ hr.transparent {
     opacity: 0; }
   to {
     opacity: 1; } }
+
+.form-invalid {
+  border-color: red; }

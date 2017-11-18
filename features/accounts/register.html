@@ -1,10 +1,14 @@
 <div class="container-float">
     <div class="card col-lg-6" style="width: 100%;margin: 0 auto;">
         <div class="card-block">
-            <form name="register" class="form-login" role="form" novalidate>
+            <form name="register" class="form-login" onsubmit="signUp()" role="form" novalidate>
                 <div style="text-align:center;">
-                    <h4 class="form-login-heading"><strong>N57 Portal<br>New Sailor Registration</strong></h4>
-                    <hr><br>
+                    <h4 class="form-login-heading">
+                        <strong>N57 Portal
+                            <br>New Sailor Registration</strong>
+                    </h4>
+                    <hr>
+                    <br>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
@@ -13,14 +17,14 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rate">Rate</label>
                             <div class="col-md-12">
-                                <input type="text" id="rate" name="rate" ng-model="registration.rate" class="form-control" placeholder="CTN3" ng-blur="getRank(registration.rate)"
-                                    required>
+                                <input type="text" id="rate" name="rate" ng-model="registration.rate" class="form-control" ng-class="{'form-invalid': !validRate && validRate != null}"
+                                    ng-blur="validateRate(registration.rate);">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rank">Rank</label>
                             <div class="col-md-12">
-                                <select id="rank" name="rank" ng-model="registration.rank" class="form-control" required>
+                                <select id="rank" name="rank" ng-model="registration.rank" class="form-control" ng-blur="validateRank(registration.rank)">
                                     <option value="{{registration.rank}}">{{registration.rank}}</option>
                                     <option value="E1">E1</option>
                                     <option value="E2">E2</option>
@@ -42,21 +46,22 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="firstname">First Name</label>
                             <div class="col-md-12">
-                                <input type="text" id="firstname" name="firstname" ng-model="registration.firstName" class="form-control" required>
+                                <input type="text" id="firstname" name="firstname" ng-model="registration.firstName" class="form-control" ng-class="{'form-invalid': !validFName && validFName != null}"
+                                    ng-blur="validateFName(registration.firstName)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="lastname">Last Name</label>
                             <div class="col-md-12">
-                                <input type="text" id="lastname" name="lastname" ng-model="registration.lastName" class="form-control" ng-blur="showUsername=true"
-                                    required>
+                                <input type="text" id="lastname" name="lastname" ng-model="registration.lastName" class="form-control" ng-class="{'form-invalid': !validLName && validLName != null}"
+                                    ng-blur="validateLName(registration.lastName)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="email">Official Email</label>
                             <div class="col-md-12">
-                                <input type="email" id="email" name="email" ng-model="registration.email" class="form-control" placeholder="first.last@navy.mil"
-                                    required>
+                                <input type="email" id="email" name="email" ng-model="registration.email" class="form-control" ng-class="{'form-invalid': !validEmail && validEmail != null}"
+                                    ng-blur="validateEmail(registration.email)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,30 +69,22 @@
                             <div class="col-md-12">
                                 <input type="password" id="password" name="password" ng-model="registration.password" class="form-control" placeholder="Password"
                                     ng-change="passwordStrength(registration.password)" ng-focus="showPwRules=true" ng-blur="validatePassword(registration.password)"
-                                    required>
+                                    ng-class="{'form-invalid': !validPassword && validPassword != null}">
                                 <em ng-show="showPwRules">
-                                    <label ng-class="hasUpper ? 'validated' : 'invalidated'">1+ uppercase, </label>    
+                                    <label ng-class="hasUpper ? 'validated' : 'invalidated'">1+ uppercase, </label>
                                     <label ng-class="hasLower ? 'validated' : 'invalidated'">1+ lowercase, </label>
                                     <label ng-class="hasDigit ? 'validated' : 'invalidated'">1+ digit, </label>
                                     <label ng-class="hasSpecial ? 'validated' : 'invalidated'">1+ special character</label>
                                     <label ng-class="hasSix ? 'validated' : 'invalidated'">6+ characters, </label>
-                                    
-                                    <!-- TROUBLESHOOTING -->
-                                    <!-- <h5>Has six: {{hasSix}}</h5>
-                                    <h5>Has lower: {{hasLower}}</h5>
-                                    <h5>Has upper: {{hasUpper}}</h5>
-                                    <h5>Has special: {{hasSpecial}}</h5>
-                                    <h5>Has digit: {{hasDigit}}</h5>
-                                    <h5>Valid: {{validPassword}}</h5> -->
-                                    
                                 </em>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="confirm">Confirm Password</label>
                             <div class="col-md-12">
-                                <input type="password" id="confirm" name="confirm" ng-model="registration.confirmPassword" class="form-control" placeholder="Confirm Password"
-                                    required><br>
+                                <input type="password" id="confirm" name="confirm" ng-model="registration.confirmPassword" class="form-control" ng-class="{'form-invalid': !validPassConf && validPassConf != null}"
+                                    ng-blur="validatePassConf(registration.password, registration.confirmPassword)">
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -96,82 +93,99 @@
                         <hr>
                         <div class="form-group">
                             <label class="form-control-label" for="street">Street Address</label>
-                            <input type="text" id="street" name="street" ng-model="registration.street" class="form-control" placeholder="123 Navy Way, Apt 4" required>
+                            <input type="text" id="street" name="street" ng-model="registration.street" class="form-control" ng-class="{'form-invalid': !validStreet && validStreet != null}"
+                                ng-blur="validateStreet(registration.street)">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="city">City</label>
-                            <input type="text" id="city" name="city" ng-model="registration.city" class="form-control" placeholder="Ft Meade" required>
+                            <input type="text" id="city" name="city" ng-model="registration.city" class="form-control" ng-class="{'form-invalid': !validCity && validCity != null}"
+                                ng-blur="validateCity(registration.city)">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="state">State</label>
-                            <input type="text" id="state" name="state" ng-model="registration.state" class="form-control" placeholder="MD" required>
+                            <input type="text" id="state" name="state" ng-model="registration.state" class="form-control" maxlength="2" ng-class="{'form-invalid': !validState && validState != null}"
+                                ng-blur="validateState(registration.state)">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="zip">Zip Code</label>
-                            <input type="text" id="zip" name="zip" ng-model="registration.zip" class="form-control" placeholder="20755" required>
+                            <input type="text" id="zip" name="zip" ng-model="registration.zip" class="form-control" maxlength="5" ng-class="{'form-invalid': !validZip && validZip != null}"
+                                ng-blur="validateZip(registration.zip)">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" ng-model="registration.phoneNumber" class="form-control" required>
+                            <input type="tel" id="phone" name="phone" ng-model="registration.phoneNumber" class="form-control" minlength="10" ng-class="{'form-invalid': !validPhone && validPhone != null}"
+                                ng-blur="validatePhone(registration.phoneNumber)">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="row">
-                        <h5>Administrative Data&nbsp;</h5>
-                        <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwjJtMPovtLVAhUB5oMKHW3JCKUQFggoMAA&url=https%3A%2F%2Fnsipsprod.nmci.navy.mil%2F&usg=AFQjCNFFz-TG1lUzoxm6pCzRuqTWX2pVxA" target="_blank"><i class="fa fa-question-circle fa-1x" style="color: #20a8d8" data-toggle="tooltip" title="Navigate to NSIPS > Employee Self Service > Electronic Service Record > Member Data Summary to find this information."></i></a>
+                            <h5>Administrative Data&nbsp;</h5>
+                            <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwjJtMPovtLVAhUB5oMKHW3JCKUQFggoMAA&url=https%3A%2F%2Fnsipsprod.nmci.navy.mil%2F&usg=AFQjCNFFz-TG1lUzoxm6pCzRuqTWX2pVxA"
+                                target="_blank">
+                                <i class="fa fa-question-circle fa-1x" style="color: #20a8d8" data-toggle="tooltip" title="Navigate to NSIPS > Employee Self Service > Electronic Service Record > Member Data Summary to find this information."></i>
+                            </a>
                         </div>
                         <hr>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="adsd">ADSD</label>
                             <div class="col-md-12">
-                                <input type="date" id="adsd" name="adsd" ng-model="registration.adsd" class="form-control" required>
+                                <input type="date" id="adsd" name="adsd" ng-model="registration.adsd" class="form-control" ng-class="{'form-invalid': !validAdsd && validAdsd != null}"
+                                    ng-blur="validateAdsd(registration.adsd)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="heaos">Hard EAOS</label>
                             <div class="col-md-12">
-                                <input type="date" id="heaos" name="heaos" ng-model="registration.heaos" class="form-control" required>
+                                <input type="date" id="heaos" name="heaos" ng-model="registration.heaos" class="form-control" ng-class="{'form-invalid': !validHeaos && validHeaos != null}"
+                                    ng-blur="validateHeaos(registration.heaos)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="seaos">Soft EAOS</label>
                             <div class="col-md-12">
-                                <input type="date" id="seaos" name="seaos" ng-model="registration.seaos" class="form-control" required>
+                                <input type="date" id="seaos" name="seaos" ng-model="registration.seaos" class="form-control" ng-class="{'form-invalid': !validSeaos && validSeaos != null}"
+                                    ng-blur="validateSeaos(registration.seaos)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="prd">PRD</label>
                             <div class="col-md-12">
-                                <input type="date" id="prd" name="prd" ng-model="registration.prd" class="form-control" required>
+                                <input type="date" id="prd" name="prd" ng-model="registration.prd" class="form-control" ng-class="{'form-invalid': !validPrd && validPrd != null}"
+                                    ng-blur="validatePrd(registration.prd)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="reportdate">Report Date</label>
                             <div class="col-md-12">
-                                <input type="date" id="reportdate" name="reportdate" ng-model="registration.reportDate" class="form-control" required>
+                                <input type="date" id="reportdate" name="reportdate" ng-model="registration.reportDate" class="form-control" ng-class="{'form-invalid': !validReportDate && validReportDate != null}"
+                                    ng-blur="validateReportDate(registration.reportDate)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="tirdate">TIR Date</label>
                             <div class="col-md-12">
-                                <input type="date" id="tirDate" name="tirdate" ng-model="registration.tirDate" class="form-control" required>
+                                <input type="date" id="tirDate" name="tirdate" ng-model="registration.tirDate" class="form-control" ng-class="{'form-invalid': !validTir && validTir != null}"
+                                    ng-blur="validateTir(registration.tirDate)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destuic">Destination UIC</label>
                             <div class="col-md-12">
-                                <input type="text" id="destuic" name="destuic" ng-model="registration.destUIC" class="form-control" required>
+                                <input type="text" id="destuic" name="destuic" ng-model="registration.destUIC" class="form-control" ng-class="{'form-invalid': !validUic && validUic != null}"
+                                    ng-blur="validateUic(registration.destUIC)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destcommand">Destination Command</label>
                             <div class="col-md-12">
-                                <input type="text" id="destcommand" name="destcommand" ng-model="registration.destCommand" class="form-control" required>
+                                <input type="text" id="destcommand" name="destcommand" minlength="5" maxlength="5" ng-model="registration.destCommand" class="form-control"
+                                    ng-class="{'form-invalid': !validDest && validDest != null}" ng-blur="validateDest(registration.destCommand)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="bluebadge">
-                                Blue Badge&nbsp;&nbsp;<input type="checkbox" id="bluebadge" name="bluebadge" ng-model="registration.blueBadge" ng-init="bluebadge=false" value="bluebadge">
+                                Blue Badge&nbsp;&nbsp;
+                                <input type="checkbox" id="bluebadge" name="bluebadge" ng-model="registration.blueBadge" ng-init="bluebadge=false" value="bluebadge">
                             </label>
                         </div>
                     </div>
@@ -181,8 +195,12 @@
                     <div data-ng-hide="registerMessage == null" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
                         {{registerMessage}}
                     </div>
-                    <em ng-show="register.$valid"><span class="highlight" style="font-size: 16px">Your username is:  {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span></em><br>
-                    <button type="submit" data-ng-click="signUp()" ng-class="register.$invalid ? 'btn btn-lg btn-secondary btn-block': 'btn btn-lg btn-primary btn-block'" ng-disabled="register.$invalid">Submit</button>
+                    <em ng-show="validForm">
+                        <span class="highlight" style="font-size: 16px">Your username is: {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span>
+                    </em>
+                    <br>
+                    <button type="submit" ng-class="register.$invalid ? 'btn btn-lg btn-secondary btn-block': 'btn btn-lg btn-primary btn-block'"
+                        ng-disabled="register.$invalid">Submit</button>
                     <button class="btn btn-lg btn-danger btn-block" type="reset">Reset</button>
                     <!-- <input type="submit" id="submit" value="Submit" class="btn btn-lg btn-primary" style="width:100px"> -->
                 </div>

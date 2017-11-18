@@ -42,7 +42,8 @@
 ************
 - IE does not like form validation
 - Need form boxes to turn red
-- Fields should not
+- Find best way to trigger showUsername = true
+- Ensure admin data is in same order found in ETJ
 
 
 **********

@@ -1,23 +1,68 @@
 angular.module('app')
     .controller('registerCtrl', registerCtrl);
 
-registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state', '$rootScope'];
-function registerCtrl($scope, $location, $timeout, authService, $state, $rootScope) {
+registerCtrl.$inject = ['$scope', '$location', '$timeout', 'authService', '$state', '$rootScope', '$filter'];
+function registerCtrl($scope, $location, $timeout, authService, $state, $rootScope, $filter) {
 
     $scope.getRank = getRank;
-    // $scope.message = "";
     $scope.passwordStrength = passwordStrength;
-    $scope.registration = {};
-    $scope.registration.blueBadge = false; // Just default this to false on backend
-    // $scope.savedSuccessfully = false;
     $scope.signUp = signUp;
     $scope.startTimer = startTimer;
-    $scope.validatePassword = validatePassword;
 
-    $scope.$on('registerFeedback', function (event, data) {
-        $rootScope.registerMessage = data.feedback;
-        $rootScope.savedSuccessfully = data.savedSuccessfully;
-    })
+    $scope.validForm = $scope.validCity &&
+        $scope.validEmail &&
+        $scope.validFName &&
+        $scope.validLName &&
+        $scope.validName &&
+        $scope.validPassword &&
+        $scope.validPassConf &&
+        $scope.validPhone &&
+        $scope.validRank &&
+        $scope.validRate &&
+        $scope.validState &&
+        $scope.validStreet &&
+        $scope.validZip &&
+        $scope.validAdsd &&
+        $scope.validHeaos &&
+        $scope.validSeaos &&
+        $scope.validPrd &&
+        $scope.validReportDate &&
+        $scope.validTir &&
+        $scope.validUic &&
+        $scope.validDest;
+
+    $scope.validateAdsd = validateAdsd;
+    $scope.validateHeaos = validateHeaos;
+    $scope.validateSeaos = validateSeaos;
+    $scope.validatePrd = validatePrd;
+    $scope.validateReportDate = validateReportDate;
+    $scope.validateTir = validateTir;
+    $scope.validateUic = validateUic;
+    $scope.validateDest = validateDest;
+    $scope.validateCity = validateCity;
+    $scope.validateEmail = validateEmail;
+    $scope.validateFName = validateFName;
+    $scope.validateLName = validateLName;
+    $scope.validatePassConf = validatePassConf;
+    $scope.validatePassword = validatePassword;
+    $scope.validatePhone = validatePhone;
+    $scope.validateRank = validateRank
+    $scope.validateRate = validateRate;
+    $scope.validateState = validateState;
+    $scope.validateStreet = validateStreet;
+    $scope.validateZip = validateZip;
+
+    $scope.validateForm = validateForm;
+
+    $scope.registration = {};
+    $scope.registration.blueBadge = false; // Just default this to false on backend
+
+
+    // TRY INSTEAD TO WRITE A HELPER FUNCTION WHICH SETS MESSAGE FOR THE SCOPE
+    // $scope.$on('registerFeedback', function (event, data) {
+    //     $rootScope.registerMessage = data.feedback;
+    //     $rootScope.savedSuccessfully = data.savedSuccessfully;
+    // })
 
 
     function getRank(rate) {
@@ -75,7 +120,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
         };
     };
 
-
     function passwordStrength(password) {
         // Has 6+ characters
         (/^(.{6,})/.test(password)) ? $scope.hasSix = true : $scope.hasSix = false;
@@ -94,41 +138,319 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
             $scope.hasUper = false;
             $scope.hasDigit = false;
             $scope.hasSpecial = false;
+            $scope.validPassword = false;
         }
         else {
             validatePassword(password);
         };
     };
 
+    function validateAdsd(date) {
+        if (date) {
+            $scope.validAdsd = _validateDate(date);
+        } else {
+            $scope.validAdsd = false;
+        }
+
+        if ($scope.validAdsd) {
+            validateForm();
+        }
+    }
+
+    function validateHeaos(date) {
+        if (date) {
+            $scope.validHeaos = _validateDate(date);
+        } else {
+            $scope.validHeaos = false;
+        }
+
+        if ($scope.validHeaos) {
+            validateForm();
+        }
+    }
+
+    function validateSeaos(date) {
+        if (date) {
+            $scope.validSeaos = _validateDate(date);
+        } else {
+            $scope.validSeaos = false;
+        }
+
+        if ($scope.validSeaos) {
+            validateForm();
+        }
+    }
+
+    function validatePrd(date) {
+        if (date) {
+            $scope.validPrd = _validateDate(date);
+        } else {
+            $scope.validPrd = false;
+        }
+
+        if ($scope.validPrd) {
+            validateForm();
+        }
+    }
+
+    function validateReportDate(date) {
+        if (date) {
+            $scope.validReportDate = _validateDate(date);
+        } else {
+            $scope.validReportDate = false;
+        }
+
+        if ($scope.validReportDate) {
+            validateForm();
+        }
+    }
+
+    function validateTir(date) {
+        if (date) {
+            $scope.validTir = _validateDate(date);
+        } else {
+            $scope.validTir = false;
+        }
+
+        if ($scope.validTir) {
+            validateForm();
+        }
+    }
+
+    function validateUic(uic) {
+        if (uic) {
+            var regEx = /\d{5}/
+            $scope.validUic = regEx.test(uic)
+        } else {
+            $scope.validUic = false;
+        }
+
+        if ($scope.validUic) {
+            validateForm();
+        }
+    }
+
+    function validateDest(dest) {
+        if (dest) {
+            $scope.validDest = true;
+        } else {
+            $scope.validDest = false;
+        }
+
+        if ($scope.validDest) {
+            validateForm();
+        }
+    }
+
+    function validateCity(city) {
+        var regEx = /[A-Za-z]{2,}[^\d]/;
+
+        if (city) {
+            $scope.validCity = regEx.test(city);
+        } else {
+            $scope.validCity = false;
+        }
+
+        if ($scope.validCity) {
+            $scope.registration.city = $filter('capitalize')(city);
+            validateForm();
+        }
+    };
+
+    function _validateDate(date) {
+        var regEx = /\W\d{4}.\d{2}.\d{2}/
+        return regEx.test(date);
+    }
+
+    function validateEmail(email) {
+        var regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        $scope.validEmail = regEx.test(email);
+
+        if ($scope.validEmail) {
+            $scope.registration.email = $filter('lowercase')(email)
+            validateForm();
+        }
+    };
+
+    function validateFName(name) {
+        $scope.validFName = _validateName(name)
+
+        if ($scope.validFName) {
+            $scope.registration.firstName = $filter('capitalize')(name);
+            validateForm();
+        }
+    };
+
+    function validateLName(name) {
+        $scope.validLName = _validateName(name)
+
+        if ($scope.validLName) {
+            $scope.registration.lastName = $filter('capitalize')(name);
+            validateForm();
+        }
+
+    };
+
+    function _validateName(name) {
+        var regEx = /^[A-Za-z]+$/
+        if (name) {
+            return regEx.test(name);
+        } else {
+            return false;
+        }
+    };
+
+    function validatePassConf(password, confirm) {
+        $scope.validPassConf = (password === confirm);
+        if ($scope.validPassConf) {
+            validateForm();
+        }
+    };
 
     function validatePassword(password) {
-        ($scope.hasSix && $scope.hasLower && $scope.hasUpper && $scope.hasDigit && $scope.hasSpecial) ?
-            $scope.validPassword = true : $scope.validPassword = false;
+        $scope.validPassword = $scope.hasSix && $scope.hasLower && $scope.hasUpper && $scope.hasDigit && $scope.hasSpecial;
 
         if ($scope.validPassword) {
             $scope.showPwRules = false;
-        };
+            validateForm();
+        }
     };
 
+    function validatePhone(phone) {
+        if (phone) {
+            phone = phone.replace(/[^0-9]+/g, '');
+
+            var regEx = /^\d{10,11}$/
+            $scope.validPhone = regEx.test(phone);
+
+            if ($scope.validPhone) {
+                $scope.registration.phoneNumber = phone;
+                validateForm();
+            }
+
+        } else {
+            $scope.validPhone = false;
+        }
+    }
+
+    function validateRank(rank) {
+        rank == null ? $scope.validRank = true : $scope.validRank = false;
+
+        if ($scope.validRank) {
+            validateForm();
+        }
+    }
+
+    function validateRate(rate) {
+        if (rate) {
+            var rate = rate.toUpperCase();
+            var regEx = /(^[A-Z]{2,3}(SN|SA|SR|[123]|C|CS|CM)$)|^ENS$|^LTJG$|^LT$/;
+
+            $scope.validRate = regEx.test(rate);
+        } else {
+            $scope.validRate = false;
+        }
+
+        if ($scope.validRate) {
+            // Uppercase
+            $scope.registration.rate = rate;
+
+            getRank(rate);
+            $scope.validRank = true;
+
+            validateForm();
+        }
+    };
+
+    function validateState(state) {
+        var regEx = /^[A-Za-z]{2}$/
+
+        if (state) {
+            $scope.validState = regEx.test(state);
+        } else {
+            $scope.validState = false;
+        }
+
+        if ($scope.validState) {
+            $scope.registration.state = $filter('uppercase')(state);
+            validateForm();
+        }
+    }
+
+    function validateStreet(street) {
+        var regEx = /\d+[A-Za-z]? \w+/;
+        if (street) {
+            $scope.validStreet = regEx.test(street);
+        } else {
+            $scope.validStreet = false;
+        }
+
+        if ($scope.validStreet) {
+            validateForm();
+        }
+    }
+
+    function validateZip(zip) {
+        var regEx = /\d{5}/;
+
+        if (zip) {
+            $scope.validZip = regEx.test(zip);
+        } else {
+            $scope.validZip = false;
+        }
+
+        if ($scope.validZip) {
+            validateForm();
+        }
+    }
+
+    function validateForm() {
+        if ($scope.validCity &&
+            $scope.validEmail &&
+            $scope.validFName &&
+            $scope.validLName &&
+            $scope.validName &&
+            $scope.validPassword &&
+            $scope.validPassConf &&
+            $scope.validPhone &&
+            $scope.validRank &&
+            $scope.validRate &&
+            $scope.validState &&
+            $scope.validStreet &&
+            $scope.validZip &&
+            $scope.validAdsd &&
+            $scope.validHeaos &&
+            $scope.validSeaos &&
+            $scope.validPrd &&
+            $scope.validReportDate &&
+            $scope.validTir &&
+            $scope.validUic &&
+            $scope.validDest) {
+            $scope.validForm = true;
+        };
+
+        console.log($scope.validForm);
+    }
 
     // REGISTER NEW USER
     function signUp() {
-        $scope.registration.phoneNumber = $scope.registration.phoneNumber.replace(/[^0-9]+/g, '');
-        authService.saveRegistration($scope.registration)
-            .then(function (response) {
-                $rootScope.$broadcast('registerFeedback',{feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true});
-                startTimer();
-            },
-            function (response) {
-                var errors = [];
-                for (var key in response.data.modelState) {
-                    for (var i = 0; i < response.data.modelState[key].length; i++) {
-                        errors.push(response.data.modelState[key][i]);
+        if (validForm) {
+            authService.saveRegistration($scope.registration)
+                .then(function (response) {
+                    $rootScope.$broadcast('registerFeedback', { feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true });
+                    startTimer();
+                },
+                function (response) {
+                    var errors = [];
+                    for (var key in response.data.modelState) {
+                        for (var i = 0; i < response.data.modelState[key].length; i++) {
+                            errors.push(response.data.modelState[key][i]);
+                        };
                     };
-                };
-                var message = "Failed to register user. " + errors.join(' ');
-                $rootScope.$broadcast('registerFeedback',{feedback: message, savedSuccessfully: false});
-            });
+                    var message = "Failed to register user. " + errors.join(' ');
+                    $rootScope.$broadcast('registerFeedback', { feedback: message, savedSuccessfully: false });
+                });
+        }
     };
 
     function startTimer() {
