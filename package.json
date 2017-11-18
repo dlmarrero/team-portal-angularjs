@@ -18,11 +18,12 @@
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
+    "jasmine": "^2.8.0",
     "main-bower-files": "^2.13.1",
     "run-sequence": "^1.2.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "author": "Łukasz Holeczek",
   "url": "http://coreui.io",
