@@ -6,9 +6,8 @@ function loginCtrl($scope, $location, authService, $state, $rootScope) {
 
     $scope.login = login;
     $scope.loginData = {};
-    // $rootScope.message = "";
 
-    $scope.$on('messageUpdate',function (event, data) {
+    $scope.$on('messageUpdate', function (event, data) {
         $rootScope.message = data;
     });
 
@@ -18,9 +17,7 @@ function loginCtrl($scope, $location, authService, $state, $rootScope) {
                 $state.transitionTo('app.main', {}, { reload: true });
             },
             function (error_description) {
-                // $scope.message = error_description.data.error_description; // Fix this
-                console.log(error_description.data.error_description);
-                $rootScope.$broadcast('messageUpdate',error_description.data.error_description);
+                $rootScope.$broadcast('messageUpdate', error_description.data.error_description);
             });
     };
 

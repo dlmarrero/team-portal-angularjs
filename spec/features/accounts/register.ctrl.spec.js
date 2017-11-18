@@ -283,4 +283,27 @@ describe('registerCtrl', function () {
         })
     })
 
+    describe('E2E Test', function () {
+        beforeEach(function () {
+            browser.navigateTo("/#!");
+        });
+
+        it("should redirect to dashboard when / is accessed", function () {
+            browser().navigateTo('#/');
+            expect(browser().location().path()).toBe("/dashboard");
+        })
+
+        it("ensures user can register", function () {
+            browser().navigateTo('/register');
+            expect(browser().location().path()).toBe("/register");
+
+            input('rate').enter('CTN2');
+            input('firstname').enter('Test');
+            input('lastname').enter('User');
+
+        })
+
+
+    })
+
 })

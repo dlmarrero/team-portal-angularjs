@@ -55,8 +55,8 @@
                                         <input type="checkbox" id="showPhone" ng-model="showPhone">
                                     </div>
                                     <div class="form-group">
-                                        <label for="showtirDate">TIR Date</label>
-                                        <input type="checkbox" id="showtirDate" ng-model="showtirDate">
+                                        <label for="showTirDate">TIR Date</label>
+                                        <input type="checkbox" id="showTirDate" ng-model="showTirDate">
                                     </div>
                                     <div class="form-group">
                                         <label for="showAdsd">ADSD</label>
@@ -67,8 +67,12 @@
                                         <input type="checkbox" id="showPrd" ng-model="showPrd">
                                     </div>
                                     <div class="form-group">
-                                        <label for="showEaos">EAOS</label>
-                                        <input type="checkbox" id="showEaos" ng-model="showEaos">
+                                        <label for="showHeaos">Hard EAOS</label>
+                                        <input type="checkbox" id="showHeaos" ng-model="showHeaos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="showSeaos">Soft EAOS</label>
+                                        <input type="checkbox" id="showSeaos" ng-model="showSeaos">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -152,10 +156,13 @@
                         <th class="td-centered" ng-show="showPrd">
                             <a href="#" ng-click="sortBy('prd')">PRD</a>
                         </th>
-                        <th class="td-centered" ng-show="showEaos">
-                            <a href="#" ng-click="sortBy('eaos')">EAOS</a>
+                        <th class="td-centered" ng-show="showHeaos">
+                            <a href="#" ng-click="sortBy('heaos')">Hard EAOS</a>
                         </th>
-                        <th class="td-centered" ng-show="showtirDate">
+                        <th class="td-centered" ng-show="showSeaos">
+                            <a href="#" ng-click="sortBy('seaos')">Soft EAOS</a>
+                        </th>
+                        <th class="td-centered" ng-show="showTirDate">
                             <a href="#" ng-click="sortBy('tirDate')">TIR Date</a>
                         </th>
                         <th class="td-centered" ng-show="showBlueBadge">
@@ -189,8 +196,9 @@
                         <td class="td-centered" ng-show="showAdsd">{{sailor.adsd | milDate}}</td>
                         <td class="td-centered" ng-show="showReportDate">{{sailor.reportDate | milDate}}</td>
                         <td class="td-centered" ng-show="showPrd">{{sailor.prd | milDate}}</td>
-                        <td class="td-centered" ng-show="showEaos">{{sailor.eaos | milDate}}</td>
-                        <td class="td-centered" ng-show="showtirDate">{{sailor.tirDate | milDate}}</td>
+                        <td class="td-centered" ng-show="showHeaos">{{sailor.heaos | milDate}}</td>
+                        <td class="td-centered" ng-show="showSeaos">{{sailor.seaos | milDate}}</td>
+                        <td class="td-centered" ng-show="showTirDate">{{sailor.tirDate | milDate}}</td>
                         <td class="td-centered" ng-show="showBlueBadge">{{sailor.blueBadge}}</td>
                         <td class="td-centered" ng-show="showDestUic">{{sailor.destUIC}}</td>
                         <td class="td-centered" ng-show="showDestCommand">{{sailor.destCommand}}</td>

@@ -34,7 +34,6 @@
 - Team/tech lead checbox
 - Is it OK to allow all to view alpha roster?
 - Update alpha roster when details are changed
-- Change EAOS to Hard EAOS, add Soft EAOS
 
 
 ************
@@ -61,7 +60,6 @@
 ***********
 * BACKEND *
 ***********
-- Remove seed data
 
 
 *******************

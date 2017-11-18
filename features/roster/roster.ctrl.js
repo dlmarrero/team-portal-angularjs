@@ -1,9 +1,9 @@
 angular.module('app')
-.controller('rosterCtrl', rosterCtrl);
+    .controller('rosterCtrl', rosterCtrl);
 
 rosterCtrl.$inject = ['$scope', 'dataSvc'];
-function rosterCtrl ($scope, dataSvc) {
-    
+function rosterCtrl($scope, dataSvc) {
+
     $scope.sailors = dataSvc.getUsers();
 
     // Default settings for table column display
@@ -13,17 +13,18 @@ function rosterCtrl ($scope, dataSvc) {
     $scope.showPhone = true;
     $scope.showAdsd = false;
     $scope.showPrd = true;
-    $scope.showEaos = true;
+    $scope.showHeaos = false;
+    $scope.showSeaos = false;
     $scope.showReportDate = true;
     $scope.showRank = false;
-    $scope.showEmail = false;
+    $scope.showEmail = true;
     $scope.showAddress = false;
-    $scope.showTirDate = false;
+    $scope.showTirDate = true;
     $scope.showBlueBadge = false;
     $scope.showDestUic = false;
     $scope.showDestCommand = false;
     $scope.showPortalRoles = false;
-    
+
     // Table column presets
     $scope.presetOpt = '';
     $scope.setPreset = setPreset;
@@ -34,7 +35,7 @@ function rosterCtrl ($scope, dataSvc) {
     $scope.sortBy = sortBy;
 
 
-    function setPreset (opt) {
+    function setPreset(opt) {
         switch (opt) {
             case 'recall':
                 $scope.showRate = true;
@@ -46,7 +47,8 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showTirDate = false;
                 $scope.showAdsd = false;
                 $scope.showPrd = false;
-                $scope.showEaos = false;
+                $scope.showHeaos = false;
+                $scope.showSeaos = false;
                 $scope.showReportDate = false;
                 $scope.showBlueBadge = false;
                 $scope.showDestUic = false;
@@ -63,7 +65,8 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showTirDate = true;
                 $scope.showAdsd = true;
                 $scope.showPrd = true;
-                $scope.showEaos = true;
+                $scope.showHeaos = true;
+                $scope.showSeaos = true;
                 $scope.showReportDate = true;
                 $scope.showBlueBadge = false;
                 $scope.showDestUic = false;
@@ -80,7 +83,8 @@ function rosterCtrl ($scope, dataSvc) {
                 $scope.showTirDate = false;
                 $scope.showAdsd = false;
                 $scope.showPrd = false;
-                $scope.showEaos = false;
+                $scope.showHeaos = false;
+                $scope.showSeaos = false;
                 $scope.showReportDate = true;
                 $scope.showBlueBadge = true;
                 $scope.showDestUic = true;
@@ -91,7 +95,7 @@ function rosterCtrl ($scope, dataSvc) {
     };
 
 
-    function sortBy (propertyName) {
+    function sortBy(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
     };
