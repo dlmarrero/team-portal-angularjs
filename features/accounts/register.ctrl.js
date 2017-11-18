@@ -9,28 +9,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
     $scope.signUp = signUp;
     $scope.startTimer = startTimer;
 
-    $scope.validForm = $scope.validCity &&
-        $scope.validEmail &&
-        $scope.validFName &&
-        $scope.validLName &&
-        $scope.validName &&
-        $scope.validPassword &&
-        $scope.validPassConf &&
-        $scope.validPhone &&
-        $scope.validRank &&
-        $scope.validRate &&
-        $scope.validState &&
-        $scope.validStreet &&
-        $scope.validZip &&
-        $scope.validAdsd &&
-        $scope.validHeaos &&
-        $scope.validSeaos &&
-        $scope.validPrd &&
-        $scope.validReportDate &&
-        $scope.validTir &&
-        $scope.validUic &&
-        $scope.validDest;
-
     $scope.validateAdsd = validateAdsd;
     $scope.validateHeaos = validateHeaos;
     $scope.validateSeaos = validateSeaos;
@@ -46,7 +24,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
     $scope.validatePassConf = validatePassConf;
     $scope.validatePassword = validatePassword;
     $scope.validatePhone = validatePhone;
-    $scope.validateRank = validateRank
     $scope.validateRate = validateRate;
     $scope.validateState = validateState;
     $scope.validateStreet = validateStreet;
@@ -56,7 +33,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
 
     $scope.registration = {};
     $scope.registration.blueBadge = false; // Just default this to false on backend
-
 
     // TRY INSTEAD TO WRITE A HELPER FUNCTION WHICH SETS MESSAGE FOR THE SCOPE
     // $scope.$on('registerFeedback', function (event, data) {
@@ -252,7 +228,7 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
         }
 
         if ($scope.validCity) {
-            $scope.registration.city = $filter('capitalize')(city);
+            $scope.registration.city = $filter('uppercase')(city);
             validateForm();
         }
     };
@@ -276,7 +252,7 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
         $scope.validFName = _validateName(name)
 
         if ($scope.validFName) {
-            $scope.registration.firstName = $filter('capitalize')(name);
+            $scope.registration.firstName = $filter('uppercase')(name);
             validateForm();
         }
     };
@@ -285,7 +261,7 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
         $scope.validLName = _validateName(name)
 
         if ($scope.validLName) {
-            $scope.registration.lastName = $filter('capitalize')(name);
+            $scope.registration.lastName = $filter('uppercase')(name);
             validateForm();
         }
 
@@ -330,14 +306,6 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
 
         } else {
             $scope.validPhone = false;
-        }
-    }
-
-    function validateRank(rank) {
-        rank == null ? $scope.validRank = true : $scope.validRank = false;
-
-        if ($scope.validRank) {
-            validateForm();
         }
     }
 
@@ -386,6 +354,7 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
         }
 
         if ($scope.validStreet) {
+            $scope.registration.street = $filter('uppercase')(street);
             validateForm();
         }
     }
@@ -405,15 +374,38 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
     }
 
     function validateForm() {
-        if ($scope.validCity &&
+        // var status = {
+        //     "$scope.validCity": $scope.validCity,
+        //     "$scope.validEmail": $scope.validEmail,
+        //     "$scope.validFName": $scope.validFName,
+        //     "$scope.validLName": $scope.validLName,
+        //     "$scope.validPassword": $scope.validPassword,
+        //     "$scope.validPassConf": $scope.validPassConf,
+        //     "$scope.validPhone": $scope.validPhone,
+        //     "$scope.validRank": $scope.validRank,
+        //     "$scope.validRate": $scope.validRate,
+        //     "$scope.validState": $scope.validState,
+        //     "$scope.validZip": $scope.validZip,
+        //     "$scope.validAdsd": $scope.validAdsd,
+        //     "$scope.validHeaos": $scope.validHeaos,
+        //     "$scope.validSeaos": $scope.validSeaos,
+        //     "$scope.validPrd": $scope.validPrd,
+        //     "$scope.validReportDate": $scope.validReportDate,
+        //     "$scope.validTir": $scope.validTir,
+        //     "$scope.validUic": $scope.validUic,
+        //     "$scope.validDest": $scope.validDest
+        // }
+        // console.table(status)
+
+
+        $scope.validForm = (
+            $scope.validCity &&
             $scope.validEmail &&
             $scope.validFName &&
             $scope.validLName &&
-            $scope.validName &&
             $scope.validPassword &&
             $scope.validPassConf &&
             $scope.validPhone &&
-            $scope.validRank &&
             $scope.validRate &&
             $scope.validState &&
             $scope.validStreet &&
@@ -425,19 +417,19 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
             $scope.validReportDate &&
             $scope.validTir &&
             $scope.validUic &&
-            $scope.validDest) {
-            $scope.validForm = true;
-        };
+            $scope.validDest
+        );
 
-        console.log($scope.validForm);
+        // console.log($scope.validForm);
     }
 
     // REGISTER NEW USER
     function signUp() {
-        if (validForm) {
+        if ($scope.validForm) {
             authService.saveRegistration($scope.registration)
                 .then(function (response) {
-                    $rootScope.$broadcast('registerFeedback', { feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true });
+                    giveFeedback({ msg: "Registration succssful!  Logging you in...", success: true })
+                    // $rootScope.$broadcast('registerFeedback', { feedback: "Registration succssful!  Logging you in...", savedSuccessfully: true });
                     startTimer();
                 },
                 function (response) {
@@ -448,8 +440,12 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                         };
                     };
                     var message = "Failed to register user. " + errors.join(' ');
-                    $rootScope.$broadcast('registerFeedback', { feedback: message, savedSuccessfully: false });
+                    giveFeedback({ msg: message, success: false });
+                    console.table($scope.registration)
+                    // $rootScope.$broadcast('registerFeedback', { feedback: message, savedSuccessfully: false });
                 });
+        } else {
+            giveFeedback({ msg: "Please properly complete all registration form fields.", success: false })
         }
     };
 
@@ -467,8 +463,14 @@ function registerCtrl($scope, $location, $timeout, authService, $state, $rootSco
                     $state.transitionTo('app.main', {}, { reload: true });
                 },
                 function (error_description) {
-                    $scope.message = error_description.data.error_description; // Fix this error syntax
+                    giveFeedback(error_description.data.error_description); // Fix this error syntax
                 });
         }, 1000);
     };
+
+    function giveFeedback(feedback) {
+        console.table(feedback);
+        $scope.registerMessage = feedback.msg;
+        $scope.savedSuccessfully = feedback.success;
+    }
 };

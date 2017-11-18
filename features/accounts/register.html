@@ -1,7 +1,7 @@
 <div class="container-float">
     <div class="card col-lg-6" style="width: 100%;margin: 0 auto;">
         <div class="card-block">
-            <form name="register" class="form-login" onsubmit="signUp()" role="form" novalidate>
+            <form name="register" class="form-login" ng-submit="signUp()" role="form" novalidate>
                 <div style="text-align:center;">
                     <h4 class="form-login-heading">
                         <strong>N57 Portal
@@ -18,13 +18,13 @@
                             <label class="col-md-12 form-control-label" for="rate">Rate</label>
                             <div class="col-md-12">
                                 <input type="text" id="rate" name="rate" ng-model="registration.rate" class="form-control" ng-class="{'form-invalid': !validRate && validRate != null}"
-                                    ng-blur="validateRate(registration.rate);">
+                                    ng-value="registration.rate" ng-blur="validateRate(registration.rate);">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="rank">Rank</label>
                             <div class="col-md-12">
-                                <select id="rank" name="rank" ng-model="registration.rank" class="form-control" ng-blur="validateRank(registration.rank)">
+                                <select id="rank" name="rank" ng-model="registration.rank" class="form-control">
                                     <option value="{{registration.rank}}">{{registration.rank}}</option>
                                     <option value="E1">E1</option>
                                     <option value="E2">E2</option>
@@ -103,8 +103,11 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="state">State</label>
-                            <input type="text" id="state" name="state" ng-model="registration.state" class="form-control" maxlength="2" ng-class="{'form-invalid': !validState && validState != null}"
-                                ng-blur="validateState(registration.state)">
+                            <select id="state" name="state" ng-model="registration.state" class="form-control">
+                                <option value="MD">Maryland</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="VA">Virginia</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="zip">Zip Code</label>
@@ -171,15 +174,15 @@
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destuic">Destination UIC</label>
                             <div class="col-md-12">
-                                <input type="text" id="destuic" name="destuic" ng-model="registration.destUIC" class="form-control" ng-class="{'form-invalid': !validUic && validUic != null}"
-                                    ng-blur="validateUic(registration.destUIC)">
+                                <input type="text" id="destuic" name="destuic" ng-model="registration.destUIC" minlength="5" maxlength="5" class="form-control"
+                                    ng-class="{'form-invalid': !validUic && validUic != null}" ng-blur="validateUic(registration.destUIC)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 form-control-label" for="destcommand">Destination Command</label>
                             <div class="col-md-12">
-                                <input type="text" id="destcommand" name="destcommand" minlength="5" maxlength="5" ng-model="registration.destCommand" class="form-control"
-                                    ng-class="{'form-invalid': !validDest && validDest != null}" ng-blur="validateDest(registration.destCommand)">
+                                <input type="text" id="destcommand" name="destcommand" ng-model="registration.destCommand" class="form-control" ng-class="{'form-invalid': !validDest && validDest != null}"
+                                    ng-change="validateDest(registration.destCommand)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -192,15 +195,15 @@
                 </div>
                 <div class="button-group" style="text-align:center;">
                     <!--WOULD LIKE TO ANIMATE THIS  -->
-                    <div data-ng-hide="registerMessage == null" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                    <div data-ng-hide="registerMessage == null" data-ng-class="(savedSuccessfully) ? 'alert alert-success alert-dismissable' : 'alert alert-danger alert-dismissable'">
+                        <a href="#" class="close" ng-click="registerMessage = null" aria-label="close">&times;</a>
                         {{registerMessage}}
                     </div>
                     <em ng-show="validForm">
                         <span class="highlight" style="font-size: 16px">Your username is: {{registration.firstName | lowercase}}.{{registration.lastName | lowercase}}</span>
                     </em>
                     <br>
-                    <button type="submit" ng-class="register.$invalid ? 'btn btn-lg btn-secondary btn-block': 'btn btn-lg btn-primary btn-block'"
-                        ng-disabled="register.$invalid">Submit</button>
+                    <button type="submit" ng-class="!validForm ? 'btn btn-lg btn-secondary btn-block': 'btn btn-lg btn-primary btn-block'">Submit</button>
                     <button class="btn btn-lg btn-danger btn-block" type="reset">Reset</button>
                     <!-- <input type="submit" id="submit" value="Submit" class="btn btn-lg btn-primary" style="width:100px"> -->
                 </div>

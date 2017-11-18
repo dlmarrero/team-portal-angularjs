@@ -1,12 +1,12 @@
 angular.module('app')
-.factory('authService', authService);
+    .factory('authService', authService);
 
 authService.$inject = ['$http', '$q', 'localStorageService', '$window', '$location', '$state', '$rootScope'];
-function authService ($http, $q, localStorageService, $window, $location, $state, $rootScope) {
+function authService($http, $q, localStorageService, $window, $location, $state, $rootScope) {
 
     var serviceBase = 'http://localhost:5000/';
     // var serviceBase = 'portal';
-    
+
     var authServiceFactory = {};
 
     var _authentication = {
@@ -16,7 +16,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
     var _saveRegistration = function (registration) {
 
-        _logOut();
+        // _logOut();
 
         return $http.post(serviceBase + '/api/account/register', registration)
             .then(function (response) {
@@ -26,12 +26,12 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
     var _login = function (loginData) {
 
-        var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName)  + "&password=" + encodeURIComponent(loginData.password);
+        var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName) + "&password=" + encodeURIComponent(loginData.password);
 
         var deferred = $q.defer();
 
         $http.post(serviceBase + '/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (success) {
-            
+
             localStorageService.set('authorizationData', { token: success.data.access_token, userName: loginData.userName });
 
             _authentication.isAuth = true;
@@ -41,7 +41,7 @@ function authService ($http, $q, localStorageService, $window, $location, $state
 
             // $rootScope.$broadcast('authUpdate', _authentication);
 
-        },function (error, status) {
+        }, function (error, status) {
             _logOut();
             deferred.reject(error);
         });
