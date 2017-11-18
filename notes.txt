@@ -44,6 +44,7 @@
 - Need form boxes to turn red
 - Find best way to trigger showUsername = true
 - Ensure admin data is in same order found in ETJ
+- Individual fields have feedback, now to get overall validity to enable submit.
 
 
 **********
