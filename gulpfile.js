@@ -22,22 +22,22 @@ gulp.paths = {
 var paths = gulp.paths;
 
 gulp.task('replace:devVars', function () {
-    gulp.src('js/services/auth.svc.js',  {base: "./"})
+    gulp.src('js/services/auth.svc.js', { base: "./" })
         .pipe(replace("  // var serviceBase = 'http://localhost:5000/';", "  var serviceBase = 'http://localhost:5000/';"))
         .pipe(replace("  var serviceBase = 'portal';", "  // var serviceBase = 'portal';"))
         .pipe(gulp.dest('./'));
-    gulp.src('js/services/data.svc.js',  {base: "./"})
+    gulp.src('js/services/data.svc.js', { base: "./" })
         .pipe(replace("  // var aspApiUrl = 'http://localhost:5000';", "  var aspApiUrl = 'http://localhost:5000';"))
         .pipe(replace("  var aspApiUrl = 'portal';", "  // var aspApiUrl = 'portal';"))
         .pipe(gulp.dest('./'))
 });
 
 gulp.task('replace:prodVars', function () {
-    gulp.src('js/services/auth.svc.js',  {base: "./"})
+    gulp.src('js/services/auth.svc.js', { base: "./" })
         .pipe(replace("  var serviceBase = 'http://localhost:5000/';", "  // var serviceBase = 'http://localhost:5000/';"))
         .pipe(replace("  // var serviceBase = 'portal';", "  var serviceBase = 'portal';"))
         .pipe(gulp.dest('./'));
-    gulp.src('js/services/data.svc.js',  {base: "./"})
+    gulp.src('js/services/data.svc.js', { base: "./" })
         .pipe(replace("  var aspApiUrl = 'http://localhost:5000';", "  // var aspApiUrl = 'http://localhost:5000';"))
         .pipe(replace("  // var aspApiUrl = 'portal';", "  var aspApiUrl = 'portal';"))
         .pipe(gulp.dest('./'))
@@ -45,10 +45,10 @@ gulp.task('replace:prodVars', function () {
 
 gulp.task('eslint', function () {
     return gulp.src(
-        ['js/app.js', 
-        'js/*.js', 
-        'js/**/*.js', 
-        'features/**/*.js'])
+        ['js/app.js',
+            'js/*.js',
+            'js/**/*.js',
+            'features/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format('stylish'));
 });
@@ -65,11 +65,13 @@ gulp.task('serve', ['sass'], function () {
 
     gulp.watch('index.html').on('change', browserSync.reload);
     gulp.watch('features/**/*.html').on('change', browserSync.reload);
+    gulp.watch('features/**/*.html').on('change', browserSync.reload);
     gulp.watch('views/**/*.html').on('change', browserSync.reload);
 
     gulp.watch('js/*.js', ['concat:dev'])
     gulp.watch('js/**/*.js', ['concat:dev'])
     gulp.watch('features/**/*.js', ['concat:dev'])
+    gulp.watch('features/**/**/*.js', ['concat:dev'])
 });
 
 // Static Server without watching scss files
@@ -108,11 +110,11 @@ gulp.task('clean:dist', function () {
 
 gulp.task('copy:bower', function () {
     return gulp.src('./bower_components/**/*.min.js')
-        .pipe(rename({dirname: ""}))
+        .pipe(rename({ dirname: "" }))
         .pipe(gulp.dest(paths.dist + '/js/libs'))
-        // .pipe(uglify())
-        // .pipe(rename({ suffix: '.min' }))
-        // .pipe(gulp.dest(paths.dist + '/js/libs'));
+    // .pipe(uglify())
+    // .pipe(rename({ suffix: '.min' }))
+    // .pipe(gulp.dest(paths.dist + '/js/libs'));
 });
 
 gulp.task('copy:css', function () {
@@ -132,10 +134,10 @@ gulp.task('copy:fonts', function () {
 
 gulp.task('concat:dist', function () {
     gulp.src(
-        ['./js/app.js', 
-        './js/*.js', 
-        './js/**/*.js', 
-        './features/**/*.js'])
+        ['./js/app.js',
+            './js/*.js',
+            './js/**/*.js',
+            './features/**/*.js'])
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())
         // .pipe(uglify())
@@ -144,10 +146,10 @@ gulp.task('concat:dist', function () {
 
 gulp.task('concat:dev', function () {
     gulp.src(
-        ['js/app.js', 
-        'js/*.js', 
-        './js/**/*.js', 
-        'features/**/*.js'])
+        ['js/app.js',
+            'js/*.js',
+            './js/**/*.js',
+            'features/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('compiled.js'))
         .pipe(ngAnnotate())

@@ -37,7 +37,9 @@ function dataSvc($resource, authService) {
         manageSections: manageSections,
         manageTopics: manageTopics,
         quizGen: quizGen,
-        checkQuiz: checkQuiz
+        checkQuiz: checkQuiz,
+        // TRACKERS
+        getNkos: getNkos
     };
 
 
@@ -201,5 +203,10 @@ function dataSvc($resource, authService) {
         return $resource(aspApiUrl + '/api/Quiz/CheckAnswers', null, {
             'send': { method: 'POST', isArray: true }
         });
+    }
+
+    // TRACKERS
+    function getNkos() {
+        return $resource(aspApiUrl + '/api/Nkos');
     }
 };

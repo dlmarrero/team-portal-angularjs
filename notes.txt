@@ -1,5 +1,11 @@
 /* Project Notes */
 
+*************
+* DASHBOARD *
+*************
+- Remove rowsCompleted prop on TrainingCourse
+- Back end is giving back same exact course data for every user :(
+
 ************
 * PROJECTS *
 ************
